@@ -24,12 +24,12 @@ export interface AirItem {
 
 
 export const testItem = [
-    { name: 'PM2_5', values: [getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber()] },
-    { name: 'PM10', values: [getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber()] },
-    { name: 'CO', values: [getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber()] },
-    { name: 'NO2', values: [getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber()] },
-    { name: 'O3', values: [getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber()] },
-    { name: 'SO2', values: [getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber()] },
+    { rounded: true, name: 'PM2_5', values: [getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber()] },
+    { rounded: true, name: 'PM10', values: [getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber()] },
+    { rounded: true, name: 'CO', values: [getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber()] },
+    { rounded: true, name: 'NO2', values: [getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber()] },
+    { rounded: true, name: 'O3', values: [getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber()] },
+    { rounded: true, name: 'SO2', values: [getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber()] },
     { name: 'windDirection', values: [getRandomNumber(360), getRandomNumber(360), getRandomNumber(360), getRandomNumber(360), getRandomNumber(360), getRandomNumber(360)] },
     { name: 'windSpeed', values: [getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber()] },
     { name: 'temperature', values: [getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber()] },

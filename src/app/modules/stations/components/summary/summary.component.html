@@ -1,19 +1,26 @@
-<nz-table ngSkipHydration [nzFrontPagination]="false" #nzTable [nzData]="listOfData" >
+<nz-table ngSkipHydration [nzFrontPagination]="false" #nzTable [nzData]="listOfData">
     <thead>
         <tr>
             <th></th>
-          <th *ngFor="let item of headers">{{item}}</th>
+            <th *ngFor="let item of headers">{{item}}</th>
         </tr>
     </thead>
 
 
     <tbody>
         <tr *ngFor="let item of listOfData;index as i">
-          <td>{{item.name}}</td>
+            <td>{{item.name}}</td>
 
-          <td *ngFor="let valueItem of item.values">{{ valueItem }}</td>
+            <td *ngFor="let valueItem of item.values">
+                <span *ngIf="item.rounded" class="item rounded">{{ valueItem }}</span>
+                
+                <span *ngIf="item.name === 'windDirection'" class="item">{{ valueItem }}</span>
+                <span *ngIf="item.name === 'windSpeed'" class="item">{{ valueItem }} KM/s</span>
+                <span *ngIf="item.name === 'temperature'" class="item">{{ valueItem }}</span>
+                <span *ngIf="item.name === 'humidity'" class="item">{{ valueItem }}</span>
+            </td>
         </tr>
-      </tbody>
+    </tbody>
 
     <!-- <tbody>
         <tr *ngFor="let data of nzTable.data;index as i">

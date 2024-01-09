@@ -1,0 +1,24 @@
+td::before {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    width: 1px;
+    height: 1.6em;
+    background-color: rgba(0, 0, 0, .06);
+    transform: translateY(-50%);
+    transition: background-color .3s;
+    content: "";
+}
+
+.rounded {
+    border-radius: 50%;
+    padding: 5px;
+    background-color: cyan;
+    display: inline-flex;
+    width: 35px;
+    height: 35px;
+    justify-content: center;
+    align-items: center;
+    
+}
+
