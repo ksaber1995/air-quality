@@ -1,1 +1,34 @@
-<p>summary works!</p>
+<nz-table ngSkipHydration [nzFrontPagination]="false" #nzTable [nzData]="listOfData" >
+    <thead>
+        <tr>
+            <th></th>
+          <th *ngFor="let item of headers">{{item}}</th>
+        </tr>
+    </thead>
+
+
+    <tbody>
+        <tr *ngFor="let item of listOfData;index as i">
+          <td>{{item.name}}</td>
+
+          <td *ngFor="let valueItem of item.values">{{ valueItem }}</td>
+        </tr>
+      </tbody>
+
+    <!-- <tbody>
+        <tr *ngFor="let data of nzTable.data;index as i">
+            <td>{{listOfData[i].PM2_5}}</td>
+            <td>{{listOfData[i].PM10}}</td>
+            <td>{{listOfData[i].CO}}</td>
+            <td>{{listOfData[i].NO2}}</td>
+            <td>{{listOfData[i].O3}}</td>
+            <td>{{listOfData[i].SO2}}</td>
+
+            <td>{{listOfData[i].windDirection}}</td>
+            <td>{{listOfData[i].windSpeed}}</td>
+            <td>{{listOfData[i].temperature}}</td>
+            <td>{{listOfData[i].humidity}}</td>
+        
+        </tr>
+    </tbody> -->
+</nz-table>

@@ -12,6 +12,7 @@ export const routes: Routes = [
       path: 'stations',
       loadChildren: () => import('./modules/stations/stations.module').then(m => m.StationsModule)
   },
+  
 
 ];
 

@@ -9,6 +9,8 @@ import { HeaderComponent } from './components/header/header.component';
 import { DetailsComponent } from './components/details/details.component';
 import { OverviewComponent } from './components/overview/overview.component';
 import { HomeComponent } from './components/home/home.component';
+import { SharedModule } from '../shared/shared.module';
+import { NzTableModule } from 'ng-zorro-antd/table';
 
 
 @NgModule({
@@ -23,7 +25,9 @@ import { HomeComponent } from './components/home/home.component';
   ],
   imports: [
     CommonModule,
-    StationsRoutingModule
+    StationsRoutingModule,
+    SharedModule,
+    NzTableModule
   ]
 })
 export class StationsModule { }
