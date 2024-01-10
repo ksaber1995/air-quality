@@ -7,6 +7,10 @@ import { AirItem, Header, testItem } from './model';
   styleUrl: './summary.component.scss'
 })
 export class SummaryComponent {
+  time = (new Date()).toLocaleString();
+  station: any = "Nizwa"
+  percent: any = 'Moderate'
+
   headers = Header
 
   listOfData = testItem

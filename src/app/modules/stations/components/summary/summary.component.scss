@@ -1,3 +1,4 @@
+
 td::before {
     position: absolute;
     top: 50%;
@@ -19,6 +20,29 @@ td::before {
     height: 35px;
     justify-content: center;
     align-items: center;
-    
+
 }
 
+.title{
+  width: 100%;
+  padding-left: 40px;
+  h1{
+    font-size: 35px;
+    font-weight: 700;
+    margin: 0
+  }
+  h3{
+    font-size: 18px;
+    font-weight: 500;
+  }
+
+}
+
+.station{
+  display: flex;
+  justify-content: space-between;
+  padding: 40px;
+  div{
+    width: 50%;
+  }
+}
