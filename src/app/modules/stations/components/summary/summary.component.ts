@@ -9,7 +9,7 @@ import { AirItem, Header, testItem } from './model';
 export class SummaryComponent {
   time = (new Date()).toLocaleString();
   station: any = "Nizwa"
-  percent: any = 'Moderate'
+  percent: any = 'moderate'
 
   headers = Header
 

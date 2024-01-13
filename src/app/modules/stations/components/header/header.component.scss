@@ -9,24 +9,33 @@
   font-size: 16px;
   font-weight: 600;
   ul{
+    width: 16%;
+    height: 100%;
     display: flex;
-    width: 15%;
     justify-content: space-between;
+    align-items: center;
+    padding-top: 10px;
     li{
       list-style: none;
-      height: 30px;
       width: 100px;
-      border-radius: 20px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      box-shadow: 0px 0px 5px gray;
-      svg{
-        margin-right:  5px;
+      img{
+        width: 120px;
+        height: 40px;
       }
     }
 
   }
-
+  div{
+    width: fit-content;
+    height: fit-content;
+    img{
+      width: 90%;
+      height: 90%;
+    }
+    .adminIcon{
+      width: 120px;
+      height: 120px;
+    }
+  }
 }
 

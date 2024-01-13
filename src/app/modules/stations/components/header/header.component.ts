@@ -7,4 +7,13 @@ import { Component } from '@angular/core';
 })
 export class HeaderComponent {
 
+  homeClick(){
+
+  }
+  overviewClick(){
+
+  }
+  adminClick(){
+
+  }
 }

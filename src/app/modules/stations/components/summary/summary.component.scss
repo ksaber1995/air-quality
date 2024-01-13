@@ -23,7 +23,7 @@ td::before {
 
 }
 
-.title{
+.title , .station {
   width: 100%;
   padding-left: 40px;
   h1{
@@ -33,7 +33,7 @@ td::before {
   }
   h3{
     font-size: 18px;
-    font-weight: 500;
+    font-weight: 400;
   }
 
 }
@@ -44,5 +44,19 @@ td::before {
   padding: 40px;
   div{
     width: 50%;
+  }
+  .information{
+    .percent{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 30px;
+      width: 150px;
+      border-radius: 5px;
+      svg{
+        margin-right: 10px;
+      }
+      }
+
   }
 }
