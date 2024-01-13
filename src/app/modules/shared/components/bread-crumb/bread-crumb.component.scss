@@ -1,0 +1,52 @@
+@import "colors";
+
+nav{
+    margin: 1rem 0;
+
+}
+
+ul {
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    .breadcrumb-item {
+        text-transform: capitalize;
+
+        &.link {
+            
+            &:hover {
+                cursor: pointer;
+            }
+
+            a{
+                text-decoration: none;
+                color: $SeaGreen !important;
+                text-wrap: nowrap;
+            }
+        }
+    }
+
+    .separator {
+        margin:  0 .5rem;
+    }
+
+    .back-btn {
+        padding: 0;
+        line-height: 1;
+        // font-size: 2rem;
+        min-width: 0;
+        margin-right: .22rem;
+        &:hover{
+            cursor: pointer;
+        }
+        mat-icon {
+            font-size: 2rem;
+        }
+    }
+}
+
+a{
+    text-decoration: none !important;
+}
