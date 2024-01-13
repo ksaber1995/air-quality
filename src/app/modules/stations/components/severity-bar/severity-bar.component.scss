@@ -1,0 +1,73 @@
+.bar-wrapper{
+    border-radius: 15px;
+    position: relative;
+    margin: auto;
+    display: inline-block;
+    margin-top: 40px;
+    &::before{
+        content: 'N/A';
+        position: absolute;
+        bottom: -20px;
+        left: -10px;
+    }
+
+    &::after{
+        content: 'Hazardous';
+        position: absolute;
+        bottom: -20px;
+        right: -30px;
+    }
+
+
+    .level{
+        display: inline-block;
+        width: 110px;
+        height: 25px;
+        position: relative;
+
+        &.na::after{
+            content: 'Good';
+            position: absolute;
+            bottom: -20px;
+            right: -30px;
+        }
+    
+
+        .end{
+            position: absolute;
+            top: -30px;
+            right: 0px;
+            display: inline-flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+        
+        .bar-value{
+            position: relative;
+            right: -7px;
+        }
+
+        .level:first-child{
+            .bar-value{
+                position: relative;
+                right: 0;
+            }
+    
+        }
+        
+        .end-bar{
+            height: 10px;
+            width: 1px;
+            background-color: gray;
+        }
+    }
+
+    .level:first-child{
+        border-top-left-radius: 15px;
+        border-bottom-left-radius: 15px;
+    }
+    .level:last-child{
+        border-top-right-radius: 15px;
+        border-bottom-right-radius: 15px;
+    }
+}
