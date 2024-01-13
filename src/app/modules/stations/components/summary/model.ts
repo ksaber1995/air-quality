@@ -37,6 +37,6 @@ export const testItem = [
 ]
 
 
-function getRandomNumber(max = 1000) {
+export function getRandomNumber(max = 1000) {
     return Math.ceil(Math.random() * max)
 }

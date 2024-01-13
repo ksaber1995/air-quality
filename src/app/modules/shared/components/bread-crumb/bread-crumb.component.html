@@ -1,1 +1,12 @@
-<p>bread-crumb works!</p>
+<nav aria-label="breadcrumb">
+    <ul class="breadcrumb">
+        <a   [routerLink]="backRoute" class="back-btn">
+        </a>
+
+        <li *ngFor="let route of routes" class="breadcrumb-item link"><a   [routerLink]="route.link">{{route.title}}</a>
+            <span class="separator">/</span>
+        </li>
+
+        <li class="breadcrumb-item active" aria-current="page">{{target}}</li>
+    </ul>
+</nav>

@@ -2,7 +2,12 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BreadCrumbComponent } from './components/bread-crumb/bread-crumb.component';
 import { NzGridModule } from 'ng-zorro-antd/grid';
+import { RouterModule } from '@angular/router';
 
+
+const DeclarationsExports = [
+  BreadCrumbComponent
+]
 
 const ImportsExports = [
   NzGridModule
@@ -10,15 +15,17 @@ const ImportsExports = [
 
 @NgModule({
   declarations: [
-    BreadCrumbComponent
+      ...DeclarationsExports
   ],
   imports: [
     CommonModule,
+    RouterModule,
     ...ImportsExports
     
   ],
   exports: [
-    ...ImportsExports
+    ...ImportsExports,
+    ...DeclarationsExports
   ]
 })
 export class SharedModule { }
