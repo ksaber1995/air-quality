@@ -11,6 +11,11 @@ import { SharedModule } from '../shared/shared.module';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { NgChartsModule } from 'ng2-charts';
+import { SeverityBarComponent } from './components/severity-bar/severity-bar.component';
+import { NzSelectModule } from 'ng-zorro-antd/select';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule } from '@angular/forms';
+import { NzRadioModule } from 'ng-zorro-antd/radio';
 
 
 @NgModule({
@@ -21,6 +26,7 @@ import { NgChartsModule } from 'ng2-charts';
     DetailsComponent,
     OverviewComponent,
     HomeComponent,
+    SeverityBarComponent,
 
   ],
   imports: [
@@ -29,8 +35,10 @@ import { NgChartsModule } from 'ng2-charts';
     SharedModule,
     NzTableModule,
     GoogleMapsModule,
-    NgChartsModule
-
+    NgChartsModule,
+    NzSelectModule,
+    FormsModule,
+    NzRadioModule
   ]
 })
 export class StationsModule { }

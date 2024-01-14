@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IBreadCrumb } from '../../../shared/components/bread-crumb/model';
+import { airQualityItems } from '../../../shared/model/air-quality';
 
 @Component({
   selector: 'app-overview',
@@ -7,11 +8,13 @@ import { IBreadCrumb } from '../../../shared/components/bread-crumb/model';
   styleUrl: './overview.component.scss'
 })
 export class OverviewComponent {
-  routes: IBreadCrumb[]  = [
+  airQualityItems = airQualityItems;
+  type = 'all'
+  routes: IBreadCrumb[] = [
     {
-        title: 'Home',
-        link: '/'
+      title: 'Home',
+      link: '/'
     }
-];
+  ];
 
 }

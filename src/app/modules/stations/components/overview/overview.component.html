@@ -6,7 +6,28 @@
     </h1>
 
     <div class="content">
+        <div class="filters">
+            <nz-select [(ngModel)]="type" nzShowSearch nzAllowClear>
+                <nz-option nzValue="all" nzLabel="Air Quality Index" ></nz-option>
+                
+                <ng-container *ngFor="let item of airQualityItems">
+                    <!--  -->
+                    
+                    <nz-option [innerHTML]="'Karim'"  [nzLabel]=" item" [nzValue]="item"></nz-option>
+                </ng-container>
+            </nz-select>
+
+            <div class="date">
+              
+            
+            </div>
+        </div>
+
         <app-chart></app-chart>
+
+        <div class="severity-bar-wrapper">
+            <app-severity-bar></app-severity-bar>
+        </div>
     </div>
 </div>
 

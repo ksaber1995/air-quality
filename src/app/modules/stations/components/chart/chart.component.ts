@@ -10,6 +10,7 @@ const data = [
   { x: 2, y: () => getRandomNumber(450), r: Radius },
   { x: 3, y: () => getRandomNumber(450), r: Radius },
   { x: 4, y: () => getRandomNumber(450), r: Radius },
+  
   { x: 5, y: () => getRandomNumber(450), r: Radius },
   { x: 6, y: () => getRandomNumber(450), r: Radius },
   { x: 7, y: () => getRandomNumber(450), r: Radius },
