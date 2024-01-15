@@ -30,8 +30,7 @@
             <td>{{item.name}}</td>
 
             <td *ngFor="let valueItem of item.values">
-                <span *ngIf="item.rounded" class="item rounded">{{ valueItem }}</span>
-
+                <span *ngIf="item.rounded" class="item rounded" >{{ valueItem }}</span>
                 <span *ngIf="item.name === 'windDirection'" class="item">{{ valueItem }}</span>
                 <span *ngIf="item.name === 'windSpeed'" class="item">{{ valueItem }} KM/s</span>
                 <span *ngIf="item.name === 'temperature'" class="item">{{ valueItem }}</span>
