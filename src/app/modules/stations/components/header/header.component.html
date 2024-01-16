@@ -1,14 +1,11 @@
 <div class="wrapper veryLightGray-bg">
-    <div class="logo">
-      <img src="../../../../../assets/ICONS/Enviroment Authority Logo.svg" alt="">
-    </div>
+
+      <img class="logo" src="../../../../../assets/ICONS/Enviroment Authority Logo.svg" alt="">
+
     <ul >
-
-      <li routerLink="/" class="home "><img src="../../../../../assets/ICONS/Home Icon.svg" alt=""></li>
-
-      <li routerLink="stations/overview" class="overview gray"> <img src="../../../../../assets/ICONS/Overview Icon.svg" alt=""></li>
-
+      <li routerLink="/" class="home seaGreen-bg white "><img src="../../../../../assets/ICONS/Home Icon.svg" alt=""> Home</li>
+      <li routerLink="stations/overview" class="overview gray veryLightGray-bg"> <img src="../../../../../assets/ICONS/Overview Icon.svg" alt="">Overview</li>
     </ul>
 
-    <div class="admin seaGreen"><img class="adminIcon" src="../../../../../assets/ICONS/Admin.svg" alt=""></div>
+    <div class="admin" (click)="adminClick()"> <img class="adminIcon" src="../../../../../assets/ICONS/Admin Icon.svg" >Admin</div>
 </div>
