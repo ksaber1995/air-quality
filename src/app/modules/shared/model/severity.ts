@@ -1,7 +1,7 @@
 import { Colors } from "./colors";
 
 export const  Levels  = [
-    {name: 'na', color: Colors.LightGray, end : 0 },
+    {name: 'na', color: Colors.VeryLightGray, end : 0 },
     {name: 'good', color: Colors.Good, end : 50 },
     {name: 'moderate', color: Colors.Moderate, end : 100 },
     {name: 'satisfactory', color: Colors.Satisfactory, end : 150 },

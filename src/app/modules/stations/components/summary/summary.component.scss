@@ -1,3 +1,8 @@
+.doughnut-chart-wrapper{
+  transform: rotate(154deg);
+  position: relative;
+}
+
 
 td::before {
     position: absolute;
@@ -42,6 +47,7 @@ td::before {
   width: 100%;
   justify-content: space-between;
   align-items: center;
+ 
   div{
     width: 50%;
   }
