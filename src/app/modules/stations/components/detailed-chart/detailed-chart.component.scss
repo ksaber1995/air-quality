@@ -1,0 +1,57 @@
+.severity-bar-wrapper {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+    padding-bottom: 5rem;
+
+}
+
+.filters {
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center
+}
+
+.wrapper {
+    padding: 2rem;
+    border-radius: 25px;
+}
+
+
+.date-filters {
+    button {
+        margin-right: 20px;
+    }
+}
+
+
+.summary-wrapper {
+    display: flex;
+    justify-content: center;
+
+    .doughnut-chart-wrapper {
+        position: relative;
+        width: 250px;
+        height: 250px;
+
+
+        .chart-title {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            font-size: 16px;
+            color: black;
+            font-weight: bold;
+            font-size: 25px;
+        }
+    }
+}
+
+.summary-title{
+    font-size: 22px;
+    margin-bottom: 15px;
+    text-align: center;
+}

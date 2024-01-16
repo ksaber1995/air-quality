@@ -1,5 +1,58 @@
-<div style="display: block;">
-        <canvas id="lineChartCanvas" #lineChartCanvas baseChart [datasets]="lineChartData"  [labels]="lineChartLabels" [options]="lineChartOptions"
-           [legend]="lineChartLegend" [type]="lineChartType">
-        </canvas>
+<div class="wrapper veryLightGray-bg">
+        <h1 class="main-header">
+                Historical Data
+        </h1>
+
+        <div class="filters">
+                <nz-select [(ngModel)]="type" nzShowSearch nzAllowClear>
+                        <nz-option nzValue="all" nzLabel="Air Quality Index"></nz-option>
+
+
+                        compareAirQualityItems
+                </nz-select>
+
+                <div class="date-filters">
+                        <button nz-button class="active">Day</button>
+                        <button nz-button>Week</button>
+                        <button nz-button>Month</button>
+
+
+                        <nz-date-picker class="simple" [(ngModel)]="date" [class.hidden]="!date"
+                                (ngModelChange)="onDateChange()"></nz-date-picker>
+                </div>
+        </div>
+
+
+        <div nz-row [nzGutter]="{ xs: 4, sm: 20, md: 60, lg: 80 }" class="charts-wrapper">
+
+
+                <div nz-col class="gutter-row chart" [nzSpan]="18">
+                        <div style="display: block;">
+                                <canvas id="lineChartCanvas" #lineChartCanvas baseChart [datasets]="lineChartData"
+                                        [labels]="lineChartLabels" [options]="lineChartOptions" [legend]="false"
+                                        [type]="'line'">
+                                </canvas>
+                        </div>
+                </div>
+
+                <div nz-col [nzSpan]="6" class="gutter-row pipe-chart">
+                        <p class="summary-title">Breakdown</p>
+                        <div class="summary-wrapper">
+                                <div style="display: block;" class="doughnut-chart-wrapper">
+                                        <canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels"
+                                                [options]="doughnutChartOptions" [legend]="false"
+                                                [type]="'doughnut'"></canvas>
+
+                                        <div class="chart-title">AQI</div>
+
+                                </div>
+                        </div>
+
+                </div>
+        </div>
+
+</div>
+
+<div class="severity-bar-wrapper">
+        <app-severity-bar></app-severity-bar>
 </div>
