@@ -1,5 +1,6 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
+import { NZ_I18N, en_US, NzI18nService } from 'ng-zorro-antd/i18n';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -18,8 +19,16 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
   ],
   providers: [
+    { provide: LOCALE_ID, useValue: 'zh-Hans' }, // Set locale globally for Angular
+    { provide: NZ_I18N, useValue: en_US }, // Set locale globally for NZ-Zorro
+
     provideClientHydration()
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule { 
+  constructor(private nzI18nService: NzI18nService) {
+    // Set the locale globally for NZ-Zorro
+    this.nzI18nService.setLocale(en_US);
+  }
+}

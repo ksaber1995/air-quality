@@ -16,6 +16,8 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
+import { DetailedChartComponent } from './components/detailed-chart/detailed-chart.component';
 
 
 @NgModule({
@@ -27,6 +29,7 @@ import { NzRadioModule } from 'ng-zorro-antd/radio';
     OverviewComponent,
     HomeComponent,
     SeverityBarComponent,
+    DetailedChartComponent,
 
   ],
   imports: [
@@ -38,7 +41,8 @@ import { NzRadioModule } from 'ng-zorro-antd/radio';
     NgChartsModule,
     NzSelectModule,
     FormsModule,
-    NzRadioModule
+    NzRadioModule,
+    NzDatePickerModule
   ]
 })
 export class StationsModule { }

@@ -8,6 +8,8 @@ import { airQualityItems } from '../../../shared/model/air-quality';
   styleUrl: './overview.component.scss'
 })
 export class OverviewComponent {
+  date: Date;
+
   airQualityItems = airQualityItems;
   type = 'all'
   routes: IBreadCrumb[] = [
@@ -16,5 +18,10 @@ export class OverviewComponent {
       link: '/'
     }
   ];
+
+
+  onDateChange(){
+    
+  }
 
 }

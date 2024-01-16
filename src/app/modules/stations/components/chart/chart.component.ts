@@ -109,24 +109,7 @@ export class ChartComponent implements OnInit {
 
       },
 
-      // xAxes: [
-      //   {
-      //     type: 'linear', // Use 'linear' scale type for numeric values
-      //     position: 'bottom',
-      //     scaleLabel: {
-      //       display: true,
-      //       labelString: 'Year',
-      //     },
-      //   },
-      // ],
-      // yAxes: [
-      //   {
-      //     scaleLabel: {
-      //       display: true,
-      //       labelString: 'Population',
-      //     },
-      //   },
-      // ],
+ 
     },
   };
 

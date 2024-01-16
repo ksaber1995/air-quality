@@ -1,0 +1,9 @@
+nz-date-picker.simple{
+    border: none;
+
+    &.hidden{
+        input{
+            width: 0;
+        }
+    }
+}

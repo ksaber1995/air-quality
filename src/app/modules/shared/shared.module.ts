@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { BreadCrumbComponent } from './components/bread-crumb/bread-crumb.component';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { RouterModule } from '@angular/router';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 
 
 const DeclarationsExports = [
@@ -10,7 +11,8 @@ const DeclarationsExports = [
 ]
 
 const ImportsExports = [
-  NzGridModule
+  NzGridModule,
+  NzButtonModule
 ]
 
 @NgModule({

@@ -1,6 +1,6 @@
 <app-bread-crumb [routes]="routes" [target]="'Overview'"></app-bread-crumb>
 
-<div class="wrapper">
+<div class="wrapper veryLightGray-bg">
     <h1 class="main-header">
         Stations Overview
     </h1>
@@ -17,17 +17,23 @@
                 </ng-container>
             </nz-select>
 
-            <div class="date">
-              
-            
+            <div class="date-filters">
+                <button nz-button  class="active">Day</button>
+                <button nz-button >Week</button>
+                <button nz-button >Month</button>
+                
+
+                <nz-date-picker class="simple" [(ngModel)]="date" [class.hidden]="!date" (ngModelChange)="onDateChange()"></nz-date-picker>
             </div>
         </div>
 
         <app-chart></app-chart>
 
-        <div class="severity-bar-wrapper">
-            <app-severity-bar></app-severity-bar>
-        </div>
+   
     </div>
 </div>
 
+
+<div class="severity-bar-wrapper">
+    <app-severity-bar></app-severity-bar>
+</div>

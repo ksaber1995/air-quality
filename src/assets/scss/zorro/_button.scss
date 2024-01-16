@@ -1,0 +1,11 @@
+@import "colors";
+
+.ant-btn{
+    min-width: 170px;
+    border-radius: 15px;
+}
+
+.ant-btn.active{
+    color: #fff;
+    background-color: $SeaGreen;
+}
