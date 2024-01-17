@@ -26,6 +26,7 @@ export class SummaryComponent {
 
       // label: 'AQI',
       data: Levels.map(res => 1 / 7),
+      
       backgroundColor: Levels.map(res => res.name === 'na' ? 'white' : res.color),
     },
 
@@ -43,7 +44,7 @@ export class SummaryComponent {
 
     // cutout: 50, 
 
-    cutout: '66%',
+    cutout: '50%',
     cutoutPercentage: 0,
 
     elements: {
