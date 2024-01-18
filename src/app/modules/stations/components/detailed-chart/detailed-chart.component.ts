@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
-import { BubbleDataPoint, Chart, ChartData, ChartDataset, ChartOptions, ChartTypeRegistry, Color } from 'chart.js';
-import { getRandomNumber } from '../summary/model';
-import { getColorMapping } from '../../helper/background';
+import { ChartData, ChartDataset, ChartOptions } from 'chart.js';
 import { Levels } from '../../../shared/model/severity';
+import { getColorMapping } from '../../helper/background';
+import { getRandomNumber } from '../summary/model';
 
 
 
 
-const data = [getRandomNumber(180), getRandomNumber(180), getRandomNumber(180), getRandomNumber(180), getRandomNumber(180), getRandomNumber(180), getRandomNumber(180), getRandomNumber(180), getRandomNumber(180), getRandomNumber(180), getRandomNumber(180), getRandomNumber(180), getRandomNumber(180)];
+const data = [getRandomNumber(500), getRandomNumber(500), getRandomNumber(500), getRandomNumber(500), getRandomNumber(500), getRandomNumber(500), getRandomNumber(500), getRandomNumber(500), getRandomNumber(500), getRandomNumber(500), getRandomNumber(500), getRandomNumber(500), getRandomNumber(500)];
 
 @Component({
   selector: 'app-detailed-chart',
@@ -17,8 +17,10 @@ const data = [getRandomNumber(180), getRandomNumber(180), getRandomNumber(180), 
 export class DetailedChartComponent {
   type;
   date: Date;
-
-
+  getRandomNumber = getRandomNumber
+  data = Levels;
+  
+  
   public lineChartData: ChartDataset[] = [
     {
       data: data,

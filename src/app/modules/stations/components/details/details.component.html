@@ -1,1 +1,67 @@
+<app-bread-crumb [routes]="routes" [target]="'Overview'"></app-bread-crumb>
+
+<div class="wrapper veryLightGray-bg main-radius d-flex justify-content-between">
+    <div class="title">
+
+        <h1 class="main-header">
+            {{currentStation}} Station
+
+
+            <a nz-dropdown [nzDropdownMenu]="menu">
+                <span nz-icon nzType="caret-down" nzTheme="outline"></span>
+            </a>
+
+            <nz-dropdown-menu #menu="nzDropdownMenu">
+                <ul nz-menu nzSelectable>
+                    <nz-radio-group [(ngModel)]="currentStation">
+
+                        <ng-container *ngFor="let station of stations">
+
+                            <li nz-menu-item>
+                                <label class="station-item" [nzValue]="station" nz-radio> {{station}}</label>
+                            </li>
+
+                            <nz-divider [nzDashed]="true" class="margin-0"></nz-divider>
+                        </ng-container>
+                    </nz-radio-group>
+                </ul>
+            </nz-dropdown-menu>
+
+        </h1>
+
+        <p class="gray par">
+            Manage by EA
+        </p>
+    </div>
+
+    <div class="details-wrapper">
+
+        <div [style]="{'background': status.color}" class="details">
+            <span class="item">
+                AQI
+            </span>
+
+            <span class="number">
+                {{value}}
+            </span>
+
+            <nz-divider [nzType]="'vertical'"></nz-divider>
+
+            <div class="status">
+
+                <img width="25" height="25" [src]="'assets/ICONS/' + status?.name + '-face.svg'" alt="">
+
+                <span class="item">
+                    {{status?.name}}
+                </span>
+            </div>
+        </div>
+
+        <p class="gray date">
+            Last updated {{date | date:'h:mm dd-MM-yyyy a'}} 
+        </p>
+    </div>
+
+</div>
+
 <app-detailed-chart></app-detailed-chart>

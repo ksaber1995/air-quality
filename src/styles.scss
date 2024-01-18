@@ -4,8 +4,48 @@
 @import 'zorro/button';
 @import 'zorro/date-picker';
 @import 'typo/headers';
-*{
+
+* {
     margin: 0;
     box-sizing: border-box;
     padding: 0;
+}
+
+.main-radius {
+    border-radius: 15px;
+}
+
+.d-flex {
+    display: flex;
+}
+
+.justify-content-center {
+    justify-content: center;
+}
+
+.align-items-center {
+    align-items: center;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.justify-content-between {
+    justify-content: space-between;
+}
+
+
+
+a {
+    color: #000;
+
+    &:hover {
+        color: #000;
+    }
+}
+
+
+.margin-0{
+    margin:  0 !important;
 }

@@ -19,6 +19,7 @@ import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { DetailedChartComponent } from './components/detailed-chart/detailed-chart.component';
 
+import { NzDividerModule } from 'ng-zorro-antd/divider';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,9 @@ import { DetailedChartComponent } from './components/detailed-chart/detailed-cha
     NzSelectModule,
     FormsModule,
     NzRadioModule,
-    NzDatePickerModule
+    NzDatePickerModule,
+    NzDividerModule
+  
   ]
 })
 export class StationsModule { }

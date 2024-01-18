@@ -1,0 +1,50 @@
+.wrapper{
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    .main-header{
+        margin-bottom: 0
+     
+    }
+
+    .par{
+        font-weight: bold;
+    }
+
+}
+
+
+.station-item{
+    width: 250px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+}
+
+.date{
+    font-size: 17px;
+}
+.details{
+    padding: 0 15px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    height: 40px;
+    margin-bottom: 10px;
+    .number{
+        font-weight: bolder;
+        font-size: 1.1rem;
+
+    }
+
+    .item{
+        color: #303030;
+        font-size: 1.1rem;
+        font-weight: 600;
+    }
+
+    nz-divider{
+        background-color: #000;
+        height: 25px;
+    }
+}

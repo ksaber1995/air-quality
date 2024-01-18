@@ -19,7 +19,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
   ],
   providers: [
-    { provide: LOCALE_ID, useValue: 'zh-Hans' }, // Set locale globally for Angular
+    // { provide: LOCALE_ID, useValue: 'zh-Hans' }, // Set locale globally for Angular 
     { provide: NZ_I18N, useValue: en_US }, // Set locale globally for NZ-Zorro
 
     // provideClientHydration()

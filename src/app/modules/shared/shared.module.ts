@@ -4,20 +4,27 @@ import { BreadCrumbComponent } from './components/bread-crumb/bread-crumb.compon
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { RouterModule } from '@angular/router';
 import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 
+import { NzRadioModule } from 'ng-zorro-antd/radio';
 
 const DeclarationsExports = [
-  BreadCrumbComponent
+  BreadCrumbComponent,
 ]
 
 const ImportsExports = [
   NzGridModule,
-  NzButtonModule
+  NzButtonModule,
+  NzIconModule,
+  NzDropDownModule,
+  NzRadioModule
 ]
 
 @NgModule({
   declarations: [
-      ...DeclarationsExports
+      ...DeclarationsExports,
+      
   ],
   imports: [
     CommonModule,
