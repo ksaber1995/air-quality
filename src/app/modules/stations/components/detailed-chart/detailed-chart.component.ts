@@ -19,7 +19,7 @@ export class DetailedChartComponent {
   date: Date;
   getRandomNumber = getRandomNumber
   data = Levels;
-  
+  downloadType = 'pdf'
   
   public lineChartData: ChartDataset[] = [
     {

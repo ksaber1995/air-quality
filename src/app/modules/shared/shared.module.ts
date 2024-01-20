@@ -8,6 +8,24 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 
 import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { HttpClientModule } from '@angular/common/http';
+
+
+
+import {
+  StepBackwardOutline,
+  CaretLeftOutline,
+  SettingOutline,
+  ArrowUpOutline
+} from '@ant-design/icons-angular/icons';
+import { IconDefinition } from '@ant-design/icons-angular';
+const icons: IconDefinition[] = [
+  StepBackwardOutline,
+  CaretLeftOutline,
+  SettingOutline,
+  ArrowUpOutline
+];
+
 
 const DeclarationsExports = [
   BreadCrumbComponent,
@@ -16,9 +34,9 @@ const DeclarationsExports = [
 const ImportsExports = [
   NzGridModule,
   NzButtonModule,
-  NzIconModule,
   NzDropDownModule,
-  NzRadioModule
+  NzRadioModule,
+  HttpClientModule
 ]
 
 @NgModule({
@@ -29,12 +47,14 @@ const ImportsExports = [
   imports: [
     CommonModule,
     RouterModule,
-    ...ImportsExports
+    ...ImportsExports,
+    NzIconModule.forChild(icons)
     
   ],
   exports: [
     ...ImportsExports,
-    ...DeclarationsExports
+    ...DeclarationsExports,
+    NzIconModule
   ]
 })
 export class SharedModule { }

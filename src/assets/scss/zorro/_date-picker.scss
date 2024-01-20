@@ -1,9 +1,26 @@
-nz-date-picker.simple{
+nz-date-picker.simple {
     border: none;
+    background-color: transparent;
 
-    &.hidden{
-        input{
+    &.hidden {
+        input {
             width: 0;
         }
+    }
+}
+
+
+nz-range-picker.simple {
+    border: none;
+    background-color: transparent;
+
+}
+
+nz-range-picker.hidden {
+
+    .ant-picker-range-separator,
+    input {
+        width: 0;
+        display: none !important;
     }
 }

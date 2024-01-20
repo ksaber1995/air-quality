@@ -7,6 +7,10 @@
 
 }
 
+.download-item{
+    width: 100px;
+}
+
 .filters {
     margin-bottom: 30px;
     display: flex;
@@ -21,8 +25,13 @@
 
 
 .date-filters {
-    button {
-        margin-right: 20px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+
+    .download{
+        padding: 0;
+        min-width: 120px;
     }
 }
 

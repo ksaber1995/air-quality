@@ -13,13 +13,12 @@ import { GoogleMapsModule } from '@angular/google-maps';
 import { NgChartsModule } from 'ng2-charts';
 import { SeverityBarComponent } from './components/severity-bar/severity-bar.component';
 import { NzSelectModule } from 'ng-zorro-antd/select';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { DetailedChartComponent } from './components/detailed-chart/detailed-chart.component';
-
 import { NzDividerModule } from 'ng-zorro-antd/divider';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 
 @NgModule({
   declarations: [

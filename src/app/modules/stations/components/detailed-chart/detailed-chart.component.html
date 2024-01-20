@@ -17,8 +17,45 @@
                         <button nz-button>Month</button>
 
 
-                        <nz-date-picker class="simple" [(ngModel)]="date" [class.hidden]="!date"
-                                (ngModelChange)="onDateChange()"></nz-date-picker>
+                        <ng-template #calendar>
+                                <span style="font-size: 22px; " nz-size="large" nz-icon nzType="calendar"
+                                        nzTheme="outline"></span>
+                        </ng-template>
+
+                        <!-- <nz-date-picker [nzSuffixIcon]="calendar" class="simple" [(ngModel)]="date" [class.hidden]="!date"
+                                (ngModelChange)="onDateChange()"></nz-date-picker> -->
+
+
+                        <nz-range-picker [nzSuffixIcon]="calendar" class="simple" [class.hidden]="!date" [(ngModel)]="date"
+                                (ngModelChange)="onDateChange()"></nz-range-picker>
+                        <br />
+
+                        <button nz-button nz-dropdown [nzDropdownMenu]="menu" class="download">
+                                Download
+                                <span nz-icon nzType="down"></span>
+
+                        </button>
+
+                        <nz-dropdown-menu #menu="nzDropdownMenu">
+                                <ul nz-menu nzSelectable>
+                                        <nz-radio-group [(ngModel)]="downloadType">
+
+                                                <li nz-menu-item>
+                                                        <label class="download-item" [nzValue]="'pdf'" nz-radio>
+                                                                PDF</label>
+                                                </li>
+
+                                                <nz-divider [nzDashed]="true" class="margin-0"></nz-divider>
+
+
+                                                <li nz-menu-item>
+                                                        <label class="download-item" [nzValue]="'png'" nz-radio>
+                                                                PNG</label>
+                                                </li>
+
+                                        </nz-radio-group>
+                                </ul>
+                        </nz-dropdown-menu>
                 </div>
         </div>
 
@@ -54,7 +91,7 @@
 
                         <div class="brief">
                                 <div *ngFor="let item of data; index as i" class="item">
-                                        <p class= "gray text">
+                                        <p class="gray text">
                                                 <span [ngStyle]="{'border-color': item.color}" class="brief-circle">
                                                         <span [ngStyle]="{'background': item.color}"
                                                                 class="inner"></span>

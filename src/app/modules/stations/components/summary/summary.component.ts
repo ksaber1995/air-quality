@@ -27,14 +27,14 @@ export class SummaryComponent {
       // label: 'AQI',
       data: Levels.map(res => 1 / 7),
       
-      backgroundColor: Levels.map(res => res.name === 'na' ? 'white' : res.color),
+      backgroundColor: Levels.map(res => res.name === 'na' ? 'transparent' : res.color),
     },
 
     {
 
       // label: 'AQI',
       data: Levels.map(res => 1 / 7),
-      backgroundColor: Levels.map(res => res.name === 'na' ? 'white' :  Levels[0].color),
+      backgroundColor: Levels.map(res => res.name === 'na' ? 'transparent' :  Levels[0].color),
     }
     ]
   };

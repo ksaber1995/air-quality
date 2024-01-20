@@ -1,54 +1,59 @@
-<div class="title">
-  <h1>Air Quality Index</h1>
-  <h3>Real-time Summary</h3>
-  <p class="gray">Last updated {{time}} </p>
+<div class="wrapper veryLightGray-bg main-radius ">
+  <h1 class="main-header">Air Quality Index</h1>
+  <h3 class="darkGray">Real-time Summary</h3>
+  <p class="gray par">Last updated {{time}} </p>
 </div>
 
-<div class="station">
-  <div routerLink="/stations/1" class="information">
-    <h1>{{station}}</h1>
-    <p class="gray">Manage By EA</p>
-    <div [class]="percent+'-bg' + ' percent '">
-      <img alt="">{{percent}}
+<div class="table-wrapper veryLightGray-bg main-radius">
+
+
+  <div class="details">
+    <div routerLink="/stations/1" class="information">
+      <h1>{{station}}</h1>
+      <p class="gray">Manage By EA</p>
+      <div [class]="percent+'-bg' + ' percent '">
+        <img alt="">{{percent}}
+      </div>
     </div>
+
+
+    <div class="summary-wrapper">
+      <div style="display: block; width: 170px;" class="doughnut-chart-wrapper">
+        <canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" [options]="doughnutChartOptions"
+          [legend]="false" [type]="'doughnut'"></canvas>
+
+        <div class="chart-inner-circle"></div>
+
+      </div>
+    </div>
+
   </div>
 
 
-  <div class="summary-wrapper">
-    <div style="display: block; width: 170px;" class="doughnut-chart-wrapper">
-      <canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" [options]="doughnutChartOptions"
-        [legend]="false" [type]="'doughnut'"></canvas>
-
-      <div class="chart-inner-circle"></div>
-
-    </div>
-  </div>
-
-</div>
-<nz-table ngSkipHydration [nzFrontPagination]="false" #nzTable [nzData]="listOfData">
-  <thead>
-    <tr>
-      <th></th>
-      <th *ngFor="let item of headers">{{item}}</th>
-    </tr>
-  </thead>
+  <nz-table class="veryLightGray-bg" [nzFrontPagination]="false" #nzTable [nzData]="listOfData">
+    <thead>
+      <tr>
+        <th></th>
+        <th *ngFor="let item of headers">{{item}}</th>
+      </tr>
+    </thead>
 
 
-  <tbody>
-    <tr *ngFor="let item of listOfData;index as i">
-      <td>{{item.name}}</td>
+    <tbody>
+      <tr *ngFor="let item of listOfData;index as i">
+        <td>{{item.name}}</td>
 
-      <td *ngFor="let valueItem of item.values">
-        <span *ngIf="item.rounded" class="item rounded">{{ valueItem }}</span>
-        <span *ngIf="item.name === 'windDirection'" class="item">{{ valueItem }}</span>
-        <span *ngIf="item.name === 'windSpeed'" class="item">{{ valueItem }} KM/s</span>
-        <span *ngIf="item.name === 'temperature'" class="item">{{ valueItem }}</span>
-        <span *ngIf="item.name === 'humidity'" class="item">{{ valueItem }}</span>
-      </td>
-    </tr>
-  </tbody>
+        <td *ngFor="let valueItem of item.values">
+          <span *ngIf="item.rounded" class="item rounded">{{ valueItem }}</span>
+          <span *ngIf="item.name === 'windDirection'" class="item"> <span nz-icon nzType="arrow-up" nzTheme="outline"></span> </span>
+          <span *ngIf="item.name === 'windSpeed'" class="item">{{ valueItem }} KM/s</span>
+          <span *ngIf="item.name === 'temperature'" class="item">{{ valueItem }}</span>
+          <span *ngIf="item.name === 'humidity'" class="item">{{ valueItem }}</span>
+        </td>
+      </tr>
+    </tbody>
 
-  <!-- <tbody>
+    <!-- <tbody>
         <tr *ngFor="let data of nzTable.data;index as i">
             <td>{{listOfData[i].PM2_5}}</td>
             <td>{{listOfData[i].PM10}}</td>
@@ -64,4 +69,5 @@
 
         </tr>
     </tbody> -->
-</nz-table>
+  </nz-table>
+</div>
