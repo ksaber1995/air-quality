@@ -1,3 +1,5 @@
+@import 'ngx-owl-carousel-o/lib/styles/scss/owl.carousel';
+@import 'ngx-owl-carousel-o/lib/styles/scss/owl.theme.default';
 
 @import 'background';
 @import 'zorro/table';
@@ -56,4 +58,25 @@ a {
 
 .bold{
     font-weight: bold !important;
+}
+
+
+
+
+.brief-circle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 4px solid;
+    margin: 0 7px;
+
+    .inner {
+        display: inline-block;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+    }
 }

@@ -7,48 +7,72 @@
 <div class="table-wrapper veryLightGray-bg main-radius">
 
 
-  <div class="details">
-    <div routerLink="/stations/1" class="information">
-      <h1>{{station}}</h1>
+  <a routerLink="/stations/1" class="details">
+    <div class="information">
+
+      <h1> {{station}} </h1>
+
       <p class="gray">Manage By EA</p>
-      <div [class]="percent+'-bg' + ' percent '">
-        <img alt="">{{percent}}
+
+      <div [style]="{'background': status.color}" class="status-wrapper">
+
+        <div class="status">
+
+          <img width="25" height="25" [src]="'assets/icons/' + status?.name + '-face.svg'" alt="">
+
+          <span class="item">
+            {{status?.name}}
+          </span>
+        </div>
       </div>
     </div>
 
 
     <div class="summary-wrapper">
-      <div style="display: block; width: 170px;" class="doughnut-chart-wrapper">
-        <canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" [options]="doughnutChartOptions"
-          [legend]="false" [type]="'doughnut'"></canvas>
+      <div style="display: block; width: 180px;" class="doughnut-chart-wrapper">
+
+
+        <div class="main-img">
+          <img width="200" height="200" src="assets/icons/aqi-circle.svg" alt="">
+
+          <img width="60" height="60" class="arrow" src="assets/icons/aqi-arrow.svg" alt="">
+
+        </div>
+
+
+        <!-- <canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" [options]="doughnutChartOptions"
+          [legend]="false" [type]="'doughnut'"></canvas> -->
 
         <div class="chart-inner-circle"></div>
 
       </div>
     </div>
 
-  </div>
+  </a>
 
 
   <nz-table [nzFrontPagination]="false" #nzTable [nzData]="listOfData">
     <thead>
       <tr>
         <th></th>
-        <th *ngFor="let item of headers">{{item}}</th>
+        <th [nzAlign]="'center'" *ngFor="let item of headers">{{item}}</th>
       </tr>
     </thead>
 
 
     <tbody>
       <tr *ngFor="let item of listOfData;index as i">
-        <td>{{item.name}}</td>
+        <td [nzAlign]="'center'">{{item.name}}</td>
 
-        <td *ngFor="let valueItem of item.values">
-          <span *ngIf="item.rounded" class="item rounded">{{ valueItem }}</span>
-          <span *ngIf="item.name === 'windDirection'" class="item"> <span nz-icon nzType="arrow-up" nzTheme="outline"></span> </span>
-          <span *ngIf="item.name === 'windSpeed'" class="item">{{ valueItem }} KM/s</span>
-          <span *ngIf="item.name === 'temperature'" class="item">{{ valueItem }}</span>
-          <span *ngIf="item.name === 'humidity'" class="item">{{ valueItem }}</span>
+        <td [nzAlign]="'center'" *ngFor="let valueItem of item.values">
+          <span [style.background]="valueItem.color" *ngIf="item.rounded" class="item rounded">{{ valueItem.value
+            }}</span>
+
+          <span *ngIf="item.name === 'windDirection'" class="item"> <span nz-icon nzType="arrow-up"
+              nzTheme="outline"></span> </span>
+          <span *ngIf="item.name === 'windSpeed'" class="item">{{ valueItem.value }} KM/s</span>
+          <span *ngIf="item.name === 'temperature'" class="item">{{ valueItem.value }}</span>
+          <span *ngIf="item.name === 'humidity'" class="item">{{ valueItem.value }}</span>
         </td>
       </tr>
     </tbody>

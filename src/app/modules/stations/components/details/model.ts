@@ -1,13 +1,22 @@
 import { OwlOptions } from "ngx-owl-carousel-o";
 
 export const customOptions: OwlOptions = {
-    loop: true,
-    mouseDrag: false,
-    touchDrag: false,
+    loop: false,
+    mouseDrag: true,
+    touchDrag: true,
     pullDrag: true,
-    dots: true,
+    autoplay: true,
+    autoWidth: true,
+    // width
+    // autoplaySpeed?: number | boolean;
+    // autoplayHoverPause?: boolean;
+    // autoplayTimeout?: number;
+
+    dots: false,
     navSpeed: 700,
     navText: ['', ''],
+    nav: false
+
     // responsive: {
     //   0: {
     //     items: 1
@@ -22,5 +31,4 @@ export const customOptions: OwlOptions = {
     //     items: 4
     //   }
     // },
-    nav: true
   }

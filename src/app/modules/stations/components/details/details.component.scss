@@ -13,6 +13,7 @@
 }
 
 
+
 .station-item{
     width: 250px;
     height: 40px;
@@ -48,4 +49,40 @@
         background-color: #000;
         height: 25px;
     }
+}
+
+
+.carousel-items{
+    margin-top: 15px;
+    .update-item{
+        margin-right: 10px ;
+        padding: 5px 10px;
+        border-radius: 8px;
+
+        .item-header{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .name{
+            font-weight: 600;
+            margin: 0;
+            font-size: 1rem;
+        }
+
+        .value{
+            font-size: 1.2rem;
+            margin: 0;
+        }
+
+        nz-divider{
+            margin: 3px;
+            padding: 0;
+        }
+    }
+}
+
+.no-min-width{
+    min-width: auto !important;
 }

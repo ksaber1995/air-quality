@@ -4,6 +4,8 @@ import { Levels } from '../../../shared/model/severity';
 import { getRandomNumber } from '../summary/model';
 import { Stations } from '../../../shared/model/stations';
 import { customOptions } from './model';
+import { airQualityItems } from '../../../shared/model/air-quality';
+import { getColorMapping } from '../../helper/background';
 
 @Component({
   selector: 'app-details',
@@ -21,7 +23,7 @@ export class DetailsComponent implements OnInit {
   
   customOptions = customOptions;
   stations = Stations;
-
+  airQualityItems = airQualityItems.map(res=> ({ ...res, value: getRandomNumber(500), color:  getColorMapping(getRandomNumber(500))}));
   status 
   value;
 

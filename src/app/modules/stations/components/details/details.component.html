@@ -36,7 +36,7 @@
 
     <div class="details-wrapper">
 
-        <div [style]="{'background': status.color}" class="details">
+        <div [style]="{'background': status.color}" class="detaisls">
             <span class="item">
                 AQI
             </span>
@@ -49,7 +49,7 @@
 
             <div class="status">
 
-                <img width="25" height="25" [src]="'assets/ICONS/' + status?.name + '-face.svg'" alt="">
+                <img width="25" height="25" [src]="'assets/icons/' + status?.name + '-face.svg'" alt="">
 
                 <span class="item">
                     {{status?.name}}
@@ -65,15 +65,44 @@
 </div>
 
 <div class="wrapper veryLightGray-bg main-radius">
-    <h1 class="main-header">
-        Latest Update
-    </h1>
+    <div class="update-header d-flex justify-content-between">
+
+        <h1 class="main-header">
+            Latest Update
+        </h1>
+    
+        <div class="buttons">
+            <button class="no-min-width" (click)="carouselRef.prev()" nz-button nzType="text">
+                <span nz-icon nzType="caret-left" nzTheme="outline"></span>
+            </button>
+
+            <button class="no-min-width" (click)="carouselRef.next()" nz-button nzType="text">
+                <span nz-icon nzType="caret-right" nzTheme="outline"></span>
+            </button>
+
+        </div>
+    </div>
 
 
-    <div class="items">
-        <owl-carousel-o [options]="customOptions">
-            <ng-template  id="1" carouselSlide>Slide 1</ng-template>
-            <ng-template  id="2" carouselSlide>Slide 2</ng-template>
+    <div class="carousel-items">
+        <owl-carousel-o #carouselRef [options]="customOptions">
+            <ng-template [width]="190" *ngFor="let item of airQualityItems" carouselSlide>
+                <div class="lightGray-bg update-item">
+                    <div class="item-header">
+                        <p class="gray name">{{item.name}}</p>
+
+                        <span [ngStyle]="{'border-color': item.color}" class="brief-circle">
+                            <span [ngStyle]="{'background': item.color}" class="inner"></span>
+                        </span>
+                    </div>
+
+                    <nz-divider></nz-divider>
+
+                    <p class="text-center seaGreen bold value">
+                        {{item.value}} {{item.unit}}
+                    </p>
+                </div>
+            </ng-template>
         </owl-carousel-o>
     </div>
 

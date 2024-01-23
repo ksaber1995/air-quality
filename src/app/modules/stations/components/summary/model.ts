@@ -24,16 +24,16 @@ export interface AirItem {
 
 
 export const testItem = [
-    { rounded: true, name: 'PM2_5', values: [getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber()] },
-    { rounded: true, name: 'PM10', values: [getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber()] },
-    { rounded: true, name: 'CO', values: [getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber()] },
-    { rounded: true, name: 'NO2', values: [getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber()] },
-    { rounded: true, name: 'O3', values: [getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber()] },
-    { rounded: true, name: 'SO2', values: [getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber()] },
-    { name: 'windDirection', values: [getRandomNumber(360), getRandomNumber(360), getRandomNumber(360), getRandomNumber(360), getRandomNumber(360), getRandomNumber(360)] },
-    { name: 'windSpeed', values: [getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber()] },
-    { name: 'temperature', values: [getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber()] },
-    { name: 'humidity', values: [getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber(), getRandomNumber()] }
+    { rounded: true, name: 'PM2_5', values: [{value: getRandomNumber()}, {value: getRandomNumber()}, {value: getRandomNumber()}, {value: getRandomNumber()}, {value: getRandomNumber()}, {value: getRandomNumber()}] },
+    { rounded: true, name: 'PM10', values: [{value: getRandomNumber()}, {value: getRandomNumber()}, {value: getRandomNumber()}, {value: getRandomNumber()}, {value: getRandomNumber()}, {value: getRandomNumber()}] },
+    { rounded: true, name: 'CO', values: [{value: getRandomNumber()}, {value: getRandomNumber()}, {value: getRandomNumber()}, {value: getRandomNumber()}, {value: getRandomNumber()}, {value: getRandomNumber()}] },
+    { rounded: true, name: 'NO2', values: [{value: getRandomNumber()}, {value: getRandomNumber()}, {value: getRandomNumber()}, {value: getRandomNumber()}, {value: getRandomNumber()}, {value: getRandomNumber()}] },
+    { rounded: true, name: 'O3', values: [{value: getRandomNumber()}, {value: getRandomNumber()}, {value: getRandomNumber()}, {value: getRandomNumber()}, {value: getRandomNumber()}, {value: getRandomNumber()}] },
+    { rounded: true, name: 'SO2', values: [{value: getRandomNumber()}, {value: getRandomNumber()}, {value: getRandomNumber()}, {value: getRandomNumber()}, {value: getRandomNumber()}, {value: getRandomNumber()}] },
+    { name: 'windDirection', values: [{value: getRandomNumber(360)}, {value: getRandomNumber(360)}, {value: getRandomNumber(360)}, {value: getRandomNumber(360)}, {value: getRandomNumber(360)}, {value: getRandomNumber(360)}] },
+    { name: 'windSpeed', values: [{value: getRandomNumber()}, {value: getRandomNumber()}, {value: getRandomNumber()}, {value: getRandomNumber()}, {value: getRandomNumber()}, {value: getRandomNumber()}] },
+    { name: 'temperature', values: [{value: getRandomNumber()}, {value: getRandomNumber()}, {value: getRandomNumber()}, {value: getRandomNumber()}, {value: getRandomNumber()}, {value: getRandomNumber()}] },
+    { name: 'humidity', values: [{value: getRandomNumber()}, {value: getRandomNumber()}, {value: getRandomNumber()}, {value: getRandomNumber()}, {value: getRandomNumber()}, {value: getRandomNumber()}] }
 ]
 
 

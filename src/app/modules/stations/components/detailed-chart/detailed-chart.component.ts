@@ -4,7 +4,6 @@ import { Levels } from '../../../shared/model/severity';
 import { getColorMapping } from '../../helper/background';
 import { getRandomNumber } from '../summary/model';
 import { Stations } from '../../../shared/model/stations';
-import { airQualityItems } from '../../../shared/model/air-quality';
 
 
 
@@ -24,7 +23,6 @@ export class DetailedChartComponent {
   downloadType = 'pdf'
   
   stations = Stations
-  airQualityItems = airQualityItems
   
   public lineChartData: ChartDataset[] = [
     {
@@ -38,7 +36,7 @@ export class DetailedChartComponent {
       segment: {
         // backgroundColor: (ctx)=> getBackground(ctx), 
         borderColor: (ctx) => getColorMapping(ctx.p0.parsed.y),
-
+        borderWidth: 6
         // borderColor
       }
     },
