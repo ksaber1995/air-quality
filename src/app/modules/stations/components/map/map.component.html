@@ -1,3 +1,10 @@
-<div  class="map">
-    <!-- <google-map ngSkipHydration [options]="options" height="100%" width="100%"></google-map> -->
+<div *ngIf="isLoaded"  class="main-wrapper">
+    <div class="map-wrapper">
+
+        <google-map  [options]="options" height="100%" width="100%"></google-map>
+    </div>
+
+    <div class="station-wrapper">
+
+    </div>
 </div>

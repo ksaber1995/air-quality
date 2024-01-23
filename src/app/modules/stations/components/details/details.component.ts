@@ -32,7 +32,6 @@ export class DetailsComponent implements OnInit {
   constructor() { }
   
   ngOnInit(): void {
-    console.log(this.date,' date')
    this.value = getRandomNumber(6);
     this.status = Levels[this.value]
     while(this.value == 0 ){
