@@ -3,6 +3,7 @@ import { IBreadCrumb } from '../../../shared/components/bread-crumb/model';
 import { Levels } from '../../../shared/model/severity';
 import { getRandomNumber } from '../summary/model';
 import { Stations } from '../../../shared/model/stations';
+import { customOptions } from './model';
 
 @Component({
   selector: 'app-details',
@@ -17,6 +18,8 @@ export class DetailsComponent implements OnInit {
     }
   ];
 
+  
+  customOptions = customOptions;
   stations = Stations;
 
   status 

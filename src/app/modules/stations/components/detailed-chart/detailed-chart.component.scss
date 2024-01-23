@@ -7,6 +7,28 @@
 
 }
 
+.compare-menu{
+    padding: 1rem;
+    display: flex;
+    // flex-direction: row;
+    gap: 40px;
+    .list-item{
+        margin-bottom: 10px;
+    }
+
+
+    .divider{
+        // height: 100%;
+        flex-grow: 1;
+        width: 1px;
+
+        nz-divider{
+           border-width: 0 0 0 1px !important
+        }
+        // border: 1px $LightGray dashed;
+    }
+}
+
 .download-item{
     width: 100px;
 }
@@ -21,6 +43,12 @@
 .wrapper {
     padding: 2rem;
     border-radius: 25px;
+}
+
+.compare-btn{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 

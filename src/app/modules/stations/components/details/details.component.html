@@ -58,10 +58,26 @@
         </div>
 
         <p class="gray date">
-            Last updated {{date | date:'h:mm dd-MM-yyyy a'}} 
+            Last updated {{date | date:'h:mm dd-MM-yyyy a'}}
         </p>
     </div>
 
 </div>
+
+<div class="wrapper veryLightGray-bg main-radius">
+    <h1 class="main-header">
+        Latest Update
+    </h1>
+
+
+    <div class="items">
+        <owl-carousel-o [options]="customOptions">
+            <ng-template  id="1" carouselSlide>Slide 1</ng-template>
+            <ng-template  id="2" carouselSlide>Slide 2</ng-template>
+        </owl-carousel-o>
+    </div>
+
+</div>
+
 
 <app-detailed-chart></app-detailed-chart>

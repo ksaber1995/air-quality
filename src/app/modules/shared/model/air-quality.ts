@@ -5,5 +5,9 @@ export const airQualityItems = [
         'NO2',
         'O3',
         'SO2',
+        'Wind Speed',
+        'Wind Direction',
+        'Temperature',
+
     
 ]

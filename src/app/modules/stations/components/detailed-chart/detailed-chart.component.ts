@@ -3,6 +3,8 @@ import { ChartData, ChartDataset, ChartOptions } from 'chart.js';
 import { Levels } from '../../../shared/model/severity';
 import { getColorMapping } from '../../helper/background';
 import { getRandomNumber } from '../summary/model';
+import { Stations } from '../../../shared/model/stations';
+import { airQualityItems } from '../../../shared/model/air-quality';
 
 
 
@@ -20,6 +22,9 @@ export class DetailedChartComponent {
   getRandomNumber = getRandomNumber
   data = Levels;
   downloadType = 'pdf'
+  
+  stations = Stations
+  airQualityItems = airQualityItems
   
   public lineChartData: ChartDataset[] = [
     {

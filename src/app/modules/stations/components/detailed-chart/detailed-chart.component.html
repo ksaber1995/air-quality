@@ -1,15 +1,56 @@
+
 <div class="wrapper veryLightGray-bg">
         <h1 class="main-header">
                 Historical Data
         </h1>
 
         <div class="filters">
-                <nz-select [(ngModel)]="type" nzShowSearch nzAllowClear>
-                        <nz-option nzValue="all" nzLabel="Air Quality Index"></nz-option>
 
+                <button nz-button nz-dropdown [nzClickHide]="false" [nzTrigger]="'click'" [nzDropdownMenu]="compareMenu"
+                        class="compare-btn">
+                        Compare
+                        <span nz-icon nzType="down"></span>
+                </button>
 
-                        compareAirQualityItems
-                </nz-select>
+                <nz-dropdown-menu #compareMenu="nzDropdownMenu">
+                        <div nz-menu nzSelectable>
+                                <div class="compare-menu">
+
+                                        <div class="variabled">
+                                                <p class="bold">
+                                                        Variables
+                                                </p>
+
+                                                <nz-checkbox-wrapper style="width: 100%;">
+                                                        <div *ngFor="let station of stations" class="list-item">
+                                                                <label nz-checkbox
+                                                                        [nzValue]="station">{{station}}</label>
+                                                        </div>
+                                                </nz-checkbox-wrapper>
+                                        </div>
+
+                                        <div class="divider">
+
+                                                <nz-divider [nzDashed]="true" [nzType]="'vertical'" ></nz-divider>
+                                        </div>
+
+                                        <div class="stations">
+                                                <p class="bold">
+                                                        Stations
+                                                </p>
+
+                                                <!-- (nzOnChange)="log($event)"  -->
+                                                <nz-checkbox-wrapper style="width: 100%;">
+                                                        <div class="list-item" *ngFor="let station of stations">
+                                                                <label nz-checkbox
+                                                                        [nzValue]="station">{{station}}</label>
+                                                        </div>
+                                                </nz-checkbox-wrapper>
+                                        </div>
+                                </div>
+
+                        </div>
+                </nz-dropdown-menu>
 
                 <div class="date-filters">
                         <button nz-button class="active">Day</button>
@@ -26,8 +67,8 @@
                                 (ngModelChange)="onDateChange()"></nz-date-picker> -->
 
 
-                        <nz-range-picker [nzSuffixIcon]="calendar" class="simple" [class.hidden]="!date" [(ngModel)]="date"
-                                (ngModelChange)="onDateChange()"></nz-range-picker>
+                        <nz-range-picker [nzSuffixIcon]="calendar" class="simple" [class.hidden]="!date"
+                                [(ngModel)]="date" (ngModelChange)="onDateChange()"></nz-range-picker>
                         <br />
 
                         <button nz-button nz-dropdown [nzDropdownMenu]="menu" class="download">

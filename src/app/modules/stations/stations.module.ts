@@ -19,6 +19,9 @@ import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { DetailedChartComponent } from './components/detailed-chart/detailed-chart.component';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
+import { CarouselModule } from 'ngx-owl-carousel-o';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -43,7 +46,9 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
     FormsModule,
     NzRadioModule,
     NzDatePickerModule,
-    NzDividerModule
+    NzDividerModule,
+    NzCheckboxModule,
+    CarouselModule,
   
   ]
 })
