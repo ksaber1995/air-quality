@@ -14,37 +14,49 @@ export class MapComponent implements OnInit {
 
   }
 
+  navigatorPosition
+
+  constructor() {
+    navigator.geolocation.getCurrentPosition((position) => {
+      this.navigatorPosition = position;
+
+      this.options = {
+        center: {
+          lat: this.navigatorPosition.coords.latitude,
+          lng: this.navigatorPosition.coords.longitude,
+        },
+        // zoomControl: true,
+        mapTypeControl: false,
+        // zoom: 2,
+        mapTypeId: 'terrain', // Use 'terrain' map type to emphasize borders
+
+        streetViewControl: false,
+        styles: [
+          {
+            "featureType": "water",
+            "elementType": "geometry",
+            "stylers": [
+              { color: '#96cccb99' }
+
+
+            ]
+          },
+          // {
+          //   "featureType": "landscape",
+          //   "elementType": "geometry",
+          //   "stylers": [
+
+          //     { color: '#86b4b380' }
+
+          //   ]
+          // }
+        ]
+      };
+    })
+  }
+
   isLoaded
-  public options: google.maps.MapOptions = {
-    center: {
-      lat: 15,
-      lng: 0,
-    },
-
-    mapTypeControl: false,
-    zoom: 2,
-    streetViewControl: false,
-    styles: [
-      {
-        "featureType": "water",
-        "elementType": "geometry.fill",
-        "stylers": [
-
-          { color: '#25B5B1' }
-
-        ]
-      },
-      {
-        "featureType": "landscape",
-        "elementType": "geometry.fill",
-        "stylers": [
-
-          { color: '#ffffff' }
-
-        ]
-      }
-    ]
-  };
+  public options: google.maps.MapOptions
 
 
 }
