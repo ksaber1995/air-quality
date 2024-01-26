@@ -25,3 +25,13 @@
         margin-right: 20px;
     }
 }
+
+.airquality-btn{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-width: 280px;
+    background-color: $SeaGreen;
+    color: #fff;
+    font-size: 1.1rem;
+}

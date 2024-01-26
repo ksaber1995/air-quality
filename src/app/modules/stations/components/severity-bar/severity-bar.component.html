@@ -1,4 +1,4 @@
-<div class="bar-wrapper">
+<div [class.vertical]="type === 'vertical'" [class.horizontal]="type === 'horizontal'" class="bar-wrapper">
     <div  [class.na]="level.name === 'na'" [ngStyle]="{'background': level.color}" *ngFor="let level of levels" class="level">
         <span class="end">
             <div class="bar-value">

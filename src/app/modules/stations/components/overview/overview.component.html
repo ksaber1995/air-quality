@@ -7,29 +7,53 @@
 
     <div class="content">
         <div class="filters">
-            <nz-select [(ngModel)]="type" nzShowSearch nzAllowClear>
+            <!-- <nz-select [(ngModel)]="type" nzShowSearch nzAllowClear>
                 <nz-option nzValue="all" nzLabel="Air Quality Index" ></nz-option>
                 
                 <ng-container *ngFor="let item of airQualityItems">
-                    <!--  -->
                     
                     <nz-option   [nzLabel]=" item.name" [nzValue]="item.name"></nz-option>
                 </ng-container>
-            </nz-select>
+            </nz-select> -->
+
+
+            <button nz-button nz-dropdown [nzClickHide]="false" [nzTrigger]="'click'" [nzDropdownMenu]="menu"
+                class="airquality-btn">
+                Air Quality Index
+                <span nz-icon nzType="down"></span>
+            </button>
+
+            <nz-dropdown-menu #menu="nzDropdownMenu">
+                <ul nz-menu nzSelectable>
+                    <nz-radio-group [(ngModel)]="type">
+
+                        <ng-container *ngFor="let item of airQualityItems">
+
+                            <li nz-menu-item>
+                                <label class="station-item" [nzValue]="item.name" nz-radio> {{item.name}}</label>
+                            </li>
+
+                            <nz-divider [nzDashed]="true" class="margin-0"></nz-divider>
+                        </ng-container>
+                    </nz-radio-group>
+                </ul>
+            </nz-dropdown-menu>
+
 
             <div class="date-filters">
-                <button nz-button  class="active">Day</button>
-                <button nz-button >Week</button>
-                <button nz-button >Month</button>
-                
+                <button nz-button class="active">Day</button>
+                <button nz-button>Week</button>
+                <button nz-button>Month</button>
 
-                <nz-date-picker class="simple" [(ngModel)]="date" [class.hidden]="!date" (ngModelChange)="onDateChange()"></nz-date-picker>
+
+                <nz-date-picker class="simple" [(ngModel)]="date" [class.hidden]="!date"
+                    (ngModelChange)="onDateChange()"></nz-date-picker>
             </div>
         </div>
 
         <app-chart></app-chart>
 
-   
+
     </div>
 </div>
 

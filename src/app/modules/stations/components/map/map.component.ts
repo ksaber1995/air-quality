@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { carouselOptions } from './model';
+import { Stations } from '../../../shared/model/stations';
+import { getRandomNumber } from '../summary/model';
+import { getColorMapping } from '../../helper/background';
 
 @Component({
   selector: 'app-map',
@@ -6,13 +10,20 @@ import { Component, OnInit } from '@angular/core';
   styleUrl: './map.component.scss'
 })
 export class MapComponent implements OnInit {
+  carouselOptions = carouselOptions;
+  stations = Stations.map(res=> ({name: res, value:  getRandomNumber(500), color: getColorMapping(getRandomNumber(500)), co:{value:  getRandomNumber(500), color: getColorMapping(getRandomNumber(500))}, no2:{value:  getRandomNumber(500), color: getColorMapping(getRandomNumber(500))} }));
 
   ngOnInit(): void {
-    setTimeout(() => {
+    // setTimeout(() => {
       this.isLoaded = true;
-    }, 3000);
+    // }, 3000);
 
   }
+
+  log(e){
+    console.log(e, 'clicked')
+  }
+  
 
   navigatorPosition
 

@@ -8,7 +8,7 @@ import { HeaderComponent } from './modules/stations/components/header/header.com
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
-import { CarouselModule } from 'ngx-owl-carousel-o';
+import { SharedModule } from './modules/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -21,6 +21,7 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
     BrowserAnimationsModule,
     HttpClientModule,
     RouterModule,
+    SharedModule
     // Routes,
     // CarouselModule
 

@@ -9,6 +9,7 @@ import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { HttpClientModule } from '@angular/common/http';
+import { NgxSpinnerModule } from "ngx-spinner";
 
 
 
@@ -19,6 +20,7 @@ import {
   ArrowUpOutline
 } from '@ant-design/icons-angular/icons';
 import { IconDefinition } from '@ant-design/icons-angular';
+import { StatusIconComponent } from './components/status-icon/status-icon.component';
 const icons: IconDefinition[] = [
   StepBackwardOutline,
   CaretLeftOutline,
@@ -29,6 +31,8 @@ const icons: IconDefinition[] = [
 
 const DeclarationsExports = [
   BreadCrumbComponent,
+  StatusIconComponent,
+
 ]
 
 const ImportsExports = [
@@ -36,7 +40,9 @@ const ImportsExports = [
   NzButtonModule,
   NzDropDownModule,
   NzRadioModule,
-  HttpClientModule
+  HttpClientModule,
+  NgxSpinnerModule,
+
 ]
 
 @NgModule({

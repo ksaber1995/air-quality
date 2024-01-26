@@ -1,10 +1,84 @@
-<div *ngIf="isLoaded"  class="main-wrapper">
+<div *ngIf="isLoaded" class="main-wrapper">
     <div class="map-wrapper">
+        <!-- <div class="bar-wrapper">
+            <app-severity-bar> </app-severity-bar>
+        </div> -->
 
-        <google-map  [options]="options" height="100%" width="100%"></google-map>
+        <google-map [options]="options" height="100%" width="100%">
+            <div class="bar-wrapper">
+                <app-severity-bar [type]="'vertical'"> </app-severity-bar>
+            </div>
+        </google-map>
     </div>
 
-    <div class="station-wrapper">
+    <div class="veryLightGray-bg main-radius stations-wrapper">
+        <div class="station-controller">
+            <button class="no-min-width rounded seaGreen-bg" (click)="carouselRef.prev()" nz-button nzType="text">
+                <span class="btn-icon" nz-icon nzType="left" nzTheme="outline"></span>
+            </button>
 
+            <button [disabled]="false" class="no-min-width rounded seaGreen-bg"
+                (click)="carouselRef.next(); log(carouselRef)" nz-button nzType="text">
+                <span class="btn-icon" nz-icon nzType="right" nzTheme="outline"></span>
+            </button>
+
+
+
+            <button class="no-min-width rounded seaGreen-bg"
+                (click)="carouselOptions.autoplay = !carouselOptions.autoplay" nz-button nzType="text">
+                <span *ngIf="carouselOptions.autoplay" class="btn-icon" nz-icon nzType="pause"
+                    nzTheme="outline"></span>
+                <span *ngIf="!carouselOptions.autoplay" nz-icon nzType="play-circle" nzTheme="outline"></span>
+            </button>
+        </div>
+
+        <div class="carousel-items">
+            <owl-carousel-o #carouselRef [options]="carouselOptions">
+                <ng-template *ngFor="let station of stations; index as i" carouselSlide>
+                    <div class=" station-item-wrapper" >
+                        <div class="lightSeaGreen-bg station-item" [class.active] = "i ===0">
+                            <h3 class="m-0 p-0 title bold text-center">
+                                {{station.name}}
+                            </h3>
+
+                            <nz-divider class="bolder-divider m-0 p-0"></nz-divider>
+
+                            <div class="aqi">
+                                <div class="img d-flex">
+                                    <img width="20" height="20" src="assets/icons/aqi.svg" alt="">
+                                    <span class="bold">AQI</span>
+                                </div>
+
+                                <div [style]="{'color': station.color}" class="station-value bold value">
+                                    {{station.value}}
+                                </div>
+                            </div>
+
+                            <nz-divider style="margin: 5px 0;" class="m-0  p-0"></nz-divider>
+
+                            <div class="worst-items">
+
+                                <div class="first">
+                                    <app-status-icon color="#00C800"></app-status-icon>
+
+                                    <div class="value">
+                                        CO
+                                    </div>
+                                </div>
+
+                                <div class="second">
+
+                                    <app-status-icon color="#00C800"></app-status-icon>
+
+                                    <div class="value">
+                                        NO2
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+            </owl-carousel-o>
+        </div>
     </div>
 </div>

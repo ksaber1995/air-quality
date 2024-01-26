@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Levels } from '../../../shared/model/severity';
 
 @Component({
@@ -9,4 +9,5 @@ import { Levels } from '../../../shared/model/severity';
 export class SeverityBarComponent {
   levels = Levels;
   
+  @Input() type : 'horizontal' | 'vertical' = 'horizontal' // horizontal or vertical 
 }
