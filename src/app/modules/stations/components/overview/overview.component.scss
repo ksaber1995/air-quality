@@ -1,4 +1,6 @@
 
+@import 'colors';
+
 .severity-bar-wrapper{
     display: flex;
     justify-content: center;
@@ -25,7 +27,9 @@
         margin-right: 20px;
     }
 }
-
+nz-radio-group{
+    width: 100%;
+}
 .airquality-btn{
     display: flex;
     align-items: center;
