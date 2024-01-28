@@ -35,8 +35,8 @@
         <div class="carousel-items">
             <owl-carousel-o  #carouselRef [options]="carouselOptions">
                 <ng-template *ngFor="let station of stations; index as i" carouselSlide>
-                    <div class=" pointer station-item-wrapper" (click)="changeStation(station)">
-                        <div class="lightSeaGreen-bg station-item" [class.active] = "station.id  === currentStation?.id">
+                    <div class="  station-item-wrapper" (click)="changeStation(station)">
+                        <div class="pointer lightSeaGreen-bg station-item" [class.active] = "station.id  === currentStation?.id">
                             <h3 class="m-0 p-0 title bold text-center">
                                 {{station.name_en}}
                             </h3>
