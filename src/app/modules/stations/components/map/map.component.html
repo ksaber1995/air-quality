@@ -1,4 +1,4 @@
-<div *ngIf="isLoaded" class="main-wrapper">
+<div  class="main-wrapper">
     <div class="map-wrapper">
         <!-- <div class="bar-wrapper">
             <app-severity-bar> </app-severity-bar>
@@ -18,7 +18,7 @@
             </button>
 
             <button [disabled]="false" class="no-min-width rounded seaGreen-bg"
-                (click)="carouselRef.next(); log(carouselRef)" nz-button nzType="text">
+                (click)="carouselRef.next();" nz-button nzType="text">
                 <span class="btn-icon" nz-icon nzType="right" nzTheme="outline"></span>
             </button>
 
@@ -33,12 +33,12 @@
         </div>
 
         <div class="carousel-items">
-            <owl-carousel-o #carouselRef [options]="carouselOptions">
+            <owl-carousel-o  #carouselRef [options]="carouselOptions">
                 <ng-template *ngFor="let station of stations; index as i" carouselSlide>
-                    <div class=" station-item-wrapper" >
-                        <div class="lightSeaGreen-bg station-item" [class.active] = "i ===0">
+                    <div class=" pointer station-item-wrapper" (click)="changeStation(station)">
+                        <div class="lightSeaGreen-bg station-item" [class.active] = "station.id  === currentStation?.id">
                             <h3 class="m-0 p-0 title bold text-center">
-                                {{station.name}}
+                                {{station.name_en}}
                             </h3>
 
                             <nz-divider class="bolder-divider m-0 p-0"></nz-divider>
@@ -49,8 +49,8 @@
                                     <span class="bold">AQI</span>
                                 </div>
 
-                                <div [style]="{'color': station.color}" class="station-value bold value">
-                                    {{station.value}}
+                                <div [style]="{'color': 'blue'}" class="station-value bold value">
+                                    {{100}}
                                 </div>
                             </div>
 

@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { AirItem, Header, getRandomNumber, testItem } from './model';
 import { Levels } from '../../../shared/model/severity';
 import { ChartData } from 'chart.js';
 import { getColorMapping } from '../../helper/background';
+import { Station } from '../../../../models/Station';
 
 @Component({
   selector: 'app-summary',
@@ -10,9 +11,11 @@ import { getColorMapping } from '../../helper/background';
   styleUrl: './summary.component.scss'
 })
 export class SummaryComponent implements OnInit {
+  @Input() stations : Station[]
+  @Input() currentStation: Station ;
 
   time = (new Date()).toLocaleString();
-  station: any = "Nizwa"
+
 
   status
 
@@ -64,11 +67,10 @@ export class SummaryComponent implements OnInit {
 
     },
 
-
-
   };
 
   ngOnInit(): void {
+
     let value = getRandomNumber(6);
     this.status = Levels[value]
     while (value == 0) {

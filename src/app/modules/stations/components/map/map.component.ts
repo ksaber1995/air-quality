@@ -1,33 +1,45 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Station } from '../../../../models/Station';
 import { carouselOptions } from './model';
-import { Stations } from '../../../shared/model/stations';
-import { getRandomNumber } from '../summary/model';
-import { getColorMapping } from '../../helper/background';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
   styleUrl: './map.component.scss'
 })
-export class MapComponent implements OnInit {
+export class MapComponent implements OnInit , OnDestroy {
+  @Input() stations : Station[];
+  @Input() currentStation: Station ;
+  
+  isLoaded
+
   carouselOptions = carouselOptions;
-  stations = Stations.map(res=> ({name: res, value:  getRandomNumber(500), color: getColorMapping(getRandomNumber(500)), co:{value:  getRandomNumber(500), color: getColorMapping(getRandomNumber(500))}, no2:{value:  getRandomNumber(500), color: getColorMapping(getRandomNumber(500))} }));
 
   ngOnInit(): void {
-    // setTimeout(() => {
-      this.isLoaded = true;
-    // }, 3000);
 
   }
 
-  log(e){
-    console.log(e, 'clicked')
-  }
   
+
+  changeStation(station : Station){
+    // this.currentStation = station;
+
+    this.router.navigate(
+      [], 
+      {
+        relativeTo: this.route,
+        queryParams: {id: station.id}, 
+      }
+    );
+
+      // console.log(e)
+  }
 
   navigatorPosition
 
-  constructor() {
+  constructor(private route: ActivatedRoute, private router: Router) {
     navigator.geolocation.getCurrentPosition((position) => {
       this.navigatorPosition = position;
 
@@ -66,7 +78,9 @@ export class MapComponent implements OnInit {
     })
   }
 
-  isLoaded
+  ngOnDestroy(): void {
+  }
+
   public options: google.maps.MapOptions
 
 

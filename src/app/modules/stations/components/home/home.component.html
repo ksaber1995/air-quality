@@ -1,11 +1,11 @@
 
-<div class="content" nz-row [nzGutter]="{ xs: 4, sm: 8, md: 12, lg: 16 }">
+<div *ngIf="stations$ | async as stations" class="content" nz-row [nzGutter]="{ xs: 4, sm: 8, md: 12, lg: 16 }">
 
     <div nz-col class="gutter-row" [nzSpan]="12">
-        <div class="inner-box summary"><app-summary></app-summary></div>
+        <div class="inner-box summary"><app-summary [currentStation]="currentStation$ | async" [stations]="stations"></app-summary></div>
     </div>
     
     <div nz-col class="gutter-row" [nzSpan]="12">
-        <div class="map inner-box"><app-map></app-map></div>
+        <div class="map inner-box"><app-map [currentStation]="currentStation$ | async" [stations]="stations"></app-map></div>
     </div>
 </div>
