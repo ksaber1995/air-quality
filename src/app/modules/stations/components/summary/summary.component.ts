@@ -11,17 +11,17 @@ import { Station } from '../../../../models/Station';
   styleUrl: './summary.component.scss'
 })
 export class SummaryComponent implements OnInit {
-  @Input() stations : Station[]
-  @Input() currentStation: Station ;
+  @Input() station: Station ;
 
   time = (new Date()).toLocaleString();
 
 
   status
 
-  headers = Header
+  headers 
 
-  listOfData = testItem.map(res => ({ ...res, values: res.values.map(res => ({ ...res, color: getColorMapping(res.value) })) }))
+  listOfData 
+  // = testItem.map(res => ({ ...res, values: res.values.map(res => ({ ...res, color: getColorMapping(res.value) })) }))
 
 
   public doughnutChartLabels: string[] = Levels.map(res => res.name);
@@ -70,6 +70,10 @@ export class SummaryComponent implements OnInit {
   };
 
   ngOnInit(): void {
+    this.headers = this.station.variables[0].readings.map(res=> new Date(res.aggregated_at).getDate() ); // get the date of the first reading
+
+    this.listOfData = [...this.station.variables.map(res=> ({...res, name: res.variable.abbreviation_en, rounded: true})) , ...this.station.weather.map(res=> ({...res, name: res.variable.name_en}))];
+    console.log(this.listOfData)
 
     let value = getRandomNumber(6);
     this.status = Levels[value]

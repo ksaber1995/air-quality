@@ -37,7 +37,6 @@ export class DetailsComponent implements OnInit {
     while(this.value == 0 ){
       this.value = getRandomNumber(6);
       this.status = Levels[this.value]
-      
     }
   }
 

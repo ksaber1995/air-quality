@@ -15,16 +15,16 @@ export class HomeComponent {
       [],
       {
         relativeTo: this.route,
-        queryParams: { id: res[0].id },
+        queryParams: { id: res[0].code },
       }
     );
   }));
 
   currentStation$ = this.route.queryParamMap.pipe(
     withLatestFrom(this.stations$), map(([routes, stations]) => {
-      const id = +routes.get('id');
+      const id = routes.get('id');
       // return stations[0]
-      return stations.find(res => res.id === id)
+      return stations.find(res=> res.code === id)
     }))
 
   aqiBreakPoints$ = this.swagger.getBreakPoints().pipe(map(res => res.aqi_breakpoints));

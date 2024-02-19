@@ -4,15 +4,15 @@ import { Station } from '../models/Station';
 import { Observable, map, shareReplay } from 'rxjs';
 import { BreakPoint, VariableBreakPoint } from '../models/breakPoint';
 
-const BaseUrl = 'https://rm.adv3.com/naqi/v1/public'
+const BaseUrl = 'https://functions.naqi.dal2.com/v1'
 
-interface StationsResponse{
-  stations: Station[] 
+interface StationsResponse {
+  data: Station[]
 }
 
 
-interface BreakPointsResponse{
-  aqi_breakpoints: BreakPoint[] 
+interface BreakPointsResponse {
+  aqi_breakpoints: BreakPoint[]
   variables_breakpoints: VariableBreakPoint[]
 
 }
@@ -26,26 +26,53 @@ export class SwaggerService {
 
   getStations() {
     const url = BaseUrl + '/stations'
-  
-    return this.http.get(url).pipe(map( (res: StationsResponse) => res.stations), shareReplay())
+
+    return this.http.get(url).pipe(map((res: StationsResponse) => res.data), shareReplay())
   }
 
-  getStation(id: string){
-    const url = BaseUrl + '/stations/' + id
+  // getStationsCode() {
+  //   const url = BaseUrl + '/stations/codes'
 
-    return this.http.get(url)
-  }
+  //   return this.http.get(url).pipe(map((res: StationsResponse) => res.stations), shareReplay())
+  // }
+
+  // getStationsOverview({ type, interval, variable_code, from, to }) {
+  //   const url = BaseUrl + '/stations/codes'
+
+  //   return this.http.post(url, { type, interval, variable_code, from, to }).pipe(map((res: StationsResponse) => res.stations), shareReplay())
+
+  // }
 
 
-
-  getBreakPoints() : Observable<BreakPointsResponse>{
-    const url = BaseUrl + '/breakpoints'
   
+  // getStationDetails(station_code ) {
+  //   const url = BaseUrl + '/station'
+
+  //   return this.http.post(url, { station_code  }).pipe(map((res: StationsResponse) => res.stations), shareReplay())
+
+  // }
+
+  // getStationHistory(station_code ) {
+  //   const url = BaseUrl + '/station/history'
+
+  //   return this.http.post(url, { station_code  }).pipe(map((res: StationsResponse) => res.stations), shareReplay())
+
+  // }
+
+
+
+
+
+
+  getBreakPoints(): Observable<BreakPointsResponse> {
+    const url = 'https://hasura.naqi.dal2.com/api/rest/v1/public/breakpoints'
+
     return this.http.get<BreakPointsResponse>(url)
   }
 
-  
 
-  
+
+
+
 }
 

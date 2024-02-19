@@ -12,6 +12,7 @@ import { Observable, Subscription } from 'rxjs';
 export class MapComponent implements OnInit , OnDestroy {
   @Input() stations : Station[];
   @Input() currentStation: Station ;
+  public options: google.maps.MapOptions
   
   isLoaded
 
@@ -30,7 +31,7 @@ export class MapComponent implements OnInit , OnDestroy {
       [], 
       {
         relativeTo: this.route,
-        queryParams: {id: station.id}, 
+        queryParams: {id: station.code}, 
       }
     );
 
@@ -81,7 +82,6 @@ export class MapComponent implements OnInit , OnDestroy {
   ngOnDestroy(): void {
   }
 
-  public options: google.maps.MapOptions
 
 
 }

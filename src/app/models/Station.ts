@@ -4,7 +4,9 @@ interface ReadingStatus {
 
 interface Reading {
     aggregated_at: string;
-    status: ReadingStatus[];
+    // status: ReadingStatus[];
+    value: number;
+    color: string;
 }
 
 interface Variable {
@@ -36,12 +38,17 @@ interface WeatherData {
 }
 
 export interface Station {
-    id: number;
+    code: string;
     name_en: string;
     name_ar: string | null;
-    coordinates: string;
-    aqi: Aqi[];
+    aqi: AqiData[];
     variables: Aqi[];
     weather: WeatherData[];
-}
+    latitude: number;
+    longitude: number;
 
+    organization: {
+        name_ar: string,
+        name_en: string
+    }
+}
