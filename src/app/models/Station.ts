@@ -14,6 +14,8 @@ interface Variable {
     abbreviation_en: string;
     name_en: string | null;
     name_ar: string | null;
+    code: string
+
 }
 
 interface Unit {
@@ -23,6 +25,14 @@ interface Unit {
 interface AqiData {
     aggregated_at: string;
     status: ReadingStatus[];
+    color: string;
+    status_ar: string,
+    status_en : string
+    value: number
+    variable: {
+        abbreviation_en: string
+
+    }
 }
 
 interface Aqi {

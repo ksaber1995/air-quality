@@ -6,7 +6,7 @@
 
         <google-map [options]="options" height="100%" width="100%">
             <div class="bar-wrapper">
-                <app-severity-bar [type]="'vertical'"> </app-severity-bar>
+                <app-severity-bar [breakPoints]="breakPoints$  | async" [type]="'vertical'"> </app-severity-bar>
             </div>
         </google-map>
     </div>

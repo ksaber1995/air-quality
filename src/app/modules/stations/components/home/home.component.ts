@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { SwaggerService } from '../../../../services/swagger.service';
-import { map, tap, withLatestFrom } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
+import { map, tap, withLatestFrom } from 'rxjs';
+import { SwaggerService } from '../../../../services/swagger.service';
 
 @Component({
   selector: 'app-home',
@@ -27,8 +27,6 @@ export class HomeComponent {
       return stations.find(res=> res.code === id)
     }))
 
-  aqiBreakPoints$ = this.swagger.getBreakPoints().pipe(map(res => res.aqi_breakpoints));
-
   constructor(private swagger: SwaggerService, private router: Router, private route: ActivatedRoute) {
     this.stations$.subscribe(res => {
       console.log(res, 'stations')
@@ -38,8 +36,7 @@ export class HomeComponent {
       console.log(res, 'c stations')
     })
 
-    this.aqiBreakPoints$.subscribe(res => {
-      console.log(res, 'breakpoints')
-    })
   }
+
+  
 }

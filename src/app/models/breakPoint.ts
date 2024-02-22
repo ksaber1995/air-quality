@@ -1,13 +1,18 @@
 export interface BreakPoint {
+    breakpoint_end: number
+    breakpoint_start: number
+    color: string
+    sequence: number
+    status_ar: string
+    status_en: string
 
-    breakpoint_end :number
-    breakpoint_start : number
-    color : string
-    message : string
-    sequence : number
-   
 }
 
-export interface VariableBreakPoint extends BreakPoint{
-    variable_id: number
+export interface VariableBreakPoint {
+    abbreviation_en: string
+    code: string
+    description_ar: string
+    description_en: string
+    name_ar: string
+    variable_breakpoints: BreakPoint []
 }

@@ -6,6 +6,7 @@ import { Stations } from '../../../shared/model/stations';
 import { customOptions } from './model';
 import { airQualityItems } from '../../../shared/model/air-quality';
 import { getColorMapping } from '../../helper/background';
+import { OmmanDate } from '../../../../unitlize/custom-date';
 
 @Component({
   selector: 'app-details',
@@ -28,7 +29,8 @@ export class DetailsComponent implements OnInit {
   value;
 
   currentStation = Stations[0]
-  date = new Date()
+  date = OmmanDate()
+
   constructor() { }
   
   ngOnInit(): void {

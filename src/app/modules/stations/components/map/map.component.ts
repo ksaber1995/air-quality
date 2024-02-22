@@ -1,8 +1,9 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { map } from 'rxjs';
 import { Station } from '../../../../models/Station';
+import { SwaggerService } from '../../../../services/swagger.service';
 import { carouselOptions } from './model';
-import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-map',
@@ -13,13 +14,12 @@ export class MapComponent implements OnInit , OnDestroy {
   @Input() stations : Station[];
   @Input() currentStation: Station ;
   public options: google.maps.MapOptions
+  breakPoints$ = this.swagger.getBreakPoints().pipe(map(res=> res.aqi_breakpoints?.sort((a, b) => a.sequence - b.sequence)))
   
-  isLoaded
-
   carouselOptions = carouselOptions;
 
   ngOnInit(): void {
-
+    console.log(this.stations, 'all stations')
   }
 
   
@@ -40,18 +40,15 @@ export class MapComponent implements OnInit , OnDestroy {
 
   navigatorPosition
 
-  constructor(private route: ActivatedRoute, private router: Router) {
-    navigator.geolocation.getCurrentPosition((position) => {
-      this.navigatorPosition = position;
+  constructor(private route: ActivatedRoute, private router: Router, private swagger: SwaggerService) {
+  
 
       this.options = {
-        center: {
-          lat: this.navigatorPosition.coords.latitude,
-          lng: this.navigatorPosition.coords.longitude,
-        },
-        // zoomControl: true,
+        center:  { lat: 21.4735, lng: 58.545284 },
+
+        zoomControl: false,
         mapTypeControl: false,
-        // zoom: 2,
+        zoom: 6.5,
         mapTypeId: 'terrain', // Use 'terrain' map type to emphasize borders
 
         streetViewControl: false,
@@ -76,7 +73,6 @@ export class MapComponent implements OnInit , OnDestroy {
           // }
         ]
       };
-    })
   }
 
   ngOnDestroy(): void {

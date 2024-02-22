@@ -1,13 +1,20 @@
 <div [class.vertical]="type === 'vertical'" [class.horizontal]="type === 'horizontal'" class="bar-wrapper">
-    <div  [class.na]="level.name === 'na'" [ngStyle]="{'background': level.color}" *ngFor="let level of levels" class="level">
+    <div   [ngStyle]="{'background': gray}"  class="level na">
+        <!-- <span class="end">
+            <div class="bar-value">
+                0
+            </div>
+            <div class="end-bar"></div>
+        </span> -->
+    </div>
+
+    <div  [class.na]="false" [ngStyle]="{'background': breakPoint.color}" *ngFor="let breakPoint of breakPoints" class="level">
         <span class="end">
             <div class="bar-value">
 
-                {{level.end}}
+                {{breakPoint.breakpoint_end}}
             </div>
             <div class="end-bar"></div>
         </span>
-
-      
     </div>
 </div>

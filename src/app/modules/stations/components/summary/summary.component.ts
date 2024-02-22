@@ -4,6 +4,7 @@ import { Levels } from '../../../shared/model/severity';
 import { ChartData } from 'chart.js';
 import { getColorMapping } from '../../helper/background';
 import { Station } from '../../../../models/Station';
+import { OmmanDate, formatTime } from '../../../../unitlize/custom-date';
 
 @Component({
   selector: 'app-summary',
@@ -11,16 +12,12 @@ import { Station } from '../../../../models/Station';
   styleUrl: './summary.component.scss'
 })
 export class SummaryComponent implements OnInit {
-  @Input() station: Station ;
+  @Input() station: Station;
 
-  time = (new Date()).toLocaleString();
+  lastUpdate: Date;
+  headers
 
-
-  status
-
-  headers 
-
-  listOfData 
+  listOfData
   // = testItem.map(res => ({ ...res, values: res.values.map(res => ({ ...res, color: getColorMapping(res.value) })) }))
 
 
@@ -70,20 +67,17 @@ export class SummaryComponent implements OnInit {
   };
 
   ngOnInit(): void {
-    this.headers = this.station.variables[0].readings.map(res=> new Date(res.aggregated_at).getDate() ); // get the date of the first reading
+    const lastUpdateStation = this.station.aqi[0].aggregated_at
+    this.lastUpdate = OmmanDate(lastUpdateStation)
 
-    this.listOfData = [...this.station.variables.map(res=> ({...res, name: res.variable.abbreviation_en, rounded: true})) , ...this.station.weather.map(res=> ({...res, name: res.variable.name_en}))];
+    this.headers = this.station.variables[0].readings.map(res => formatTime(OmmanDate(res.aggregated_at))); // get the date of the first reading
+
+    this.listOfData = [...this.station.variables, ...this.station.weather];
     console.log(this.listOfData)
+    
+ 
 
-    let value = getRandomNumber(6);
-    this.status = Levels[value]
-    while (value == 0) {
-      value = getRandomNumber(6);
-      this.status = Levels[value]
-
-    }
   }
 
 
 }
-
