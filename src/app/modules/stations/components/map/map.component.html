@@ -49,8 +49,8 @@
                                     <span class="bold">AQI</span>
                                 </div>
 
-                                <div [style]="{'color': 'blue'}" class="station-value bold value">
-                                    {{100}}
+                                <div [style]="{'color': station.aqi[0].color}" class="station-value bold value">
+                                    {{station.aqi[0].value}}
                                 </div>
                             </div>
 
@@ -58,22 +58,15 @@
 
                             <div class="worst-items">
 
-                                <div class="first">
-                                    <app-status-icon color="#00C800"></app-status-icon>
+                                <div *ngFor="let item of station.aqi" class="first">
+                                    <app-status-icon [color]="item.color"></app-status-icon>
 
                                     <div class="value">
-                                        CO
+                                        {{item.status_en}}
                                     </div>
                                 </div>
 
-                                <div class="second">
-
-                                    <app-status-icon color="#00C800"></app-status-icon>
-
-                                    <div class="value">
-                                        NO2
-                                    </div>
-                                </div>
+                             
                             </div>
                         </div>
                     </div>

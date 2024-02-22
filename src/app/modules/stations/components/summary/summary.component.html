@@ -18,7 +18,7 @@
 
         <div class="status">
 
-          <img width="25" height="25" [src]="'assets/icons/' + station.aqi[0].status_en.toLowerCase() + '-face.svg'" alt="">
+          <img width="25" height="25" [src]="'assets/icons/' + station.aqi[0].status_en?.toLowerCase() + '-face.svg'" alt="">
 
           <span class="item">
             {{station.aqi[0].status_en}}
@@ -77,8 +77,10 @@
         <td [nzAlign]="'center'" *ngFor="let valueItem of item.readings">
        
 
-          <span *ngIf="item.variable.code === 'WD'"class="item"> <span nz-icon nzType="arrow-up"
+          <span *ngIf="item.variable.code === 'WD'"class="item"> 
+            <span nz-icon nzType="arrow-up"
               nzTheme="outline"></span> </span>
+              
           <span *ngIf="item.variable.code === 'WS'" class="item">{{ valueItem.value }} KM/s</span>
           <span *ngIf="item.variable.code === 'AT'" class="item">{{ valueItem.value }}</span>
           <span *ngIf="item.variable.code === 'RH'" class="item">{{ valueItem.value }}</span>
