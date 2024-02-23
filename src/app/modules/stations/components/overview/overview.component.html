@@ -23,7 +23,7 @@
                 <span nz-icon nzType="down"></span>
             </button>
 
-            <nz-dropdown-menu #menu="nzDropdownMenu">
+            <nz-dropdown-menu *ngFor="let item of airQualityItems" #menu="nzDropdownMenu">
                 <ul nz-menu nzSelectable>
                     <nz-radio-group [(ngModel)]="type">
 

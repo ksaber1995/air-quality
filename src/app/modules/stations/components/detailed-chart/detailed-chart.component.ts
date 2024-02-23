@@ -116,7 +116,6 @@ export class DetailedChartComponent {
   }
 
   ngOnInit(): void {
-    console.log(this.lineChartData, 'koko')
     // this.initializeChart()
   }
 

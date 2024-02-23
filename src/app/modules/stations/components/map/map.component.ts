@@ -19,7 +19,6 @@ export class MapComponent implements OnInit , OnDestroy {
   carouselOptions = carouselOptions;
 
   ngOnInit(): void {
-    console.log(this.stations, 'all stations')
   }
 
   
@@ -35,7 +34,6 @@ export class MapComponent implements OnInit , OnDestroy {
       }
     );
 
-      // console.log(e)
   }
 
   navigatorPosition

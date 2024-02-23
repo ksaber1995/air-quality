@@ -32,7 +32,7 @@ export class OverviewComponent implements OnInit {
   sub;
 
   breakPoints$ = this.swagger.getBreakPoints().pipe(map(res => res.aqi_breakpoints?.sort((a, b) => a.sequence - b.sequence)))
-
+  variables$ = this.swagger.getStationsCode().pipe(map(res=> res.variables))
   breakPoints: BreakPoint[] = []
 
   data = []
@@ -41,10 +41,13 @@ export class OverviewComponent implements OnInit {
   constructor(private swagger: SwaggerService) { }
   ngOnInit(): void {
     this.getData();
+
+    this.variables$.subscribe(re=>{
+
+    })
   }
 
   getData() {
-    console.log(weeksEndsToday())
     this.breakPoints$.subscribe(res => {
       this.breakPoints = res;
       this.breakPointLoaded = true;

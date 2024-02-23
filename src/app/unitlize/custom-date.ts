@@ -36,10 +36,7 @@ export function getTimeOnNumber(date: Date) {
 export function getDateOnNumber(targetDate: Date) {
     const dayName = getDayName(targetDate.getDay())
     const new_index = weeksEndsToday().findIndex(res=> res === dayName)
-  
-  
 
-    console.log(new_index, 'new index')
     return new_index
 }
 

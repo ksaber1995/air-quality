@@ -57,7 +57,6 @@ export class ChartComponent implements OnInit {
             stepSize: 1,
             // count: getCount(this.interval),
             callback: (value: any, index: any, values: any) => {
-              console.log(index)
               if(this.interval === 'day'){
   
                 let period = index < 12 ? 'am' : 'pm';
@@ -66,7 +65,6 @@ export class ChartComponent implements OnInit {
                 index = index ? index : 12; // Convert 0 to 12
                 return index  + ' ' + period;
               }else if(this.interval === 'week'){
-                console.log(index,'index')
                 return weeksEndsToday()[index];
               }else if( this.interval === 'month'){
                 const number_of_days = 32 - index;

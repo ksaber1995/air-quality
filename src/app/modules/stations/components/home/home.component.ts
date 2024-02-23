@@ -28,14 +28,7 @@ export class HomeComponent {
     }))
 
   constructor(private swagger: SwaggerService, private router: Router, private route: ActivatedRoute) {
-    this.stations$.subscribe(res => {
-      console.log(res, 'stations')
-    })
-
-    this.currentStation$.subscribe(res => {
-      console.log(res, 'c stations')
-    })
-
+ 
   }
 
   

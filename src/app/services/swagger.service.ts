@@ -11,6 +11,18 @@ interface StationsResponse {
   data: Station[]
 }
 
+interface CodesResponse {
+  stations: {
+    code: string,
+    name_ar: string,
+    name_en: string
+  }[],
+  variables: {
+    abbreviation_en
+    code: string
+  }[]
+}
+
 export type OverviewType = 'aqi' | 'variable'
 export type HistoryInterval = 'day' | 'week' | 'month'
 
@@ -33,11 +45,11 @@ export class SwaggerService {
     return this.http.get(url).pipe(map((res: StationsResponse) => res.data), shareReplay())
   }
 
-  // getStationsCode() {
-  //   const url = BaseUrl + '/stations/codes'
+  getStationsCode() : Observable<CodesResponse>{
+    const url = BaseUrl + '/stations/codes'
 
-  //   return this.http.get(url).pipe(map((res: StationsResponse) => res.stations), shareReplay())
-  // }
+    return this.http.get<CodesResponse>(url).pipe(shareReplay())
+  }
 
   getStationsOverview( data: {type : OverviewType , interval: HistoryInterval, variable_code?: string, from?: string, to?: string} ) : Observable< CustomOverviewResponse> {
     const url = BaseUrl + '/stations/overview'
