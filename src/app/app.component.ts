@@ -16,7 +16,7 @@ export class AppComponent {
       /** spinner ends after 5 seconds */
       this.spinner.hide();
       this.isLoading = false;
-    }, 5000);
+    }, 2000);
   }
 
 }

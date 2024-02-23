@@ -40,10 +40,10 @@
             </nz-dropdown-menu>
 
 
-            <div class="date-filters">
-                <button nz-button class="active">Day</button>
-                <button nz-button>Week</button>
-                <button nz-button>Month</button>
+            <div *ngIf="activeInterval$ | async as activeInterval" class="date-filters">
+                <button (click)="onIntervalChange('day')"  nz-button [class.active]="activeInterval === 'day'" >Day</button>
+                <button (click)="onIntervalChange('week')" nz-button [class.active]="activeInterval === 'week'">Week</button>
+                <button (click)="onIntervalChange('month')" nz-button [class.active]="activeInterval === 'month'">Month</button>
 
 
                 <nz-date-picker class="simple" [(ngModel)]="date" [class.hidden]="!date"
@@ -51,13 +51,12 @@
             </div>
         </div>
 
-        <app-chart></app-chart>
 
-
+        <app-chart *ngIf="isLoaded  && breakPointLoaded" [data]="data" [breakPoints]="breakPoints"></app-chart>
     </div>
 </div>
 
 
 <div class="severity-bar-wrapper">
-    <app-severity-bar></app-severity-bar>
+<app-severity-bar [breakPoints]="breakPoints"></app-severity-bar>
 </div>

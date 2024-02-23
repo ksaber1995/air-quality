@@ -1,61 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ChartDataset, ChartOptions, ChartTypeRegistry } from 'chart.js';
-import { getRandomNumber } from '../summary/model';
-import { Stations } from '../../../shared/model/stations';
+import { BreakPoint } from '../../../../models/breakPoint';
 
-const Radius = 12;
-const data = [
-  { x: 12, y: () => getRandomNumber(450), r: Radius },
-  { x: 1, y: () => getRandomNumber(450), r: Radius },
-  { x: 2, y: () => getRandomNumber(450), r: Radius },
-  { x: 3, y: () => getRandomNumber(450), r: Radius },
-  { x: 4, y: () => getRandomNumber(450), r: Radius },
-  
-  { x: 5, y: () => getRandomNumber(450), r: Radius },
-  { x: 6, y: () => getRandomNumber(450), r: Radius },
-  { x: 7, y: () => getRandomNumber(450), r: Radius },
-  { x: 8, y: () => getRandomNumber(450), r: Radius },
-  { x: 9, y: () => getRandomNumber(450), r: Radius },
-  { x: 10, y: () => getRandomNumber(450), r: Radius },
-  { x: 11, y: () => getRandomNumber(450), r: Radius },
-  // Add more data points as needed
-];
-
-const items = Stations.map(res => {
-  return {
-    data: data.map(res=> ({...res, y: res.y()})),
-
-    label: res,
-    backgroundColor: (item) => getBackground(item)
-  }
-})
-
-const getBackground = (item) => {
+const getBackground = (item, breakPoints: BreakPoint[]) => {
   const value = item.raw.y;
-
-  // Set different colors based on your conditions
-
-  if (value > 0 && value <= 50) {
-    return '#00C800';
-  } else if (value > 50 && value <= 100) {
-    return '#FFE12D';
-  }
-  else if (value > 100 && value <= 150) {
-    return '#FF7E00';
-  }
-  else if (value > 150 && value <= 200) {
-    return '#FA0A00';
-  }
-  else if (value > 200 && value <= 300) {
-    return '#8F3F97';
-  }
-  else if (value > 300) {
-    return '#7E0023';
-  }
-
-  return 'rgb(231,231,231)' // not applicable
+  return breakPoints.find(res => value >= res.breakpoint_start && value <= res.breakpoint_end)?.color
 
 }
+
 @Component({
   selector: 'app-chart',
   templateUrl: './chart.component.html',
@@ -63,7 +15,9 @@ const getBackground = (item) => {
 })
 export class ChartComponent implements OnInit {
   public bubbleChartType: keyof ChartTypeRegistry = 'bubble';
-  public bubbleChartData: ChartDataset[] = items;
+  @Input() public data: ChartDataset[] ;
+   public bubbleChartData: ChartDataset[] ;
+   @Input() breakPoints : BreakPoint[] = [];
 
   public bubbleChartOptions: ChartOptions = {
     responsive: true,
@@ -77,11 +31,18 @@ export class ChartComponent implements OnInit {
         // title: {
         //   text:''
         // },
-
+        offset: true,
         ticks: {
+          count: 25,
           callback: (value: any, index: any, values: any) => {
-            return value + ' am'
+            let period = index < 12 ? 'am' : 'pm';
+
+            index = index % 12;
+            index = index ? index : 12; // Convert 0 to 12
+            return index  + ' ' + period;
           }
+          
+          
         },
         grid: {
           drawOnChartArea: false,
@@ -116,11 +77,9 @@ export class ChartComponent implements OnInit {
   public bubbleChartLegend: boolean = false;
 
   constructor() {
-
   }
 
   ngOnInit(): void {
-
-
+    this.bubbleChartData = this.data.map(station=> ({...station , backgroundColor: (item) => getBackground(item, this.breakPoints)}))
   }
 }

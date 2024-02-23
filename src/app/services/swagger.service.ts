@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Station } from '../models/Station';
 import { Observable, map, shareReplay } from 'rxjs';
 import { BreakPoint, VariableBreakPoint } from '../models/breakPoint';
+import { CustomOverviewResponse, OverviewResponse } from '../models/overview';
 
 const BaseUrl = 'https://functions.naqi.dal2.com/v1'
 
@@ -10,6 +11,8 @@ interface StationsResponse {
   data: Station[]
 }
 
+export type OverviewType = 'aqi' | 'variable'
+export type HistoryInterval = 'day' | 'week' | 'month'
 
 interface BreakPointsResponse {
   aqi_breakpoints: BreakPoint[]
@@ -36,12 +39,27 @@ export class SwaggerService {
   //   return this.http.get(url).pipe(map((res: StationsResponse) => res.stations), shareReplay())
   // }
 
-  // getStationsOverview({ type, interval, variable_code, from, to }) {
-  //   const url = BaseUrl + '/stations/codes'
+  getStationsOverview( data: {type : OverviewType , interval: HistoryInterval, variable_code?: string, from?: string, to?: string} ) : Observable< CustomOverviewResponse> {
+    const url = BaseUrl + '/stations/overview'
+    return this.http.post<{data: OverviewResponse[]}>(url, { ...data })
+      .pipe(
+        map(res=> res.data),
+        map(res=>{
+          const data: CustomOverviewResponse = {}
 
-  //   return this.http.post(url, { type, interval, variable_code, from, to }).pipe(map((res: StationsResponse) => res.stations), shareReplay())
+          res.forEach(item=> {
+           const key = item.station.name_en;
+            if(data[key]) {
+              data[key].push(item)
+            } else {
+              data[key] = [item]
+            }
+          })
 
-  // }
+          return data
+        })
+      )
+  }
 
 
   
