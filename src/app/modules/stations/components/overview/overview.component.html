@@ -52,7 +52,7 @@
         </div>
 
 
-        <app-chart *ngIf="isLoaded  && breakPointLoaded" [data]="data" [breakPoints]="breakPoints"></app-chart>
+        <app-chart *ngIf="isLoaded  && breakPointLoaded" [data]="data" [breakPoints]="breakPoints" [interval]="activeInterval$ | async"></app-chart>
     </div>
 </div>
 

@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { IBreadCrumb } from '../../../shared/components/bread-crumb/model';
 import { airQualityItems } from '../../../shared/model/air-quality';
 import { BehaviorSubject, combineLatest, from, interval, map, switchMap } from 'rxjs';
-import { OmmanDate, formatTime, getTimeOnNumber } from '../../../../unitlize/custom-date';
+import { OmmanDate, daysSincePastDate, formatTime, getDateOnNumber, getTimeOnNumber, weeksEndsToday } from '../../../../unitlize/custom-date';
 const Radius = 12;
 
 @Component({
@@ -33,7 +33,7 @@ export class OverviewComponent implements OnInit {
 
   breakPoints$ = this.swagger.getBreakPoints().pipe(map(res => res.aqi_breakpoints?.sort((a, b) => a.sequence - b.sequence)))
 
-  breakPoints : BreakPoint[] = []
+  breakPoints: BreakPoint[] = []
 
   data = []
   isLoaded = false;
@@ -44,7 +44,8 @@ export class OverviewComponent implements OnInit {
   }
 
   getData() {
-    this.breakPoints$.subscribe(res=>{
+    console.log(weeksEndsToday())
+    this.breakPoints$.subscribe(res => {
       this.breakPoints = res;
       this.breakPointLoaded = true;
     })
@@ -56,20 +57,21 @@ export class OverviewComponent implements OnInit {
       this.to$
     ])
 
-      .pipe(switchMap(([interval, type, from, to]) => this.swagger.getStationsOverview({ type, interval, from, to })))
+      .pipe(switchMap(([interval, type, from, to]) => {
+        this.isLoaded = false;
+
+        return this.swagger.getStationsOverview({ type, interval, from, to })
+      }))
       .subscribe(items => {
         const interval = this.activeInterval$.getValue();
+
+        const stations = Object.keys(items)
+        const chartData = []
+
         if (interval === 'day') {
-          console.log(items, 'kokok ')
-
-
-          const stations = Object.keys(items)
-
-          const chartData = []
-
           stations.forEach(station => {
             const station_items = items[station]
-         
+
             const stationData = station_items.map(item => {
               return { x: getTimeOnNumber(OmmanDate(item.aggregated_at)), y: item.value || 0, r: Radius }
             })
@@ -84,16 +86,42 @@ export class OverviewComponent implements OnInit {
 
 
 
-          console.log(chartData)
-          this.data = chartData;
-
-
-
         } else if (interval === 'week') {
+          stations.forEach(station => {
+            const station_items = items[station]
+
+            const stationData = station_items.map(item => {
+              return { x: getDateOnNumber(OmmanDate(item.aggregated_at)), y: item.value || 0, r: Radius }
+            })
+
+
+
+            chartData.push({
+              data: stationData,
+              label: station
+            })
+          })
 
         } else if (interval === 'month') {
+          stations.forEach(station => {
+            const station_items = items[station]
 
+
+            const stationData = station_items.map(item => {
+              const x =  daysSincePastDate(OmmanDate(item.aggregated_at));
+              return { x , y: item.value || 0, r: Radius }
+            })
+
+
+
+            chartData.push({
+              data: stationData,
+              label: station
+            })
+          })
         }
+
+        this.data = chartData;
 
         this.isLoaded = true;
 
