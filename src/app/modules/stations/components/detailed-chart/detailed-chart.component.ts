@@ -7,10 +7,20 @@ import { HistoryInterval, OverviewType, SwaggerService } from '../../../../servi
 import { OmmanDate, formatDateYYMMDD, formatTime, getDayName } from '../../../../unitlize/custom-date';
 import { getRandomNumber } from '../summary/model';
 
+const colorPalette = [
+  '#1f77b4', // blue
+  '#8c564b', // brown
+  '#e377c2', // pink
+  '#bcbd22', // olive
+  '#17becf', // cyan
+  '#ff5733', // coral
+  '#ff33f2', // magenta
+  '#5733ff', // indigo
+];
 
 
 const getBackground = (value, breakPoints: BreakPoint[]) => {
-  return breakPoints.find(res => value >= res.breakpoint_start && value <= res.breakpoint_end)?.color
+  return breakPoints?.find(res => value >= res.breakpoint_start && value <= res.breakpoint_end)?.color || '#d1d1d1'
 
 }
 
@@ -27,7 +37,9 @@ export class DetailedChartComponent {
 
 
   activeInterval$ = new BehaviorSubject<HistoryInterval>('day')
+  stationsToCompare$ = new BehaviorSubject<string[]>([])
   type$ = new BehaviorSubject<string>('aqi')
+  type = 'aqi';
 
   interval: HistoryInterval = 'day';
 
@@ -73,7 +85,7 @@ export class DetailedChartComponent {
   public lineChartLabels: string[];
   public doughnutChartLabels: string[] = []
 
-  public doughnutChartData: ChartData<'doughnut'> ;
+  public doughnutChartData: ChartData<'doughnut'>;
 
   public lineChartOptions: ChartOptions = {
     responsive: true,
@@ -102,7 +114,6 @@ export class DetailedChartComponent {
           // stepSize: 3,
           // maxTicksLimit: 28
 
-
         }
 
 
@@ -122,26 +133,32 @@ export class DetailedChartComponent {
 
   }
 
-  getHistory(interval: HistoryInterval, type: OverviewType) {
-    return this.swagger.getStationHistory({ station_code: this.currentStation.code, type, interval })
+  getHistory(interval: HistoryInterval, type: OverviewType, variable_code: string, station_code: string) {
+    return this.swagger.getStationHistory({ station_code, type, interval, variable_code })
   }
 
   ngOnInit(): void {
-    const breakPoints$ = this.swagger.getBreakPoints().pipe(map(res => res.aqi_breakpoints?.sort((a, b) => a.sequence - b.sequence))).pipe(shareReplay())
+    const breakPoints$ = this.swagger.getBreakPoints().pipe(shareReplay())
 
-    combineLatest([this.activeInterval$, this.type$])
-      .pipe(switchMap(([interval, type]) => {
+    combineLatest([this.activeInterval$, this.type$, this.stationsToCompare$, breakPoints$])
+      .pipe(switchMap(([interval, type, stationsToCompare, breakPoints]) => {
         this.interval = interval;
-         this.filter_type = type === 'aqi' ? 'aqi' : 'variable';
+        this.filter_type = type === 'aqi' ? 'aqi' : 'variable';
+        if (type === 'aqi') {
+          this.breakPoints = breakPoints.aqi_breakpoints?.sort((a, b) => a.sequence - b.sequence)
+        } else {
+          this.breakPoints = breakPoints?.variables?.find(res => res.code === type)?.variable_breakpoints?.sort((a, b) => a.sequence - b.sequence)
+        }
 
-        return combineLatest([this.getHistory(interval, this.filter_type), breakPoints$])
+        return combineLatest([this.getHistory(interval, this.filter_type, type, this.currentStation.code), ...stationsToCompare.map(code => this.getHistory(interval, this.filter_type, type, code).pipe(map(res => ({ code, data: res }))))])
       }))
-      .subscribe(([history, breakPoints]) => {
+      .subscribe(([history, ...stationsToCompare]) => {
         this.history = history;
-        console.log(history, 'koko')
-        this.breakPoints = breakPoints
-        
+
+        console.log(stationsToCompare, 'kokoko')
+
         this.summary = {}
+
         if (this.filter_type === 'aqi') {
 
           this.history.forEach(item => {
@@ -154,12 +171,10 @@ export class DetailedChartComponent {
               this.summary[status] = [item]
             }
           })
+          this.setDoughnutChartData()
         }
 
-        console.log(this.summary, 'summary')
 
-
-        this.setDoughnutChartData()
 
 
         if (this.interval === 'day' || this.interval === 'week') {
@@ -182,30 +197,50 @@ export class DetailedChartComponent {
 
             segment: {
               // backgroundColor: (ctx)=> getBackground(ctx), 
-              borderColor: (ctx) => getBackground(ctx.p0.parsed.y, breakPoints),
+              borderColor: (ctx) => getBackground(ctx.p0.parsed.y, this.breakPoints),
               borderWidth: 6
             }
-          },
+          }
         ]
+
+
+        stationsToCompare.forEach(c_station_history => {
+
+          const randomIndex = getRandomNumber(8);
+          const new_lineChartData =
+          {
+            data: c_station_history.data.map(res => res.value || 0),
+            label: this.stations.find(res => res.code === c_station_history.code)?.name_en,
+
+
+            pointBackgroundColor: colorPalette[randomIndex ],
+
+            segment: {
+              // backgroundColor: (ctx)=> getBackground(ctx), 
+              borderColor: colorPalette[randomIndex],
+              borderWidth: 6
+            }
+          }
+
+          this.lineChartData.push(new_lineChartData)
+        })
 
 
       })
   }
   setDoughnutChartData() {
-    const keys = Object.keys(this.summary) 
-    const backgroundColor = keys.map(key => this.history.find(res=> res.status_en === key)?.color || 'rgb(231, 231, 231)' )
-    this.summaryKeys = keys.map((key,i)=>({name: key, percentage: this.summary[key].length  / this.history.length * 100, color: backgroundColor[i] } ));
-    const data = keys.map(key=> this.summary[key].length)
+    const keys = Object.keys(this.summary)
+    const backgroundColor = keys.map(key => this.history.find(res => res.status_en === key)?.color || 'rgb(231, 231, 231)')
+    this.summaryKeys = keys.map((key, i) => ({ name: key, percentage: this.summary[key].length / this.history.length * 100, color: backgroundColor[i] }));
+    const data = keys.map(key => this.summary[key].length)
 
     this.doughnutChartData =
     {
       labels: keys,
       datasets: [{
-  
         label: 'AQI',
         data,
-        
-        backgroundColor,
+        backgroundColor
       }]
     };
 
@@ -216,8 +251,15 @@ export class DetailedChartComponent {
 
   }
 
+  onVariableChange(e) {
+    this.type$.next(e)
+  }
+
+  onStationChange(e) {
+    this.stationsToCompare$.next(e)
+  }
+
   onIntervalChange(interval: HistoryInterval) {
     this.activeInterval$.next(interval)
-
   }
 }

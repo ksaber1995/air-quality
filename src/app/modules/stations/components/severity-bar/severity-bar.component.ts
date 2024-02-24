@@ -1,6 +1,5 @@
-import { Colors } from '../../../shared/model/colors';
-import { BreakPoint } from './../../../../models/breakPoint';
 import { Component, Input } from '@angular/core';
+import { BreakPoint } from './../../../../models/breakPoint';
 
 @Component({
   selector: 'app-severity-bar',
@@ -8,7 +7,7 @@ import { Component, Input } from '@angular/core';
   styleUrl: './severity-bar.component.scss'
 })
 export class SeverityBarComponent {
-  gray = Colors.LightGray;
+  gray = '#D1D1D1';
 
   @Input() type : 'horizontal' | 'vertical' = 'horizontal' // horizontal or vertical 
 

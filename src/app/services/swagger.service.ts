@@ -24,7 +24,7 @@ export type HistoryInterval = 'day' | 'week' | 'month'
 
 interface BreakPointsResponse {
   aqi_breakpoints: BreakPoint[]
-  variables_breakpoints: VariableBreakPoint[]
+  variables: VariableBreakPoint[]
 
 }
 
@@ -51,7 +51,7 @@ export class SwaggerService {
         })
         return data
       }),
-      
+
       shareReplay()
     )
   }
@@ -66,7 +66,7 @@ export class SwaggerService {
     const url = BaseUrl + '/stations/overview'
     return this.http.post<{data: OverviewResponse[]}>(url, { ...data })
       .pipe(
-        map(res=> res.data),
+        map(res=> res.data.reverse()),
         map(res=>{
           const data: CustomOverviewResponse = {}
 
@@ -93,7 +93,7 @@ export class SwaggerService {
 
   }
 
-  getStationHistory( data : {station_code: string, type: OverviewType, interval: HistoryInterval, from?: string, to?: string}): Observable<Reading[]> {
+  getStationHistory( data : {station_code: string, type: OverviewType, variable_code?: string, interval: HistoryInterval, from?: string, to?: string}): Observable<Reading[]> {
     const url = BaseUrl + '/station/history'
 
     return this.http.post<{data: Reading[]}>(url, { ...data  }).pipe(map(res=> res.data.reverse()))

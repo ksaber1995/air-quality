@@ -19,12 +19,29 @@
                                                         Variables
                                                 </p>
 
-                                                <nz-checkbox-wrapper style="width: 100%;">
-                                                        <div *ngFor="let variable of variables" class="list-item">
-                                                                <label nz-checkbox
-                                                                        [nzValue]="variable.code">{{variable.abbreviation_en}}</label>
-                                                        </div>
-                                                </nz-checkbox-wrapper>
+                                                <nz-radio-group (ngModelChange)="onVariableChange($event)"
+                                                        [(ngModel)]="type">
+
+                                                        <li nz-menu-item>
+                                                                <label style="display: block; width: 100%;"
+                                                                        class="station-item" [nzValue]="'aqi'" nz-radio>
+                                                                        {{'Air Quality Index'}}</label>
+                                                        </li>
+
+                                                        <nz-divider [nzDashed]="true" class="margin-0"></nz-divider>
+
+                                                        <ng-container *ngFor="let variable of variables">
+                                                                <li nz-menu-item>
+                                                                        <label style="display: block ; width: 100%;"
+                                                                                class="station-item"
+                                                                                [nzValue]="variable.code" nz-radio>
+                                                                                {{variable.abbreviation_en}}</label>
+                                                                </li>
+
+                                                                <nz-divider [nzDashed]="true"
+                                                                        class="margin-0"></nz-divider>
+                                                        </ng-container>
+                                                </nz-radio-group>
                                         </div>
 
                                         <div class="divider">
@@ -37,7 +54,7 @@
                                                         Stations
                                                 </p>
 
-                                                <nz-checkbox-wrapper style="width: 100%;">
+                                                <nz-checkbox-wrapper (nzOnChange)="onStationChange($event)" style="width: 100%;">
                                                         <div class="list-item" *ngFor="let station of stations">
                                                                 <label nz-checkbox
                                                                         [nzValue]="station.code">{{station.name_en}}</label>
@@ -142,7 +159,7 @@
                                         </p>
 
                                         <p class="gray text">
-                                                {{ item.percentage  | number:'.1'}} %
+                                                {{ item.percentage | number:'.1'}} %
                                         </p>
                                 </div>
                         </div>
@@ -150,6 +167,6 @@
         </div>
 </div>
 
-<div class="severity-bar-wrapper">
+<div *ngIf="breakPoints?.length > 0" class="severity-bar-wrapper">
         <app-severity-bar [breakPoints]="breakPoints"></app-severity-bar>
 </div>
