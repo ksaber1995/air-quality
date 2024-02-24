@@ -2,11 +2,13 @@ interface ReadingStatus {
     sequence: number;
 }
 
-interface Reading {
+export interface Reading {
     aggregated_at: string;
     // status: ReadingStatus[];
     value: number;
     color: string;
+    status_ar: string
+    status_en: string
 }
 
 interface Variable {
@@ -20,7 +22,7 @@ interface Variable {
 
 interface Unit {
     code: string;
-    abbreviation_en?:string
+    abbreviation_en?: string
 }
 
 interface AqiData {

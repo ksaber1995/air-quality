@@ -1,11 +1,9 @@
-
 <div class="wrapper veryLightGray-bg">
         <h1 class="main-header">
                 Historical Data
         </h1>
 
         <div class="filters">
-
                 <button nz-button nz-dropdown [nzClickHide]="false" [nzTrigger]="'click'" [nzDropdownMenu]="compareMenu"
                         class="compare-btn">
                         Compare
@@ -22,16 +20,16 @@
                                                 </p>
 
                                                 <nz-checkbox-wrapper style="width: 100%;">
-                                                        <div *ngFor="let station of stations" class="list-item">
+                                                        <div *ngFor="let variable of variables" class="list-item">
                                                                 <label nz-checkbox
-                                                                        [nzValue]="station">{{station}}</label>
+                                                                        [nzValue]="variable.code">{{variable.abbreviation_en}}</label>
                                                         </div>
                                                 </nz-checkbox-wrapper>
                                         </div>
 
                                         <div class="divider">
 
-                                                <nz-divider [nzDashed]="true" [nzType]="'vertical'" ></nz-divider>
+                                                <nz-divider [nzDashed]="true" [nzType]="'vertical'"></nz-divider>
                                         </div>
 
                                         <div class="stations">
@@ -39,36 +37,38 @@
                                                         Stations
                                                 </p>
 
-                                                <!-- (nzOnChange)="log($event)"  -->
                                                 <nz-checkbox-wrapper style="width: 100%;">
                                                         <div class="list-item" *ngFor="let station of stations">
                                                                 <label nz-checkbox
-                                                                        [nzValue]="station">{{station}}</label>
+                                                                        [nzValue]="station.code">{{station.name_en}}</label>
                                                         </div>
                                                 </nz-checkbox-wrapper>
                                         </div>
                                 </div>
-
                         </div>
                 </nz-dropdown-menu>
 
-                <div class="date-filters">
-                        <button nz-button class="active">Day</button>
-                        <button nz-button>Week</button>
-                        <button nz-button>Month</button>
+                <div div *ngIf="activeInterval$ | async as activeInterval" class="date-filters">
+                        <button (click)="onIntervalChange('day')" nz-button
+                                [class.active]="activeInterval === 'day'">Day</button>
+                        <button (click)="onIntervalChange('week')" nz-button
+                                [class.active]="activeInterval === 'week'">Week</button>
+                        <button (click)="onIntervalChange('month')" nz-button
+                                [class.active]="activeInterval === 'month'">Month</button>
 
 
-                        <ng-template #calendar>
+
+                        <!-- <ng-template #calendar>
                                 <span style="font-size: 22px; " nz-size="large" nz-icon nzType="calendar"
                                         nzTheme="outline"></span>
-                        </ng-template>
+                        </ng-template> -->
 
                         <!-- <nz-date-picker [nzSuffixIcon]="calendar" class="simple" [(ngModel)]="date" [class.hidden]="!date"
                                 (ngModelChange)="onDateChange()"></nz-date-picker> -->
 
 
-                        <nz-range-picker [nzSuffixIcon]="calendar" class="simple" [class.hidden]="!date"
-                                [(ngModel)]="date" (ngModelChange)="onDateChange()"></nz-range-picker>
+                        <!-- <nz-range-picker [nzSuffixIcon]="calendar" class="simple" [class.hidden]="!date"
+                                [(ngModel)]="date" (ngModelChange)="onDateChange()"></nz-range-picker> -->
                         <br />
 
                         <button nz-button nz-dropdown [nzDropdownMenu]="menu" class="download">
@@ -148,9 +148,8 @@
                         </div>
                 </div>
         </div>
-
 </div>
 
 <div class="severity-bar-wrapper">
-        <app-severity-bar></app-severity-bar>
+        <app-severity-bar [breakPoints]="breakPoints"></app-severity-bar>
 </div>

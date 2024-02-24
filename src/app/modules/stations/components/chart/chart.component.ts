@@ -1,4 +1,3 @@
-import { interval, retry } from 'rxjs';
 import { Component, Input, OnInit } from '@angular/core';
 import { ChartDataset, ChartOptions, ChartTypeRegistry } from 'chart.js';
 import { BreakPoint } from '../../../../models/breakPoint';

@@ -60,7 +60,7 @@ export function weeksEndsToday() {
     return weekdaysEndingToday.reverse();
 }
 
-function getDayName(index){
+export function getDayName(index){
     const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
     return weekdays[index]
@@ -84,4 +84,24 @@ export function getDateNsDaysAgo(n) {
 
     const formattedDate = `${nDaysAgo.getDate()}/${nDaysAgo.getMonth() + 1}/${nDaysAgo.getFullYear()}`;
     return formattedDate
+}
+
+
+export function formatDateYYMMDD(date: Date) {
+    
+    // Get year, month, and day components
+    const year = date.getFullYear().toString().slice(-2); // Get last two digits of the year
+    let month = (date.getMonth() + 1).toString(); // Month is 0-indexed, so add 1
+    if (month.length === 1) {
+        month = '0' + month; // Add leading zero if month is a single digit
+    }
+    let day = date.getDate().toString();
+    if (day.length === 1) {
+        day = '0' + day; // Add leading zero if day is a single digit
+    }
+
+    // Concatenate year, month, and day with no separators
+    const formattedDate = day + '/' + month + '/'+ year;
+
+    return formattedDate;
 }

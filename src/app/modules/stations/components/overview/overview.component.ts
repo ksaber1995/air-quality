@@ -1,9 +1,9 @@
-import { BreakPoint } from './../../../../models/breakPoint';
-import { HistoryInterval, OverviewType, SwaggerService } from './../../../../services/swagger.service';
 import { Component, OnInit } from '@angular/core';
+import { BehaviorSubject, combineLatest, map, switchMap } from 'rxjs';
+import { OmmanDate, daysSincePastDate, getDateOnNumber, getTimeOnNumber } from '../../../../unitlize/custom-date';
 import { IBreadCrumb } from '../../../shared/components/bread-crumb/model';
-import { BehaviorSubject, combineLatest, from, interval, map, switchMap } from 'rxjs';
-import { OmmanDate, daysSincePastDate, formatTime, getDateOnNumber, getTimeOnNumber, weeksEndsToday } from '../../../../unitlize/custom-date';
+import { BreakPoint } from './../../../../models/breakPoint';
+import { HistoryInterval, SwaggerService } from './../../../../services/swagger.service';
 const Radius = 12;
 
 @Component({
@@ -63,7 +63,7 @@ export class OverviewComponent implements OnInit {
         this.isLoaded = false;
         const filter_type = type === 'aqi' ? 'aqi' : 'variable';
         const variable_code = type !== 'aqi' ? type : undefined;
-        debugger
+        
         return this.swagger.getStationsOverview({ type: filter_type, interval, from, to, variable_code})
       }))
       .subscribe(items => {

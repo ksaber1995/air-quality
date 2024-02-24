@@ -1,154 +1,161 @@
 <app-bread-crumb [routes]="routes" [target]="'Overview'"></app-bread-crumb>
 
-<div class="wrapper veryLightGray-bg main-radius d-flex justify-content-between">
-    <div class="title">
+<ng-container *ngIf="isLoaded">
 
-        <h1 class="main-header">
-            {{currentStation.name_en}} Station
+    <div class="wrapper veryLightGray-bg main-radius d-flex justify-content-between">
+        <div class="title">
+
+            <h1 class="main-header">
+                {{currentStation?.name_en}} Station
 
 
-            <a nz-dropdown [nzDropdownMenu]="menu">
-                <span nz-icon nzType="caret-down" nzTheme="outline"></span>
-            </a>
+                <a nz-dropdown [nzDropdownMenu]="menu">
+                    <span nz-icon nzType="caret-down" nzTheme="outline"></span>
+                </a>
 
-            <nz-dropdown-menu #menu="nzDropdownMenu">
-                <ul nz-menu nzSelectable>
-                    <nz-radio-group [(ngModel)]="currentStationCode">
+                <nz-dropdown-menu #menu="nzDropdownMenu">
+                    <ul nz-menu nzSelectable>
+                        <nz-radio-group [(ngModel)]="currentStationCode">
 
-                        <ng-container *ngFor="let station of stations">
+                            <ng-container *ngFor="let station of stations">
 
-                            <li nz-menu-item>
-                                <label class="station-item" [nzValue]="station.code" nz-radio> {{station.name_en}}</label>
-                            </li>
+                                <li nz-menu-item>
+                                    <label class="station-item" [nzValue]="station.code" nz-radio>
+                                        {{station.name_en}}</label>
+                                </li>
 
-                            <nz-divider [nzDashed]="true" class="margin-0"></nz-divider>
-                        </ng-container>
-                    </nz-radio-group>
-                </ul>
-            </nz-dropdown-menu>
+                                <nz-divider [nzDashed]="true" class="margin-0"></nz-divider>
+                            </ng-container>
+                        </nz-radio-group>
+                    </ul>
+                </nz-dropdown-menu>
 
-        </h1>
+            </h1>
 
-        <p class="gray par">
-            Manage by {{details?.organization?.name_en}}
-        </p>
+            <p class="gray par">
+                Manage by {{details?.organization?.name_en}}
+            </p>
+        </div>
+
+        <div class="details-wrapper">
+
+            <div [style]="{'background': details?.aqi[0]?.color}" class="details">
+                <span class="item">
+                    AQI
+                </span>
+
+                <span class="number">
+                    {{details?.aqi[0]?.value}}
+                </span>
+
+                <nz-divider [nzType]="'vertical'"></nz-divider>
+
+                <div class="status">
+
+                    <img width="25" height="25"
+                        [src]="'assets/icons/' + details?.aqi[0]?.status_en?.toLowerCase() + '-face.svg'" alt="">
+
+                    <span class="item">
+                        {{details.aqi[0]?.status_en}}
+                    </span>
+                </div>
+            </div>
+
+            <p class="gray date">
+                Last updated {{lastUpdate | date:'h:mm dd-MM-yyyy a'}}
+            </p>
+        </div>
+
     </div>
 
-    <div class="details-wrapper">
+    <div class="wrapper veryLightGray-bg main-radius">
+        <div class="update-header d-flex justify-content-between">
 
-        <div [style]="{'background': details.aqi[0]?.color}" class="details">
-            <span class="item">
-                AQI
-            </span>
+            <h1 class="main-header">
+                Latest Update
+            </h1>
 
-            <span class="number">
-                {{details.aqi[0].value}}
-            </span>
+            <div class="buttons">
+                <button class="no-min-width" (click)="carouselRef.prev()" nz-button nzType="text">
+                    <span nz-icon nzType="caret-left" nzTheme="outline"></span>
+                </button>
 
-            <nz-divider [nzType]="'vertical'"></nz-divider>
+                <button class="no-min-width" (click)="carouselRef.next()" nz-button nzType="text">
+                    <span nz-icon nzType="caret-right" nzTheme="outline"></span>
+                </button>
 
-            <div class="status">
-
-                <img width="25" height="25" [src]="'assets/icons/' + details.aqi[0]?.status_en?.toLowerCase() + '-face.svg'" alt="">
-
-                <span class="item">
-                    {{details.aqi[0]?.status_en}}
-                </span>
             </div>
         </div>
 
-        <p class="gray date">
-            Last updated {{lastUpdate | date:'h:mm dd-MM-yyyy a'}}
-        </p>
-    </div>
 
-</div>
+        <div class="carousel-items">
+            <owl-carousel-o #carouselRef [options]="customOptions">
+                <ng-template [width]="190" *ngFor="let item of details?.variables" carouselSlide>
+                    <div class="lightGray-bg update-item">
+                        <div class="item-header">
+                            <p class="gray name">{{item.variable.code}}</p>
 
-<div class="wrapper veryLightGray-bg main-radius">
-    <div class="update-header d-flex justify-content-between">
+                            <span [ngStyle]="{'border-color': item.readings[0]?.color}" class="brief-circle">
+                                <span [ngStyle]="{'background': item.readings[0]?.color}" class="inner"></span>
+                            </span>
+                        </div>
 
-        <h1 class="main-header">
-            Latest Update
-        </h1>
-    
-        <div class="buttons">
-            <button class="no-min-width" (click)="carouselRef.prev()" nz-button nzType="text">
-                <span nz-icon nzType="caret-left" nzTheme="outline"></span>
-            </button>
+                        <nz-divider></nz-divider>
+                        <p class="text-center seaGreen bold value">
+                            {{item.readings[0]?.value}} {{item.unit.abbreviation_en}}
+                        </p>
+                    </div>
+                </ng-template>
 
-            <button class="no-min-width" (click)="carouselRef.next()" nz-button nzType="text">
-                <span nz-icon nzType="caret-right" nzTheme="outline"></span>
-            </button>
 
+                <ng-template [width]="210" *ngFor="let item of details.weather" carouselSlide>
+                    <div class="lightGray-bg update-item">
+                        <div class="item-header">
+                            <p *ngIf="item.variable.code === 'AT'" class="gray name weather">Temperature</p>
+                            <p *ngIf="item.variable.code === 'AP'" class="gray name weather">Pressure</p>
+                            <p *ngIf="item.variable.code !== 'AT' && item.variable.code !== 'AP'  "
+                                class="gray name weather">{{item.variable.name_en}}</p>
+
+                            <span [ngStyle]="{'border-color': '#25B5B1'}" class="brief-circle">
+                                <span [ngStyle]="{'background': '#25B5B1'}" class="inner"></span>
+                            </span>
+                        </div>
+
+                        <nz-divider></nz-divider>
+
+                        <p class="text-center seaGreen bold value">
+                            {{item.readings[0]?.value}} {{item.unit.abbreviation_en}}
+                        </p>
+                    </div>
+                </ng-template>
+
+
+
+                <ng-template [width]="210" *ngFor="let item of details.others" carouselSlide>
+                    <div class="lightGray-bg update-item">
+                        <div class="item-header">
+
+                            <p class="gray name weather">{{item.variable.code}}</p>
+
+                            <span [ngStyle]="{'border-color':   item.readings[0]?.color || '#25B5B1'}"
+                                class="brief-circle">
+                                <span [ngStyle]="{'background':  item.readings[0]?.color || '#25B5B1'}"
+                                    class="inner"></span>
+                            </span>
+                        </div>
+
+                        <nz-divider></nz-divider>
+
+                        <p class="text-center seaGreen bold value">
+                            {{item.readings[0]?.value}} {{item.unit.abbreviation_en}}
+                        </p>
+                    </div>
+                </ng-template>
+            </owl-carousel-o>
         </div>
     </div>
 
 
-    <div class="carousel-items">
-        <owl-carousel-o #carouselRef [options]="customOptions">
-            <ng-template [width]="190" *ngFor="let item of details.variables" carouselSlide>
-                <div class="lightGray-bg update-item">
-                    <div class="item-header">
-                        <p class="gray name">{{item.variable.code}}</p>
-
-                        <span [ngStyle]="{'border-color': item.readings[0]?.color}" class="brief-circle">
-                            <span [ngStyle]="{'background': item.readings[0]?.color}" class="inner"></span>
-                        </span>
-                    </div>
-
-                    <nz-divider></nz-divider>
-
-                    <p class="text-center seaGreen bold value">
-                        {{item.readings[0]?.value}} {{item.unit.abbreviation_en}}
-                    </p>
-                </div>
-            </ng-template>
-
-
-            <ng-template [width]="210" *ngFor="let item of details.weather" carouselSlide>
-                <div class="lightGray-bg update-item">
-                    <div class="item-header">
-                        <p *ngIf="item.variable.code === 'AT'" class="gray name weather">Temperature</p>
-                        <p *ngIf="item.variable.code === 'AP'" class="gray name weather">Pressure</p>
-                        <p *ngIf="item.variable.code !== 'AT' && item.variable.code !== 'AP'  " class="gray name weather">{{item.variable.name_en}}</p>
-
-                        <span [ngStyle]="{'border-color': '#25B5B1'}" class="brief-circle">
-                            <span [ngStyle]="{'background': '#25B5B1'}" class="inner"></span>
-                        </span>
-                    </div>
-
-                    <nz-divider></nz-divider>
-
-                    <p class="text-center seaGreen bold value">
-                        {{item.readings[0]?.value}} {{item.unit.abbreviation_en}}
-                    </p>
-                </div>
-            </ng-template>
-
-
-            
-            <ng-template [width]="210" *ngFor="let item of details.others" carouselSlide>
-                <div class="lightGray-bg update-item">
-                    <div class="item-header">
-                      
-                        <p class="gray name weather">{{item.variable.code}}</p>
-
-                        <span [ngStyle]="{'border-color':   item.readings[0]?.color || '#25B5B1'}" class="brief-circle">
-                            <span [ngStyle]="{'background':  item.readings[0]?.color || '#25B5B1'}" class="inner"></span>
-                        </span>
-                    </div>
-
-                    <nz-divider></nz-divider>
-
-                    <p class="text-center seaGreen bold value">
-                        {{item.readings[0]?.value}} {{item.unit.abbreviation_en}}
-                    </p>
-                </div>
-            </ng-template>
-        </owl-carousel-o>
-    </div>
-
-</div>
-
-
-<app-detailed-chart></app-detailed-chart>
+    <app-detailed-chart [variables]="variables" [stations]="stations" [details]="details"
+    [currentStation]="currentStation"></app-detailed-chart>
+</ng-container>

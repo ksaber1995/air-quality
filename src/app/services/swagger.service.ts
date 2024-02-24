@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { DetailedStation, Station } from '../models/Station';
+import { DetailedStation, Reading, Station } from '../models/Station';
 import { Observable, map, shareReplay } from 'rxjs';
 import { BreakPoint, VariableBreakPoint } from '../models/breakPoint';
 import { CustomOverviewResponse, OverviewResponse } from '../models/overview';
@@ -78,12 +78,11 @@ export class SwaggerService {
 
   }
 
-  // getStationHistory(station_code ) {
-  //   const url = BaseUrl + '/station/history'
+  getStationHistory( data : {station_code: string, type: OverviewType, interval: HistoryInterval, from?: string, to?: string}): Observable<Reading[]> {
+    const url = BaseUrl + '/station/history'
 
-  //   return this.http.post(url, { station_code  }).pipe(map((res: StationsResponse) => res.stations), shareReplay())
-
-  // }
+    return this.http.post<{data: Reading[]}>(url, { ...data  }).pipe(map(res=> res.data.reverse()))
+  }
 
 
 

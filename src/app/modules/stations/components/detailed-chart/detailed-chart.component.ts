@@ -1,14 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ChartData, ChartDataset, ChartOptions } from 'chart.js';
 import { Levels } from '../../../shared/model/severity';
-import { getColorMapping } from '../../helper/background';
 import { getRandomNumber } from '../summary/model';
-import { Stations } from '../../../shared/model/stations';
+import { DetailedStation, Station } from '../../../../models/Station';
+import { HistoryInterval, OverviewType, SwaggerService } from '../../../../services/swagger.service';
+import { combineLatest, map, shareReplay, interval, BehaviorSubject, switchMap } from 'rxjs';
+import { OmmanDate, formatDateYYMMDD, formatTime, getDayName } from '../../../../unitlize/custom-date';
+import { BreakPoint } from '../../../../models/breakPoint';
 
 
 
+const getBackground = (value, breakPoints: BreakPoint[]) => {
+  return breakPoints.find(res => value >= res.breakpoint_start && value <= res.breakpoint_end)?.color
 
-const data = [getRandomNumber(500), getRandomNumber(500), getRandomNumber(500), getRandomNumber(500), getRandomNumber(500), getRandomNumber(500), getRandomNumber(500), getRandomNumber(500), getRandomNumber(500), getRandomNumber(500), getRandomNumber(500), getRandomNumber(500), getRandomNumber(500)];
+}
 
 @Component({
   selector: 'app-detailed-chart',
@@ -16,66 +21,63 @@ const data = [getRandomNumber(500), getRandomNumber(500), getRandomNumber(500), 
   styleUrl: './detailed-chart.component.scss'
 })
 export class DetailedChartComponent {
+  @Input() stations: Partial<Station>[];
+  @Input() variables: { abbreviation_en: any; code: string; }[];
+  @Input() details: DetailedStation;
+  @Input() currentStation: Station
+
+
+  activeInterval$ = new BehaviorSubject<HistoryInterval>('day')
+
+  interval: HistoryInterval = 'day';
+
   type;
   date: Date;
   getRandomNumber = getRandomNumber
   data = Levels;
   downloadType = 'pdf'
-  
-  stations = Stations
-  
-  public lineChartData: ChartDataset[] = [
-    {
-      data: data,
 
-      label: 'Nizwa',
+  breakPoints: BreakPoint[] = [];
 
 
-      pointBackgroundColor: data.map(res => getColorMapping(res)),
 
-      segment: {
-        // backgroundColor: (ctx)=> getBackground(ctx), 
-        borderColor: (ctx) => getColorMapping(ctx.p0.parsed.y),
-        borderWidth: 6
-        // borderColor
-      }
-    },
-  ];
+
+  public lineChartData: ChartDataset[];
 
   public doughnutChartOptions = {
     responsive: true,
     // cutout: 50,  
     cutout: '75%',
 
-    elements:{
+    elements: {
       arc: {
         borderWidth: 1
-        
+
       },
-  
-      bar:{
+
+      bar: {
         borderWidth: 10
       },
-      line:{
+      line: {
         borderWidth: 10
       },
-      point:{
+      point: {
         borderWidth: 10
       }
     },
 
- 
+
 
   };
 
 
-  public lineChartLabels: string[] = ['12am', '1am', '2am', '3am', '4am', '5am', '6am', '7am', '8am', '9am', '10am', '11am', '12pm'];
+  public lineChartLabels: string[];
   public doughnutChartLabels: string[] = Levels.map(res => res.name);
 
   public doughnutChartData: ChartData<'doughnut'> = {
     labels: this.doughnutChartLabels,
     datasets: [{
-      
+
       // label: 'AQI',
       data: Levels.map(res => getRandomNumber(500)),
       backgroundColor: Levels.map(res => res.color),
@@ -104,22 +106,85 @@ export class DetailedChartComponent {
 
       },
 
+      x: {
+        ticks: {
+          // stepSize: 3,
+          // maxTicksLimit: 28
+
+
+        }
+
+
+
+      }
+
 
     },
   };
+  history: any[];
 
 
 
 
-  constructor() {
+  constructor(private swagger: SwaggerService) {
 
+  }
+
+  getHistory(interval: HistoryInterval, type: OverviewType) {
+    return this.swagger.getStationHistory({ station_code: this.currentStation.code, type, interval })
   }
 
   ngOnInit(): void {
-    // this.initializeChart()
+    const breakPoints$ = this.swagger.getBreakPoints().pipe(map(res => res.aqi_breakpoints?.sort((a, b) => a.sequence - b.sequence))).pipe(shareReplay())
+
+    combineLatest([this.activeInterval$])
+      .pipe(switchMap(([interval]) => {
+        this.interval = interval;
+
+        return combineLatest([this.getHistory(interval, 'aqi'), breakPoints$])
+      }))
+      .subscribe(([history, breakPoints]) => {
+        this.history = history;
+        this.breakPoints = breakPoints
+
+        if (this.interval === 'day' || this.interval === 'week') {
+          this.lineChartLabels = this.history.map(res => getDayName(OmmanDate(res.aggregated_at).getDay()) + formatTime(OmmanDate(res.aggregated_at)))
+
+
+        }
+
+        else if (this.interval === 'month') {
+          this.lineChartLabels = this.history.map(res => formatDateYYMMDD(OmmanDate(res.aggregated_at)))
+        }
+
+
+        this.lineChartData = [
+          {
+            data: this.history.map(res => res.value || 0),
+
+            label: this.currentStation.name_en,
+
+
+            pointBackgroundColor: this.history.map(res => res.color),
+
+            segment: {
+              // backgroundColor: (ctx)=> getBackground(ctx), 
+              borderColor: (ctx) => getBackground(ctx.p0.parsed.y, breakPoints),
+              borderWidth: 6
+            }
+          },
+        ]
+
+
+      })
   }
 
   onDateChange() {
+
+  }
+
+  onIntervalChange(interval: HistoryInterval) {
+    this.activeInterval$.next(interval)
 
   }
 
