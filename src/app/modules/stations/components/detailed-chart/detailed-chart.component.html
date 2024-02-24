@@ -104,7 +104,7 @@
         <div nz-row [nzGutter]="{ xs: 4, sm: 20, md: 60, lg: 80 }" class="charts-wrapper">
 
 
-                <div nz-col class="gutter-row chart" [nzSpan]="18">
+                <div nz-col class="gutter-row chart" [nzSpan]="((type$ | async) === 'aqi') ? 18 : 24">
                         <div style="display: block;">
                                 <canvas id="lineChartCanvas" #lineChartCanvas baseChart [datasets]="lineChartData"
                                         [labels]="lineChartLabels" [options]="lineChartOptions" [legend]="false"
@@ -113,7 +113,7 @@
                         </div>
                 </div>
 
-                <div nz-col [nzSpan]="6" class="gutter-row">
+                <div *ngIf="(type$ | async) === 'aqi'" nz-col [nzSpan]="6" class="gutter-row">
                         <div class="pipe-chart">
                                 <p class="summary-title">Breakdown</p>
                                 <div class="summary-wrapper">
@@ -131,7 +131,7 @@
                         <nz-divider [nzDashed]="true"></nz-divider>
 
                         <div class="brief">
-                                <div *ngFor="let item of data; index as i" class="item">
+                                <div *ngFor="let item of summaryKeys; index as i" class="item">
                                         <p class="gray text">
                                                 <span [ngStyle]="{'border-color': item.color}" class="brief-circle">
                                                         <span [ngStyle]="{'background': item.color}"
@@ -142,7 +142,7 @@
                                         </p>
 
                                         <p class="gray text">
-                                                {{getRandomNumber(50)}} %
+                                                {{ item.percentage  | number:'.1'}} %
                                         </p>
                                 </div>
                         </div>
