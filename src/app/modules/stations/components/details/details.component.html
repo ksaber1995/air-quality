@@ -102,7 +102,7 @@
 
                         <nz-divider></nz-divider>
                         <p class="text-center seaGreen bold value">
-                            {{item.readings[0]?.value}} {{item.unit.abbreviation_en}}
+                            {{item.readings[0]?.value}} {{item?.unit?.abbreviation_en}}
                         </p>
                     </div>
                 </ng-template>
@@ -124,7 +124,7 @@
                         <nz-divider></nz-divider>
 
                         <p class="text-center seaGreen bold value">
-                            {{item.readings[0]?.value}} {{item.unit.abbreviation_en}}
+                            {{item.readings[0]?.value}} {{item?.unit?.abbreviation_en}}
                         </p>
                     </div>
                 </ng-template>
@@ -147,7 +147,7 @@
                         <nz-divider></nz-divider>
 
                         <p class="text-center seaGreen bold value">
-                            {{item.readings[0]?.value}} {{item.unit.abbreviation_en}}
+                            {{item.readings[0]?.value || 'na'}} {{item?.unit?.abbreviation_en }}
                         </p>
                     </div>
                 </ng-template>
