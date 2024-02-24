@@ -1,7 +1,11 @@
-
 @import 'colors';
 
-.severity-bar-wrapper{
+::ng-deep .ant-menu-title-content {
+    width: 100%;
+    display: block;
+}
+
+.severity-bar-wrapper {
     display: flex;
     justify-content: center;
     margin: 20px 0;
@@ -9,28 +13,30 @@
 
 }
 
-.filters{
+.filters {
     margin-bottom: 30px;
     display: flex;
     justify-content: space-between;
     align-items: center
 }
 
-.wrapper{
+.wrapper {
     padding: 2rem;
     border-radius: 25px;
 }
 
 
-.date-filters{
-    button{
+.date-filters {
+    button {
         margin-right: 20px;
     }
 }
-nz-radio-group{
+
+nz-radio-group {
     width: 100%;
 }
-.airquality-btn{
+
+.airquality-btn {
     display: flex;
     align-items: center;
     justify-content: space-between;

@@ -1,12 +1,12 @@
 <app-bread-crumb [routes]="routes" [target]="'Overview'"></app-bread-crumb>
 
-<div class="wrapper veryLightGray-bg">
+<div class="wrapper overview veryLightGray-bg">
     <h1 class="main-header">
         Stations Overview
     </h1>
 
     <div class="content">
-        <div class="filters">
+        <div *ngIf="type$ | async as activeVariable" class="filters">
             <!-- <nz-select [(ngModel)]="type" nzShowSearch nzAllowClear>
                 <nz-option nzValue="all" nzLabel="Air Quality Index" ></nz-option>
                 
@@ -17,20 +17,26 @@
             </nz-select> -->
 
 
-            <button nz-button nz-dropdown [nzClickHide]="false" [nzTrigger]="'click'" [nzDropdownMenu]="menu"
+            <button  nz-button nz-dropdown [nzClickHide]="false" [nzTrigger]="'click'" [nzDropdownMenu]="menu"
                 class="airquality-btn">
-                Air Quality Index
+                {{activeVariable  === 'aqi' ? 'Air Quality Index' : activeVariable}}
                 <span nz-icon nzType="down"></span>
             </button>
 
-            <nz-dropdown-menu *ngFor="let item of airQualityItems" #menu="nzDropdownMenu">
+            <nz-dropdown-menu #menu="nzDropdownMenu">
                 <ul nz-menu nzSelectable>
-                    <nz-radio-group [(ngModel)]="type">
+                    <nz-radio-group (ngModelChange)="onTypeChange($event)" [(ngModel)]="type">
 
-                        <ng-container *ngFor="let item of airQualityItems">
+                        <li nz-menu-item>
+                            <label style="display: block; width: 100%;"  class="station-item" [nzValue]="'aqi'" nz-radio> {{'Air Quality Index'}}</label>
+                        </li>
+
+                        <nz-divider [nzDashed]="true" class="margin-0"></nz-divider>
+
+                        <ng-container *ngFor="let variable of variables$ |async">
 
                             <li nz-menu-item>
-                                <label class="station-item" [nzValue]="item.name" nz-radio> {{item.name}}</label>
+                                <label style="display: block ; width: 100%;" class="station-item" [nzValue]="variable.code" nz-radio> {{variable.abbreviation_en}}</label>
                             </li>
 
                             <nz-divider [nzDashed]="true" class="margin-0"></nz-divider>
@@ -41,9 +47,12 @@
 
 
             <div *ngIf="activeInterval$ | async as activeInterval" class="date-filters">
-                <button (click)="onIntervalChange('day')"  nz-button [class.active]="activeInterval === 'day'" >Day</button>
-                <button (click)="onIntervalChange('week')" nz-button [class.active]="activeInterval === 'week'">Week</button>
-                <button (click)="onIntervalChange('month')" nz-button [class.active]="activeInterval === 'month'">Month</button>
+                <button (click)="onIntervalChange('day')" nz-button
+                    [class.active]="activeInterval === 'day'">Day</button>
+                <button (click)="onIntervalChange('week')" nz-button
+                    [class.active]="activeInterval === 'week'">Week</button>
+                <button (click)="onIntervalChange('month')" nz-button
+                    [class.active]="activeInterval === 'month'">Month</button>
 
 
                 <nz-date-picker class="simple" [(ngModel)]="date" [class.hidden]="!date"
@@ -52,11 +61,12 @@
         </div>
 
 
-        <app-chart *ngIf="isLoaded  && breakPointLoaded" [data]="data" [breakPoints]="breakPoints" [interval]="activeInterval$ | async"></app-chart>
+        <app-chart *ngIf="isLoaded  && breakPointLoaded" [data]="data" [breakPoints]="breakPoints"
+            [interval]="activeInterval$ | async"></app-chart>
     </div>
 </div>
 
 
 <div class="severity-bar-wrapper">
-<app-severity-bar [breakPoints]="breakPoints"></app-severity-bar>
+    <app-severity-bar [breakPoints]="breakPoints"></app-severity-bar>
 </div>

@@ -2,7 +2,6 @@ import { BreakPoint } from './../../../../models/breakPoint';
 import { HistoryInterval, OverviewType, SwaggerService } from './../../../../services/swagger.service';
 import { Component, OnInit } from '@angular/core';
 import { IBreadCrumb } from '../../../shared/components/bread-crumb/model';
-import { airQualityItems } from '../../../shared/model/air-quality';
 import { BehaviorSubject, combineLatest, from, interval, map, switchMap } from 'rxjs';
 import { OmmanDate, daysSincePastDate, formatTime, getDateOnNumber, getTimeOnNumber, weeksEndsToday } from '../../../../unitlize/custom-date';
 const Radius = 12;
@@ -15,8 +14,7 @@ const Radius = 12;
 export class OverviewComponent implements OnInit {
   date: Date;
 
-  airQualityItems = airQualityItems;
-  type = 'all'
+  type = 'aqi'
   routes: IBreadCrumb[] = [
     {
       title: 'Home',
@@ -25,7 +23,7 @@ export class OverviewComponent implements OnInit {
   ];
 
   activeInterval$ = new BehaviorSubject<HistoryInterval>('day')
-  type$ = new BehaviorSubject<OverviewType>('aqi')
+  type$ = new BehaviorSubject<string>('aqi')
   from$ = new BehaviorSubject<string>(null)
   to$ = new BehaviorSubject<string>(null)
   overview$ = this.swagger.getStationsOverview({ type: 'aqi', interval: 'month' });
@@ -38,6 +36,7 @@ export class OverviewComponent implements OnInit {
   data = []
   isLoaded = false;
   breakPointLoaded = false;
+  
   constructor(private swagger: SwaggerService) { }
   ngOnInit(): void {
     this.getData();
@@ -62,8 +61,10 @@ export class OverviewComponent implements OnInit {
 
       .pipe(switchMap(([interval, type, from, to]) => {
         this.isLoaded = false;
-
-        return this.swagger.getStationsOverview({ type, interval, from, to })
+        const filter_type = type === 'aqi' ? 'aqi' : 'variable';
+        const variable_code = type !== 'aqi' ? type : undefined;
+        debugger
+        return this.swagger.getStationsOverview({ type: filter_type, interval, from, to, variable_code})
       }))
       .subscribe(items => {
         const interval = this.activeInterval$.getValue();
@@ -133,6 +134,15 @@ export class OverviewComponent implements OnInit {
 
   onDateChange() {
 
+  }
+
+  onTypeChange(e: string){
+    
+    if(e === 'aqi'){
+      this.type$.next('aqi')
+    }else{
+      this.type$.next(e)
+    }
   }
 
   onIntervalChange(interval: HistoryInterval) {

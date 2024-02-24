@@ -48,7 +48,7 @@ export class SwaggerService {
   getStationsCode() : Observable<CodesResponse>{
     const url = BaseUrl + '/stations/codes'
 
-    return this.http.get<CodesResponse>(url).pipe(shareReplay())
+    return this.http.get<CodesResponse>(url)
   }
 
   getStationsOverview( data: {type : OverviewType , interval: HistoryInterval, variable_code?: string, from?: string, to?: string} ) : Observable< CustomOverviewResponse> {
