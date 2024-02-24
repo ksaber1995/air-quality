@@ -7,7 +7,7 @@
 <div class="table-wrapper veryLightGray-bg main-radius">
 
 
-  <a routerLink="/stations/1" class="details">
+  <a [routerLink]="'/stations/' + station.code" class="details">
     <div class="information">
 
       <h1> {{station?.name_en}} </h1>

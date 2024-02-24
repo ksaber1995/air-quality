@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { IBreadCrumb } from '../../../shared/components/bread-crumb/model';
-import { Levels } from '../../../shared/model/severity';
 import { getRandomNumber } from '../summary/model';
-import { Stations } from '../../../shared/model/stations';
 import { customOptions } from './model';
 import { airQualityItems } from '../../../shared/model/air-quality';
 import { getColorMapping } from '../../helper/background';
 import { OmmanDate } from '../../../../unitlize/custom-date';
+import { SwaggerService } from '../../../../services/swagger.service';
+import { DetailedStation, Station } from '../../../../models/Station';
+import { ActivatedRoute } from '@angular/router';
+import { combineLatest, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-details',
@@ -14,6 +16,8 @@ import { OmmanDate } from '../../../../unitlize/custom-date';
   styleUrl: './details.component.scss'
 })
 export class DetailsComponent implements OnInit {
+  currentStationCode ;
+
   routes: IBreadCrumb[] = [
     {
       title: 'Home',
@@ -23,23 +27,33 @@ export class DetailsComponent implements OnInit {
 
   
   customOptions = customOptions;
-  stations = Stations;
-  airQualityItems = airQualityItems.map(res=> ({ ...res, value: getRandomNumber(500), color:  getColorMapping(getRandomNumber(500))}));
-  status 
-  value;
+  currentStation;
+  stations: Partial< Station > [];
+  lastUpdate;
+  variables: { abbreviation_en: any; code: string; }[];
+  details: DetailedStation;
 
-  currentStation = Stations[0]
-  date = OmmanDate()
-
-  constructor() { }
+  constructor(private swagger: SwaggerService, private route: ActivatedRoute) { }
   
   ngOnInit(): void {
-   this.value = getRandomNumber(6);
-    this.status = Levels[this.value]
-    while(this.value == 0 ){
-      this.value = getRandomNumber(6);
-      this.status = Levels[this.value]
-    }
+ 
+    this.getData();
+  }
+
+  getData() {
+    this.route.paramMap.pipe(switchMap(res=>{
+      this.currentStationCode =  res['params'].code
+      return combineLatest([this.swagger.getStationsCode(), this.swagger.getStationDetails(this.currentStationCode)]) ;
+    }))
+
+    .subscribe(([codes, details])=>{
+      this.stations = codes.stations;
+      this.variables = codes.variables;
+      this.currentStation = this.stations.find(res=> res.code === this.currentStationCode)
+     
+      this.details = details
+      this.lastUpdate = OmmanDate( this.details.aqi[0].aggregated_at)
+    })
   }
 
   

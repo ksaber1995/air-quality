@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Station } from '../models/Station';
+import { DetailedStation, Station } from '../models/Station';
 import { Observable, map, shareReplay } from 'rxjs';
 import { BreakPoint, VariableBreakPoint } from '../models/breakPoint';
 import { CustomOverviewResponse, OverviewResponse } from '../models/overview';
@@ -12,11 +12,7 @@ interface StationsResponse {
 }
 
 interface CodesResponse {
-  stations: {
-    code: string,
-    name_ar: string,
-    name_en: string
-  }[],
+  stations: Partial< Station >[],
   variables: {
     abbreviation_en
     code: string
@@ -75,12 +71,12 @@ export class SwaggerService {
 
 
   
-  // getStationDetails(station_code ) {
-  //   const url = BaseUrl + '/station'
+  getStationDetails(station_code ) : Observable<DetailedStation> {
+    const url = BaseUrl + '/station'
 
-  //   return this.http.post(url, { station_code  }).pipe(map((res: StationsResponse) => res.stations), shareReplay())
+    return this.http.post<{data: DetailedStation[]}>(url, { station_code  }).pipe(map(res=> res.data[0]))
 
-  // }
+  }
 
   // getStationHistory(station_code ) {
   //   const url = BaseUrl + '/station/history'
