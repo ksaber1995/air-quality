@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject, combineLatest, map, switchMap } from 'rxjs';
+import { BehaviorSubject, combineLatest, map, shareReplay, switchMap } from 'rxjs';
 import { OmmanDate, daysSincePastDate, getDateOnNumber, getTimeOnNumber } from '../../../../unitlize/custom-date';
 import { IBreadCrumb } from '../../../shared/components/bread-crumb/model';
 import { BreakPoint } from './../../../../models/breakPoint';
@@ -29,7 +29,7 @@ export class OverviewComponent implements OnInit {
   overview$ = this.swagger.getStationsOverview({ type: 'aqi', interval: 'month' });
   sub;
 
-  breakPoints$ = this.swagger.getBreakPoints().pipe(map(res => res.aqi_breakpoints?.sort((a, b) => a.sequence - b.sequence)))
+  breakPoints$ = this.swagger.getBreakPoints()
   variables$ = this.swagger.getStationsCode().pipe(map(res=> res.variables))
   breakPoints: BreakPoint[] = []
 
@@ -47,23 +47,29 @@ export class OverviewComponent implements OnInit {
   }
 
   getData() {
-    this.breakPoints$.subscribe(res => {
-      this.breakPoints = res;
-      this.breakPointLoaded = true;
-    })
+    this.breakPoints$.pipe(shareReplay())
+    
+ 
 
     this.sub = combineLatest([
       this.activeInterval$,
       this.type$,
       this.from$,
-      this.to$
+      this.to$,
+      this.breakPoints$
     ])
 
-      .pipe(switchMap(([interval, type, from, to]) => {
+      .pipe(switchMap(([interval, type, from, to, breakPoints]) => {
         this.isLoaded = false;
         const filter_type = type === 'aqi' ? 'aqi' : 'variable';
         const variable_code = type !== 'aqi' ? type : undefined;
-        
+        debugger
+        if (type === 'aqi') {
+          this.breakPoints = breakPoints.aqi_breakpoints?.sort((a, b) => a.sequence - b.sequence)
+        } else {
+          this.breakPoints = breakPoints?.variables?.find(res => res.code === type)?.variable_breakpoints?.sort((a, b) => a.sequence - b.sequence)
+        }
+
         return this.swagger.getStationsOverview({ type: filter_type, interval, from, to, variable_code})
       }))
       .subscribe(items => {

@@ -56,7 +56,7 @@
 
                                                 <nz-checkbox-wrapper (nzOnChange)="onStationChange($event)" style="width: 100%;">
                                                         <div class="list-item" *ngFor="let station of stations">
-                                                                <label nz-checkbox
+                                                                <label *ngIf="station.code !== currentStation.code" nz-checkbox
                                                                         [nzValue]="station.code">{{station.name_en}}</label>
                                                         </div>
                                                 </nz-checkbox-wrapper>

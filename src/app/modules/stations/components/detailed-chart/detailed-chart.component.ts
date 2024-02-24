@@ -206,7 +206,7 @@ export class DetailedChartComponent {
 
         stationsToCompare.forEach(c_station_history => {
 
-          const randomIndex = getRandomNumber(8);
+          const randomIndex = getRandomNumber(6);
           const new_lineChartData =
           {
             data: c_station_history.data.map(res => res.value || 0),
