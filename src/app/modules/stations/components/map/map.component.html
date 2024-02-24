@@ -1,13 +1,24 @@
-<div  class="main-wrapper">
+<div class="main-wrapper">
     <div class="map-wrapper">
-        <!-- <div class="bar-wrapper">
-            <app-severity-bar> </app-severity-bar>
-        </div> -->
-
         <google-map [options]="options" height="100%" width="100%">
             <div class="bar-wrapper">
                 <app-severity-bar [breakPoints]="breakPoints$  | async" [type]="'vertical'"> </app-severity-bar>
             </div>
+
+
+            <div *ngFor="let station of stations" 
+                class="">
+
+                <map-marker   #marker="mapMarker"
+                    [label]=" { color: '#fff', fontSize: '18px', fontWeight: 'bold',  text:  station.aqi[0].value + '' , className: 'custom-label ' + station.aqi[0].status_en } "
+                    [icon]="   {url:  ' '}"
+                    [position]="{lat: +station.latitude, lng: +station.longitude}">
+
+                </map-marker>
+
+            </div>
+
+
         </google-map>
     </div>
 
@@ -17,26 +28,26 @@
                 <span class="btn-icon" nz-icon nzType="left" nzTheme="outline"></span>
             </button>
 
-            <button [disabled]="false" class="no-min-width rounded seaGreen-bg"
-                (click)="carouselRef.next();" nz-button nzType="text">
+            <button [disabled]="false" class="no-min-width rounded seaGreen-bg" (click)="carouselRef.next();" nz-button
+                nzType="text">
                 <span class="btn-icon" nz-icon nzType="right" nzTheme="outline"></span>
             </button>
 
 
 
             <button class="no-min-width rounded seaGreen-bg"
-                (click)="carouselOptions.autoplay = !carouselOptions.autoplay" nz-button nzType="text">
-                <span *ngIf="carouselOptions.autoplay" class="btn-icon" nz-icon nzType="pause"
-                    nzTheme="outline"></span>
+                (click)="toggleCarouselAutoPlay(carouselRef)" nz-button nzType="text">
+                <span *ngIf="carouselOptions.autoplay" class="btn-icon" nz-icon nzType="pause" nzTheme="outline"></span>
                 <span *ngIf="!carouselOptions.autoplay" nz-icon nzType="play-circle" nzTheme="outline"></span>
             </button>
         </div>
 
         <div class="carousel-items">
-            <owl-carousel-o  #carouselRef [options]="carouselOptions">
+            <owl-carousel-o #carouselRef [options]="carouselOptions">
                 <ng-template *ngFor="let station of stations; index as i" carouselSlide>
                     <div class="  station-item-wrapper" (click)="changeStation(station)">
-                        <div class="pointer lightSeaGreen-bg station-item" [class.active] = "station.code  === currentStation?.code">
+                        <div class="pointer lightSeaGreen-bg station-item"
+                            [class.active]="station.code  === currentStation?.code">
                             <h3 class="m-0 p-0 title bold text-center">
                                 {{station.name_en}}
                             </h3>
@@ -66,7 +77,7 @@
                                     </div>
                                 </div>
 
-                             
+
                             </div>
                         </div>
                     </div>

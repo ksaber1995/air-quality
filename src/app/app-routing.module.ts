@@ -5,11 +5,11 @@ import { RouterModule, Routes } from '@angular/router';
 export const routes: Routes = [
   {
       path: '',
-      redirectTo: 'stations',
+      redirectTo: 'home',
       pathMatch: 'full'
   },
   {
-      path: 'stations',
+      path: '',
       loadChildren: () => import('./modules/stations/stations.module').then(m => m.StationsModule)
   },
   

@@ -6,7 +6,7 @@ import { DetailsComponent } from './components/details/details.component';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'home',
     component: HomeComponent
   },
   {
@@ -14,7 +14,7 @@ const routes: Routes = [
     component: OverviewComponent
   },
   {
-    path: ':code',
+    path: 'stations/:code',
     component: DetailsComponent
   }
 ];

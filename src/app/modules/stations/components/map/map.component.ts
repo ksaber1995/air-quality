@@ -77,5 +77,9 @@ export class MapComponent implements OnInit , OnDestroy {
   }
 
 
+  toggleCarouselAutoPlay(carouselRef) {
+    const autoplay = !this.carouselOptions.autoplay
+    this.carouselOptions = {...this.carouselOptions, autoplay}
+  }
 
 }

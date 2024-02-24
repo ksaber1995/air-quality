@@ -38,7 +38,22 @@ export class SwaggerService {
   getStations() {
     const url = BaseUrl + '/stations'
 
-    return this.http.get(url).pipe(map((res: StationsResponse) => res.data), shareReplay())
+    return this.http.get(url).pipe(
+      map((res: StationsResponse) => res.data),
+      map(stations=> {
+        const data = stations.map(station=>{
+        
+          return {
+            ...station,
+            variables: station.variables.map(variable=> ({...variable, readings: variable.readings.reverse()})),
+            weather: station.weather.map(weather=> ({...weather, readings: weather.readings.reverse()}))
+          }
+        })
+        return data
+      }),
+      
+      shareReplay()
+    )
   }
 
   getStationsCode() : Observable<CodesResponse>{

@@ -24,7 +24,7 @@ export class HomeComponent {
     withLatestFrom(this.stations$), map(([routes, stations]) => {
       const id = routes.get('id');
       // return stations[0]
-      return stations.find(res=> res.code === id)
+      return stations.find(res=> res.code === id) 
     }))
 
   constructor(private swagger: SwaggerService, private router: Router, private route: ActivatedRoute) {

@@ -95,3 +95,53 @@ a {
 .pointer:hover{
     cursor: pointer;
 }
+
+
+
+.custom-label{
+    padding: .5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px !important;
+    position: relative;
+    top: -2px;
+    left: 0px;
+    width: 30px;
+    height: 30px;
+    padding: 1px;
+    border-radius: 50%;
+    background-color: $LightGray;
+}
+
+.custom-label.Good{
+    background-color: $Good;
+}
+
+.custom-label.Moderate{
+    background-color: $Moderate;
+    color: #000 !important;
+}
+
+.custom-label.Satisfactory{
+    background-color: $Satisfactory;
+}
+
+.custom-label.Unhealthy.Sensitive {
+    background-color: #FF7E00;
+}
+
+.custom-label.Unhealthy{
+    background-color: $Unhealthy;
+}
+
+.custom-label.Hazardous{
+    background-color: $Hazardous;
+}
+
+// $Good: #00C800;
+// $Moderate: #FFE12D;
+// $Satisfactory: #FF7E00 ;
+// $Unhealthy: #FA0A00;
+// $VeryUnhealthy: #8F3F97;
+// $Hazardous: #7E0023;

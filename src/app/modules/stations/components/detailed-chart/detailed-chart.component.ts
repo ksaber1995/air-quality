@@ -1,11 +1,10 @@
 import { Component, Input } from '@angular/core';
 import { ChartData, ChartDataset, ChartOptions } from 'chart.js';
-import { BehaviorSubject, combineLatest, filter, map, shareReplay, switchMap } from 'rxjs';
+import { BehaviorSubject, combineLatest, map, shareReplay, switchMap } from 'rxjs';
 import { DetailedStation, Reading, Station } from '../../../../models/Station';
 import { BreakPoint } from '../../../../models/breakPoint';
 import { HistoryInterval, OverviewType, SwaggerService } from '../../../../services/swagger.service';
 import { OmmanDate, formatDateYYMMDD, formatTime, getDayName } from '../../../../unitlize/custom-date';
-import { Levels } from '../../../shared/model/severity';
 import { getRandomNumber } from '../summary/model';
 
 
@@ -72,7 +71,7 @@ export class DetailedChartComponent {
 
 
   public lineChartLabels: string[];
-  public doughnutChartLabels: string[] = Levels.map(res => res.name);
+  public doughnutChartLabels: string[] = []
 
   public doughnutChartData: ChartData<'doughnut'> ;
 
@@ -209,6 +208,8 @@ export class DetailedChartComponent {
         backgroundColor,
       }]
     };
+
+    this.doughnutChartLabels = keys
   }
 
   onDateChange() {
