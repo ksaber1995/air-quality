@@ -15,7 +15,7 @@
 
                 <nz-dropdown-menu #menu="nzDropdownMenu">
                     <ul nz-menu nzSelectable>
-                        <nz-radio-group [(ngModel)]="currentStationCode">
+                        <nz-radio-group (ngModelChange)="onStationChange($event)" [ngModel]="currentStationCode">
 
                             <ng-container *ngFor="let station of stations">
 

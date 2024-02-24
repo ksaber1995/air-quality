@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest, switchMap } from 'rxjs';
 import { DetailedStation, Station } from '../../../../models/Station';
 import { SwaggerService } from '../../../../services/swagger.service';
@@ -29,9 +29,9 @@ export class DetailsComponent implements OnInit {
   variables: { abbreviation_en: any; code: string; }[];
   details: DetailedStation;
 
-  
 
-  constructor(private swagger: SwaggerService, private route: ActivatedRoute) { }
+
+  constructor(private swagger: SwaggerService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
 
@@ -62,5 +62,9 @@ export class DetailsComponent implements OnInit {
       })
   }
 
+
+  onStationChange(e){
+    this.router.navigate([`/stations/${e}`])
+  }
 
 }
