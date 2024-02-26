@@ -1,6 +1,6 @@
 export function OmmanDate(dateString?) {
     const date = dateString ? new Date(dateString) : new Date(Date.now());
-    
+
     // Get the current time in milliseconds
     var currentTime = date.getTime();
 
@@ -12,6 +12,21 @@ export function OmmanDate(dateString?) {
 
     return utc4Time;
 
+}
+
+
+export function FromOmmanDateUTC(date: Date) {
+
+    // Get the current time in milliseconds
+    var currentTime = date.getTime();
+
+    // Define the UTC+4 offset in milliseconds (4 hours * 60 minutes * 60 seconds * 1000 milliseconds)
+    var utc4Offset = 4 * 60 * 60 * 1000;
+
+    // Adjust the time by adding the UTC+4 offset
+    var utc4Time = new Date(currentTime - utc4Offset);
+
+    return utc4Time;
 }
 
 
@@ -33,9 +48,10 @@ export function getTimeOnNumber(date: Date) {
 
 
 
+
 export function getDateOnNumber(targetDate: Date) {
     const dayName = getDayName(targetDate.getDay())
-    const new_index = weeksEndsToday().findIndex(res=> res === dayName)
+    const new_index = weeksEndsToday().findIndex(res => res === dayName)
 
     return new_index
 }
@@ -47,7 +63,7 @@ export function weeksEndsToday() {
     const currentDayIndex = today.getDay(); // 0 for Sunday, 1 for Monday, ..., 6 for Saturday
 
     const weekdaysEndingToday = [];
-    
+
     for (let i = 6; i >= 0; i--) {
         const date = new Date(today);
         date.setDate(today.getDate() - (currentDayIndex - i));
@@ -60,7 +76,7 @@ export function weeksEndsToday() {
     return weekdaysEndingToday.reverse();
 }
 
-export function getDayName(index){
+export function getDayName(index) {
     const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
     return weekdays[index]
@@ -88,7 +104,7 @@ export function getDateNsDaysAgo(n) {
 
 
 export function formatDateYYMMDD(date: Date) {
-    
+
     // Get year, month, and day components
     const year = date.getFullYear().toString().slice(-2); // Get last two digits of the year
     let month = (date.getMonth() + 1).toString(); // Month is 0-indexed, so add 1
@@ -101,7 +117,7 @@ export function formatDateYYMMDD(date: Date) {
     }
 
     // Concatenate year, month, and day with no separators
-    const formattedDate = day + '/' + month + '/'+ year;
+    const formattedDate = day + '/' + month + '/' + year;
 
     return formattedDate;
 }

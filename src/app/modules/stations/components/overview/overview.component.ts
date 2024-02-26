@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject, combineLatest, map, shareReplay, switchMap } from 'rxjs';
-import { OmmanDate, daysSincePastDate, getDateOnNumber, getTimeOnNumber } from '../../../../unitlize/custom-date';
+import { OmmanDate,  daysSincePastDate, getDateOnNumber, getTimeOnNumber } from '../../../../unitlize/custom-date';
 import { IBreadCrumb } from '../../../shared/components/bread-crumb/model';
 import { BreakPoint } from './../../../../models/breakPoint';
 import { HistoryInterval, SwaggerService } from './../../../../services/swagger.service';
@@ -29,13 +29,15 @@ export class OverviewComponent implements OnInit {
   overview$ = this.swagger.getStationsOverview({ type: 'aqi', interval: 'month' });
   sub;
 
+  startDate: Date;
+  endDate: Date;
+
   breakPoints$ = this.swagger.getBreakPoints()
   variables$ = this.swagger.getStationsCode().pipe(map(res=> res.variables))
   breakPoints: BreakPoint[] = []
 
   data = []
   isLoaded = false;
-  breakPointLoaded = false;
   
   constructor(private swagger: SwaggerService) { }
   ngOnInit(): void {
@@ -63,7 +65,7 @@ export class OverviewComponent implements OnInit {
         this.isLoaded = false;
         const filter_type = type === 'aqi' ? 'aqi' : 'variable';
         const variable_code = type !== 'aqi' ? type : undefined;
-        debugger
+        
         if (type === 'aqi') {
           this.breakPoints = breakPoints.aqi_breakpoints?.sort((a, b) => a.sequence - b.sequence)
         } else {
@@ -77,13 +79,17 @@ export class OverviewComponent implements OnInit {
 
         const stations = Object.keys(items)
         const chartData = []
+        
+        this.startDate = OmmanDate( items[stations[0]][0].aggregated_at)
+        this.endDate = OmmanDate( items[stations[0]] [items[stations[0]].length - 1].aggregated_at)
+
 
         if (interval === 'day') {
           stations.forEach(station => {
             const station_items = items[station]
 
             const stationData = station_items.map(item => {
-              return { x: getTimeOnNumber(OmmanDate(item.aggregated_at)), y: item.value || 0, r: Radius }
+              return { name: item.aggregated_at, x: OmmanDate(item.aggregated_at).getTime() , y: item.value || 0, r: Radius }
             })
 
 
@@ -101,7 +107,7 @@ export class OverviewComponent implements OnInit {
             const station_items = items[station]
 
             const stationData = station_items.map(item => {
-              return { x: getDateOnNumber(OmmanDate(item.aggregated_at)), y: item.value || 0, r: Radius }
+              return { x: OmmanDate(item.aggregated_at).getTime(), y: item.value || 0, r: Radius }
             })
 
 
@@ -118,7 +124,7 @@ export class OverviewComponent implements OnInit {
 
 
             const stationData = station_items.map(item => {
-              const x =  daysSincePastDate(OmmanDate(item.aggregated_at));
+              const x =  OmmanDate(item.aggregated_at).getTime();
               return { x , y: item.value || 0, r: Radius }
             })
 
@@ -138,8 +144,9 @@ export class OverviewComponent implements OnInit {
       })
   }
 
-  onDateChange() {
-
+  onDateChange(e) {
+    this.from$.next(e[0])
+    this.to$.next(e[1])
   }
 
   onTypeChange(e: string){
@@ -155,4 +162,13 @@ export class OverviewComponent implements OnInit {
     this.activeInterval$.next(interval)
 
   }
+
+
+  disabledDate = (current: Date): boolean => {
+
+    const currentDate = current.getFullYear() * 10000 + (current.getMonth() + 1) * 100 + current.getDate();
+    const start = this.startDate.getFullYear() * 10000 + (this.startDate.getMonth() + 1) * 100 + this.startDate.getDate();
+    const end = this.endDate.getFullYear() * 10000 + (this.endDate.getMonth() + 1) * 100 + this.endDate.getDate();
+    return currentDate < start || currentDate > end;
+  };
 }

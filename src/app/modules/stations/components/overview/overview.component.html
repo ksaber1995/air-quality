@@ -17,9 +17,9 @@
             </nz-select> -->
 
 
-            <button  nz-button nz-dropdown [nzClickHide]="false" [nzTrigger]="'click'" [nzDropdownMenu]="menu"
+            <button nz-button nz-dropdown [nzClickHide]="false" [nzTrigger]="'click'" [nzDropdownMenu]="menu"
                 class="airquality-btn">
-                {{activeVariable  === 'aqi' ? 'Air Quality Index' : activeVariable}}
+                {{activeVariable === 'aqi' ? 'Air Quality Index' : activeVariable}}
                 <span nz-icon nzType="down"></span>
             </button>
 
@@ -28,7 +28,8 @@
                     <nz-radio-group (ngModelChange)="onTypeChange($event)" [(ngModel)]="type">
 
                         <li nz-menu-item>
-                            <label style="display: block; width: 100%;"  class="station-item" [nzValue]="'aqi'" nz-radio> {{'Air Quality Index'}}</label>
+                            <label style="display: block; width: 100%;" class="station-item" [nzValue]="'aqi'" nz-radio>
+                                {{'Air Quality Index'}}</label>
                         </li>
 
                         <nz-divider [nzDashed]="true" class="margin-0"></nz-divider>
@@ -36,7 +37,8 @@
                         <ng-container *ngFor="let variable of variables$ |async">
 
                             <li nz-menu-item>
-                                <label style="display: block ; width: 100%;" class="station-item" [nzValue]="variable.code" nz-radio> {{variable.abbreviation_en}}</label>
+                                <label style="display: block ; width: 100%;" class="station-item"
+                                    [nzValue]="variable.code" nz-radio> {{variable.abbreviation_en}}</label>
                             </li>
 
                             <nz-divider [nzDashed]="true" class="margin-0"></nz-divider>
@@ -55,8 +57,13 @@
                     [class.active]="activeInterval === 'month'">Month</button>
 
 
-                <!-- <nz-date-picker class="simple" [(ngModel)]="date" [class.hidden]="!date"
-                    (ngModelChange)="onDateChange()"></nz-date-picker> -->
+                <ng-template #calendar>
+                    <span style="font-size: 22px; " nz-size="large" nz-icon nzType="calendar" nzTheme="outline"></span>
+                </ng-template>
+
+               
+                <nz-range-picker [nzDisabledDate]="disabledDate" [nzShowTime]="{ nzFormat: 'HH:mm' }" [nzSuffixIcon]="calendar" class="simple" [class.hidden]="!date" [(ngModel)]="date"
+                    (ngModelChange)="onDateChange($event)"></nz-range-picker>
             </div>
         </div>
 
@@ -68,5 +75,5 @@
 
 
 <div class="severity-bar-wrapper">
-    <app-severity-bar  [breakPoints]="breakPoints"></app-severity-bar>
+    <app-severity-bar [breakPoints]="breakPoints"></app-severity-bar>
 </div>

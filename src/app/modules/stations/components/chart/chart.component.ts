@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ChartDataset, ChartOptions, ChartTypeRegistry } from 'chart.js';
 import { BreakPoint } from '../../../../models/breakPoint';
 import { HistoryInterval } from '../../../../services/swagger.service';
-import { getDateNsDaysAgo, weeksEndsToday } from '../../../../unitlize/custom-date';
+import { OmmanDate, formatDateYYMMDD, formatTime, getDateNsDaysAgo, weeksEndsToday } from '../../../../unitlize/custom-date';
 
 const getBackground = (item, breakPoints: BreakPoint[]) => {
   const value = item.raw.y;
@@ -17,10 +17,10 @@ const getBackground = (item, breakPoints: BreakPoint[]) => {
 })
 export class ChartComponent implements OnInit {
   public bubbleChartType: keyof ChartTypeRegistry = 'bubble';
-  @Input() public data: ChartDataset[] ;
-   public bubbleChartData: ChartDataset[] ;
-   @Input() breakPoints : BreakPoint[] = [];
-  @Input() interval : HistoryInterval = 'day'
+  @Input() public data: ChartDataset[];
+  public bubbleChartData: ChartDataset[];
+  @Input() breakPoints: BreakPoint[] = [];
+  @Input() interval: HistoryInterval = 'day'
 
   public bubbleChartOptions: ChartOptions
 
@@ -31,11 +31,11 @@ export class ChartComponent implements OnInit {
 
   ngOnInit(): void {
     this.setCharOptions()
-    this.bubbleChartData = this.data.map(station=> ({...station , backgroundColor: (item) => getBackground(item, this.breakPoints)}))
+    this.bubbleChartData = this.data.map(station => ({ ...station, backgroundColor: (item) => getBackground(item, this.breakPoints) }))
   }
 
   setCharOptions() {
-    this.bubbleChartOptions  = {
+    this.bubbleChartOptions = {
       responsive: true,
       scales: {
         x: {
@@ -47,45 +47,40 @@ export class ChartComponent implements OnInit {
           // title: {
           //   text:''
           // },
-          
+
           offset: true,
 
           // beginAtZero: false,
 
           ticks: {
-            stepSize: 1,
+            stepSize: 4,
             // count: getCount(this.interval),
             callback: (value: any, index: any, values: any) => {
-              if(this.interval === 'day'){
-  
-                let period = index < 12 ? 'am' : 'pm';
-                
-                index = index % 12;
-                index = index ? index : 12; // Convert 0 to 12
-                return index  + ' ' + period;
-              }else if(this.interval === 'week'){
-                return weeksEndsToday()[index];
-              }else if( this.interval === 'month'){
-                const number_of_days = 32 - index;
-                
-                return getDateNsDaysAgo(number_of_days)
+              if (this.interval === 'day') {
+
+                return formatTime(OmmanDate(value))
+              } else if (this.interval === 'week') {
+                return formatDateYYMMDD(OmmanDate(value))
+              } else if (this.interval === 'month') {
+                return formatDateYYMMDD(OmmanDate(value))
+
               }
-  
+
               return index
             }
-            
-            
+
+
           },
           grid: {
             drawOnChartArea: false,
           },
-  
+
         },
         y: {
           type: 'linear', // Use 'linear' scale type for numeric values
           position: 'bottom',
           axis: 'x',
-  
+
           // backgroundColor: 'blue',
           grid: {
             drawOnChartArea: true,
@@ -98,8 +93,8 @@ export class ChartComponent implements OnInit {
             tickBorderDash: [50, 5, 50, 5],
           },
         },
-  
-   
+
+
       },
     };
   }
