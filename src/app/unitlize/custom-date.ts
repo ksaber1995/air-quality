@@ -98,8 +98,7 @@ export function getDateNsDaysAgo(n) {
     nDaysAgo.setDate(currentDate.getDate() - n);
     const date = OmmanDate(nDaysAgo);
 
-    const formattedDate = `${nDaysAgo.getDate()}/${nDaysAgo.getMonth() + 1}/${nDaysAgo.getFullYear()}`;
-    return formattedDate
+    return date
 }
 
 

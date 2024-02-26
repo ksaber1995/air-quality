@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ChartDataset, ChartOptions, ChartTypeRegistry } from 'chart.js';
 import { BreakPoint } from '../../../../models/breakPoint';
 import { HistoryInterval } from '../../../../services/swagger.service';
-import { OmmanDate, formatDateYYMMDD, formatTime, getDateNsDaysAgo, weeksEndsToday } from '../../../../unitlize/custom-date';
+import { OmmanDate, formatDateYYMMDD, formatTime } from '../../../../unitlize/custom-date';
 
 const getBackground = (item, breakPoints: BreakPoint[]) => {
   const value = item.raw.y;

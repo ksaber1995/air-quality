@@ -4,8 +4,9 @@ import { BehaviorSubject, combineLatest, map, shareReplay, switchMap } from 'rxj
 import { DetailedStation, Reading, Station } from '../../../../models/Station';
 import { BreakPoint } from '../../../../models/breakPoint';
 import { HistoryInterval, OverviewType, SwaggerService } from '../../../../services/swagger.service';
-import { OmmanDate, formatDateYYMMDD, formatTime, getDayName } from '../../../../unitlize/custom-date';
+import { OmmanDate, formatDateYYMMDD, formatTime, getDateNsDaysAgo, getDayName } from '../../../../unitlize/custom-date';
 import { getRandomNumber } from '../summary/model';
+import { NzDatePickerComponent } from 'ng-zorro-antd/date-picker';
 
 const colorPalette = [
   '#1f77b4', // blue
@@ -35,7 +36,11 @@ export class DetailedChartComponent {
   @Input() details: DetailedStation;
   @Input() currentStation: Station
 
+  startDate: Date;
+  endDate: Date;
 
+  from$ = new BehaviorSubject<string>(null)
+  to$ = new BehaviorSubject<string>(null)
   activeInterval$ = new BehaviorSubject<HistoryInterval>('day')
   stationsToCompare$ = new BehaviorSubject<string[]>([])
   type$ = new BehaviorSubject<string>('aqi')
@@ -128,20 +133,29 @@ export class DetailedChartComponent {
   summary: { [key: string]: Reading[] } = {}
   summaryKeys: { name: string; percentage: number; color: string; }[] = [];
 
-
+  
   constructor(private swagger: SwaggerService) {
 
   }
 
-  getHistory(interval: HistoryInterval, type: OverviewType, variable_code: string, station_code: string) {
-    return this.swagger.getStationHistory({ station_code, type, interval, variable_code })
+  getHistory(interval: HistoryInterval, type: OverviewType, variable_code: string, station_code: string, from: string, to: string) {
+    return this.swagger.getStationHistory({ station_code, type, interval, variable_code, from, to })
   }
 
   ngOnInit(): void {
     const breakPoints$ = this.swagger.getBreakPoints().pipe(shareReplay())
 
-    combineLatest([this.activeInterval$, this.type$, this.stationsToCompare$, breakPoints$])
-      .pipe(switchMap(([interval, type, stationsToCompare, breakPoints]) => {
+    combineLatest(
+      [
+        this.activeInterval$, 
+        this.type$, 
+        this.stationsToCompare$, 
+        breakPoints$,
+        this.from$,
+        this.to$
+      
+      ])
+      .pipe(switchMap(([interval, type, stationsToCompare, breakPoints, from, to]) => {
         this.interval = interval;
         this.filter_type = type === 'aqi' ? 'aqi' : 'variable';
         if (type === 'aqi') {
@@ -150,12 +164,11 @@ export class DetailedChartComponent {
           this.breakPoints = breakPoints?.variables?.find(res => res.code === type)?.variable_breakpoints?.sort((a, b) => a.sequence - b.sequence)
         }
 
-        return combineLatest([this.getHistory(interval, this.filter_type, type, this.currentStation.code), ...stationsToCompare.map(code => this.getHistory(interval, this.filter_type, type, code).pipe(map(res => ({ code, data: res }))))])
+        return combineLatest([this.getHistory(interval, this.filter_type, type, this.currentStation.code, from, to), ...stationsToCompare.map(code => this.getHistory(interval, this.filter_type, type, code, from , to).pipe(map(res => ({ code, data: res }))))])
       }))
       .subscribe(([history, ...stationsToCompare]) => {
         this.history = history;
 
-        console.log(stationsToCompare, 'kokoko')
 
         this.summary = {}
 
@@ -179,10 +192,20 @@ export class DetailedChartComponent {
 
         if (this.interval === 'day' || this.interval === 'week') {
           this.lineChartLabels = this.history.map(res => getDayName(OmmanDate(res.aggregated_at).getDay()) + formatTime(OmmanDate(res.aggregated_at)))
+        
+          if(this.interval === 'day'){
+            this.startDate = getDateNsDaysAgo(1)
+            this.endDate = OmmanDate()
+          }else{
+            this.startDate = getDateNsDaysAgo(8)
+            this.endDate = OmmanDate()
+          }
         }
 
         else if (this.interval === 'month') {
           this.lineChartLabels = this.history.map(res => formatDateYYMMDD(OmmanDate(res.aggregated_at)))
+          this.startDate = getDateNsDaysAgo(32)
+          this.endDate = OmmanDate()
         }
 
 
@@ -247,8 +270,9 @@ export class DetailedChartComponent {
     this.doughnutChartLabels = keys
   }
 
-  onDateChange() {
-
+  onDateChange(e) {
+    this.from$.next(e[0])
+    this.to$.next(e[1])
   }
 
   onVariableChange(e) {
@@ -259,7 +283,21 @@ export class DetailedChartComponent {
     this.stationsToCompare$.next(e)
   }
 
-  onIntervalChange(interval: HistoryInterval) {
-    this.activeInterval$.next(interval)
+  onIntervalChange(interval: HistoryInterval, picker: NzDatePickerComponent) {
+    picker.close()
+    this.date = undefined
+    this.activeInterval$.next(interval);
+    this.from$.next(null)
+    this.to$.next(null)
+    // console.log()
   }
+
+  
+  disabledDate = (current: Date): boolean => {
+
+    const currentDate = current.getFullYear() * 10000 + (current.getMonth() + 1) * 100 + current.getDate();
+    const start = this.startDate.getFullYear() * 10000 + (this.startDate.getMonth() + 1) * 100 + this.startDate.getDate();
+    const end = this.endDate.getFullYear() * 10000 + (this.endDate.getMonth() + 1) * 100 + this.endDate.getDate();
+    return currentDate < start || currentDate > end;
+  };
 }

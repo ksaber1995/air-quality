@@ -49,11 +49,11 @@
 
 
             <div *ngIf="activeInterval$ | async as activeInterval" class="date-filters">
-                <button (click)="onIntervalChange('day')" nz-button
+                <button (click)="onIntervalChange('day', datepicker)" nz-button
                     [class.active]="activeInterval === 'day'">Day</button>
-                <button (click)="onIntervalChange('week')" nz-button
+                <button (click)="onIntervalChange('week', datepicker)" nz-button
                     [class.active]="activeInterval === 'week'">Week</button>
-                <button (click)="onIntervalChange('month')" nz-button
+                <button (click)="onIntervalChange('month', datepicker)" nz-button
                     [class.active]="activeInterval === 'month'">Month</button>
 
 
@@ -62,7 +62,7 @@
                 </ng-template>
 
                
-                <nz-range-picker [nzDisabledDate]="disabledDate" [nzShowTime]="{ nzFormat: 'HH:mm' }" [nzSuffixIcon]="calendar" class="simple" [class.hidden]="!date" [(ngModel)]="date"
+                <nz-range-picker #datepicker [nzAllowClear]="true" [nzDisabledDate]="disabledDate" [nzShowTime]="(activeInterval$ | async) === 'day' ? { nzFormat: 'HH:mm' } : false" [nzSuffixIcon]="calendar" class="simple" [class.hidden]="!date" [(ngModel)]="date"
                     (ngModelChange)="onDateChange($event)"></nz-range-picker>
             </div>
         </div>
