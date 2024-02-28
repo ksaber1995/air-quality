@@ -18,7 +18,7 @@
 
         <div class="status">
 
-          <img width="25" height="25" [src]="'assets/icons/' + station?.aqi[0]?.status_en?.toLowerCase() + '-face.svg'" alt="">
+          <img width="25" height="25" [src]="'assets/icons/' + (station?.aqi[0]?.status_en?.toLowerCase() || 'na') + '-face.svg'" alt="">
 
           <span class="item">
             {{station?.aqi[0]?.status_en}}
@@ -29,12 +29,11 @@
 
 
     <div class="summary-wrapper">
-      <div style="display: block; width: 180px;" class="doughnut-chart-wrapper">
+      <div style="display: block; width: 180px;" >
 
         <div class="main-img">
-          <img width="200" height="200" src="assets/icons/aqi-circle.svg" alt="">
+          <img width="200" height="200" [src]="'assets/icons/status/meter/' + (station?.aqi[0]?.status_en?.toLowerCase() || 'na')  + '.svg' " alt="">
 
-          <img width="60" height="60" class="arrow" src="assets/icons/aqi-arrow.svg" alt="">
 
         </div>
 

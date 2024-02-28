@@ -32,22 +32,6 @@ tbody {
 }
 
 
-.doughnut-chart-wrapper {
-  // transform: rotate(154deg);
-  // position: relative;
-
-  .main-img {
-    position: relative;
-
-    .arrow {
-      position: absolute;
-      top: calc(50% - 10px);
-      left: calc(50% - 10px);
-      transform: translate(-50%, -50%);
-      width: 50%;
-    }
-  }
-}
 
 
 td:not(:last-child) ::before {
@@ -122,7 +106,7 @@ td:not(:last-child) ::before {
   margin-bottom: 10px;
   border-radius: 10px;
   text-transform: capitalize;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   .status {
     display: flex;
