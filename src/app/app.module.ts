@@ -6,14 +6,21 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './modules/stations/components/header/header.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
 import { SharedModule } from './modules/shared/shared.module';
+import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
+export function createTranslateLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent
+    
   ],
   imports: [
     BrowserModule,
@@ -21,7 +28,15 @@ import { SharedModule } from './modules/shared/shared.module';
     BrowserAnimationsModule,
     HttpClientModule,
     RouterModule,
-    SharedModule
+    SharedModule,
+
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: createTranslateLoader,
+        deps: [HttpClient]
+      }
+    })
     // Routes,
     // CarouselModule
 
@@ -35,8 +50,11 @@ import { SharedModule } from './modules/shared/shared.module';
   bootstrap: [AppComponent]
 })
 export class AppModule { 
-  constructor(private nzI18nService: NzI18nService) {
+  constructor(private nzI18nService: NzI18nService, private translate: TranslateService) {
     // Set the locale globally for NZ-Zorro
     this.nzI18nService.setLocale(en_US);
+    translate.setDefaultLang('en');
+    translate.use('en'); // Set default language
+    
   }
 }
