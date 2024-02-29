@@ -19,7 +19,7 @@
                                                         {{'variables' | translate}}
                                                 </p>
 
-                                                <nz-radio-group [dir]="(lang$ | async)  === 'ar' ? 'rtl' : 'ltr'" (ngModelChange)="onVariableChange($event)"
+                                                <nz-radio-group [style.direction]="(lang$ | async)  === 'ar' ? 'rtl' : 'ltr'" (ngModelChange)="onVariableChange($event)"
                                                         [(ngModel)]="type">
 
                                                         <li nz-menu-item>
@@ -54,7 +54,7 @@
                                                         {{'stations' | translate}}
                                                 </p>
 
-                                                <nz-checkbox-wrapper [dir]="(lang$ | async)  === 'ar' ? 'rtl' : 'ltr'" (nzOnChange)="onStationChange($event)"
+                                                <nz-checkbox-wrapper [style.direction]="(lang$ | async)  === 'ar' ? 'rtl' : 'ltr'" (nzOnChange)="onStationChange($event)"
                                                         style="width: 100%;">
                                                         <div class="list-item" *ngFor="let station of stations">
                                                                 <label *ngIf="station.code !== currentStation.code"
