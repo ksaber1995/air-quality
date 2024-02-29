@@ -37,6 +37,7 @@ export class ChartComponent implements OnInit {
   setCharOptions() {
     this.bubbleChartOptions = {
       responsive: true,
+     
       scales: {
         x: {
           type: 'linear', // Use 'linear' scale type for numeric values
@@ -53,6 +54,7 @@ export class ChartComponent implements OnInit {
           // beginAtZero: false,
 
           ticks: {
+            
             stepSize: 4,
             // count: getCount(this.interval),
             callback: (value: any, index: any, values: any) => {
@@ -92,8 +94,9 @@ export class ChartComponent implements OnInit {
             // tickBorderDash: [5, 5], // Add a dash to the tick
             tickBorderDash: [50, 5, 50, 5],
           },
-        },
 
+
+        },
 
       },
     };

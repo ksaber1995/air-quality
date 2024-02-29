@@ -18,7 +18,7 @@ export class OverviewComponent implements OnInit {
   type = 'aqi'
   routes: IBreadCrumb[] = [
     {
-      title: 'Home',
+      title: 'home',
       link: '/'
     }
   ];

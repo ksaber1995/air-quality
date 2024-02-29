@@ -1,3 +1,4 @@
+import { LocalizationService } from './../../../../services/localization.service';
 import { Component, Input } from '@angular/core';
 import { ChartData, ChartDataset, ChartOptions } from 'chart.js';
 import { BehaviorSubject, combineLatest, map, shareReplay, switchMap } from 'rxjs';
@@ -133,8 +134,8 @@ export class DetailedChartComponent {
   summary: { [key: string]: Reading[] } = {}
   summaryKeys: { name: string; percentage: number; color: string; }[] = [];
 
-  
-  constructor(private swagger: SwaggerService) {
+  lang$  = this.localization.getCurrentLanguage();
+  constructor(private swagger: SwaggerService, private localization: LocalizationService) {
 
   }
 

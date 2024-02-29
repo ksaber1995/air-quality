@@ -6,6 +6,7 @@ import { SwaggerService } from '../../../../services/swagger.service';
 import { OmmanDate } from '../../../../unitlize/custom-date';
 import { IBreadCrumb } from '../../../shared/components/bread-crumb/model';
 import { customOptions } from './model';
+import { LocalizationService } from '../../../../services/localization.service';
 
 @Component({
   selector: 'app-details',
@@ -14,10 +15,10 @@ import { customOptions } from './model';
 })
 export class DetailsComponent implements OnInit {
   currentStationCode;
-
+  lang$ = this.localization.getCurrentLanguage()
   routes: IBreadCrumb[] = [
     {
-      title: 'Home',
+      title: 'home',
       link: '/'
     }
   ];
@@ -31,9 +32,14 @@ export class DetailsComponent implements OnInit {
 
 
 
-  constructor(private swagger: SwaggerService, private route: ActivatedRoute, private router: Router) { }
+  constructor(private swagger: SwaggerService, private route: ActivatedRoute, private router: Router, private localization: LocalizationService) { }
 
   ngOnInit(): void {
+
+      this.localization.getCurrentLanguage().subscribe(lang=>{
+        this.customOptions = {...this.customOptions, rtl: lang === 'ar'}
+
+      })
 
     this.getData();
   }

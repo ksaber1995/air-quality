@@ -44,9 +44,7 @@ export class SwaggerService {
     
     .pipe(
       map(([stationsResponse, lang])=> {
-        console.log(lang)
         const stations = stationsResponse.data;
-        debugger
         const data = stations.map(station=>{
         
           return {
@@ -65,8 +63,8 @@ export class SwaggerService {
 
   getStationsCode() : Observable<CodesResponse>{
     const url = BaseUrl + '/stations/codes'
-
-    return this.http.get<CodesResponse>(url)
+    return combineLatest([this.http.get<CodesResponse>(url), this.localization.getCurrentLanguage()])
+    .pipe(map(([response, lang])=> ({variables: response.variables, stations: response.stations.map(res=> ({...res, name: lang === Lang.ar ? res.name_ar : res.name_en}))  })))
   }
 
   getStationsOverview( data: {type : OverviewType , interval: HistoryInterval, variable_code?: string, from?: string, to?: string} ) : Observable< CustomOverviewResponse> {
@@ -95,8 +93,16 @@ export class SwaggerService {
   
   getStationDetails(station_code ) : Observable<DetailedStation> {
     const url = BaseUrl + '/station'
+    return   combineLatest([this.http.post<{data: DetailedStation[]}>(url, { station_code  }), this.localization.getCurrentLanguage()])
+    .pipe(map(([res, lang])=> {
+      const data = res.data[0];
 
-    return this.http.post<{data: DetailedStation[]}>(url, { station_code  }).pipe(map(res=> res.data[0]))
+      return {
+        ...data,
+        name: lang === Lang.ar ? data.name_ar : data.name_en,
+        organization: {...data.organization, name: lang === Lang.ar ? data.organization.name_ar : data.organization.name_en}
+      }
+    }))
 
   }
 

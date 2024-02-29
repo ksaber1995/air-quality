@@ -77,7 +77,9 @@ export interface DetailedStation {
     code: string,
     name_en: string,
     name_ar: string,
+    name: string
     organization: {
+        name: string
         name_en: string,
         name_ar: string
     },

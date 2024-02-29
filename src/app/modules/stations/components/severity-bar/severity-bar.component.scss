@@ -1,49 +1,49 @@
-.bar-wrapper{
+.bar-wrapper {
     border-radius: 15px;
     position: relative;
     margin: auto;
     display: inline-block;
     margin-top: 40px;
 
-    &.vertical{
+    &.vertical {
         // transform: rotate(-90deg);
         display: flex;
         flex-direction: column-reverse;
 
-        .level:first-child{
+        .level:first-child {
             border-bottom-left-radius: 15px;
             border-bottom-right-radius: 15px;
             border-top: 18px solid #fff;
 
         }
 
-        .level:last-child{
+        .level:last-child {
             border-top-right-radius: 15px;
             border-top-left-radius: 15px;
             border-top: 0;
 
         }
 
-    
 
-        .level{
+
+        .level {
             display: inline-block;
             width: 20px;
             height: 90px;
             position: relative;
             border-top: 1px solid #fff;
-    
 
 
-            &.na::after{
+
+            &.na::after {
                 content: 'Good';
                 position: absolute;
                 bottom: -20px;
                 right: -30px;
             }
-        
-    
-            .end{
+
+
+            .end {
                 position: absolute;
                 top: -30px;
                 right: 0px;
@@ -51,17 +51,17 @@
                 flex-direction: column;
                 align-items: flex-end;
             }
-            
-            .bar-value{
+
+            .bar-value {
                 position: relative;
                 left: -33px;
                 bottom: -19px;
                 font-weight: 500;
 
             }
-    
-            
-            .end-bar{
+
+
+            .end-bar {
                 height: 1px;
                 width: 10px;
                 background-color: gray;
@@ -70,42 +70,43 @@
                 bottom: -7px
             }
         }
-    
+
     }
 
 
-    &.horizontal{
+    &.horizontal {
 
-        &::before{
+        &::before {
             content: 'N/A';
             position: absolute;
             bottom: -20px;
             left: -10px;
         }
-        
-        &::after{
+
+        &::after {
             content: 'Hazardous';
             position: absolute;
             bottom: -20px;
             right: -30px;
         }
-        
-        
-        .level{
+
+
+        .level {
             display: inline-block;
             width: 90px;
             height: 20px;
             position: relative;
             border-top: 1px solid #fff;
-            &.na::after{
+
+            &.na::after {
                 content: 'Good';
                 position: absolute;
                 bottom: -20px;
                 right: -30px;
             }
-            
-            
-            .end{
+
+
+            .end {
                 position: absolute;
                 top: -30px;
                 right: 0px;
@@ -113,33 +114,34 @@
                 flex-direction: column;
                 align-items: flex-end;
             }
-            
-            .bar-value{
+
+            .bar-value {
                 position: relative;
                 right: -7px;
             }
-            
-            .level:first-child{
-                .bar-value{
+
+            .level:first-child {
+                .bar-value {
                     position: relative;
                     right: 0;
                 }
-                
+
             }
-            
-            .end-bar{
+
+            .end-bar {
                 height: 10px;
                 width: 1px;
                 background-color: gray;
             }
         }
-        
-        .level:first-child{
+
+        .level:first-child {
             border-top-left-radius: 15px;
             border-bottom-left-radius: 15px;
             border-right: 18px solid #fff;
         }
-        .level:last-child{
+
+        .level:last-child {
             border-top-right-radius: 15px;
             border-bottom-right-radius: 15px;
             border-right: 0;

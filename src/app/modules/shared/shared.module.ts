@@ -21,6 +21,7 @@ import {
 } from '@ant-design/icons-angular/icons';
 import { IconDefinition } from '@ant-design/icons-angular';
 import { StatusIconComponent } from './components/status-icon/status-icon.component';
+import { TranslateModule } from '@ngx-translate/core';
 const icons: IconDefinition[] = [
   StepBackwardOutline,
   CaretLeftOutline,
@@ -53,6 +54,7 @@ const ImportsExports = [
   imports: [
     CommonModule,
     RouterModule,
+    TranslateModule,
     ...ImportsExports,
     NzIconModule.forChild(icons)
     

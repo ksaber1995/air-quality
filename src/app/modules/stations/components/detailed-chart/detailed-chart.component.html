@@ -6,7 +6,7 @@
         <div class="filters">
                 <button nz-button nz-dropdown [nzClickHide]="false" [nzTrigger]="'click'" [nzDropdownMenu]="compareMenu"
                         class="compare-btn">
-                        Compare
+                        {{'compare' | translate}}
                         <span nz-icon nzType="down"></span>
                 </button>
 
@@ -16,16 +16,16 @@
 
                                         <div class="variabled">
                                                 <p class="bold">
-                                                        Variables
+                                                        {{'variables' | translate}}
                                                 </p>
 
-                                                <nz-radio-group (ngModelChange)="onVariableChange($event)"
+                                                <nz-radio-group [dir]="(lang$ | async)  === 'ar' ? 'rtl' : 'ltr'" (ngModelChange)="onVariableChange($event)"
                                                         [(ngModel)]="type">
 
                                                         <li nz-menu-item>
                                                                 <label style="display: block; width: 100%;"
                                                                         class="station-item" [nzValue]="'aqi'" nz-radio>
-                                                                        {{'Air Quality Index'}}</label>
+                                                                        {{'aqi' | translate}}</label>
                                                         </li>
 
                                                         <nz-divider [nzDashed]="true" class="margin-0"></nz-divider>
@@ -51,15 +51,15 @@
 
                                         <div class="stations">
                                                 <p class="bold">
-                                                        Stations
+                                                        {{'stations' | translate}}
                                                 </p>
 
-                                                <nz-checkbox-wrapper (nzOnChange)="onStationChange($event)"
+                                                <nz-checkbox-wrapper [dir]="(lang$ | async)  === 'ar' ? 'rtl' : 'ltr'" (nzOnChange)="onStationChange($event)"
                                                         style="width: 100%;">
                                                         <div class="list-item" *ngFor="let station of stations">
                                                                 <label *ngIf="station.code !== currentStation.code"
                                                                         nz-checkbox
-                                                                        [nzValue]="station.code">{{station.name_en}}</label>
+                                                                        [nzValue]="station.code">{{station.name}}</label>
                                                         </div>
                                                 </nz-checkbox-wrapper>
                                         </div>
@@ -69,11 +69,11 @@
 
                 <div div *ngIf="activeInterval$ | async as activeInterval" class="date-filters">
                         <button (click)="onIntervalChange('day', datepicker)" nz-button
-                                [class.active]="activeInterval === 'day'">Day</button>
+                                [class.active]="activeInterval === 'day'">{{'day' | translate}}</button>
                         <button (click)="onIntervalChange('week', datepicker)" nz-button
-                                [class.active]="activeInterval === 'week'">Week</button>
+                                [class.active]="activeInterval === 'week'">{{'week' | translate}}</button>
                         <button (click)="onIntervalChange('month', datepicker)" nz-button
-                                [class.active]="activeInterval === 'month'">Month</button>
+                                [class.active]="activeInterval === 'month'">{{'month' | translate}}</button>
 
 
                                 <ng-template #calendar>
@@ -84,7 +84,7 @@
                                     <nz-range-picker #datepicker [nzAllowClear]="true" [nzDisabledDate]="disabledDate" [nzShowTime]="(activeInterval$ | async) === 'day' ? { nzFormat: 'HH:mm' } : false" [nzSuffixIcon]="calendar" class="simple" [class.hidden]="!date" [(ngModel)]="date"
                                         (ngModelChange)="onDateChange($event)"></nz-range-picker>
                         <button nz-button nz-dropdown [nzDropdownMenu]="menu" class="download">
-                                Download
+                                {{'download' | translate}}
                                 <span nz-icon nzType="down"></span>
 
                         </button>

@@ -1,4 +1,4 @@
-<app-bread-crumb [routes]="routes" [target]="'Overview'"></app-bread-crumb>
+<app-bread-crumb [routes]="routes" [target]="'overview'"></app-bread-crumb>
 
 <ng-container *ngIf="isLoaded">
 
@@ -6,7 +6,7 @@
         <div class="title">
 
             <h1 class="main-header">
-                {{currentStation?.name_en}} Station
+                {{currentStation?.name}} 
 
 
                 <a nz-dropdown [nzDropdownMenu]="menu">
@@ -21,7 +21,7 @@
 
                                 <li nz-menu-item>
                                     <label class="station-item" [nzValue]="station.code" nz-radio>
-                                        {{station.name_en}}</label>
+                                        {{station.name}}</label>
                                 </li>
 
                                 <nz-divider [nzDashed]="true" class="margin-0"></nz-divider>
@@ -33,7 +33,7 @@
             </h1>
 
             <p class="gray par">
-                Manage by {{details?.organization?.name_en}}
+                {{'mangeBy' | translate}} {{details?.organization?.name}}
             </p>
         </div>
 
@@ -41,7 +41,7 @@
 
             <div [style]="{'background': details?.aqi[0]?.color}" class="details">
                 <span class="item">
-                    AQI
+                    {{'aqi' | translate}}
                 </span>
 
                 <span class="number">
@@ -56,13 +56,13 @@
                         [src]="'assets/icons/' + details?.aqi[0]?.status_en?.toLowerCase() + '-face.svg'" alt="">
 
                     <span class="item">
-                        {{details.aqi[0]?.status_en}}
+                        {{details.aqi[0]?.status_name}}
                     </span>
                 </div>
             </div>
 
             <p class="gray date">
-                Last updated {{lastUpdate | date:'h:mm dd-MM-yyyy a'}}
+                {{'lastUpdate' | translate}} {{lastUpdate | date:'h:mm dd-MM-yyyy a'}}
             </p>
         </div>
 
@@ -72,16 +72,19 @@
         <div class="update-header d-flex justify-content-between">
 
             <h1 class="main-header">
-                Latest Update
+                {{'latestUpdate' | translate}}
             </h1>
 
-            <div class="buttons">
+            <div *ngIf="lang$ | async as lang" class="buttons">
+                
                 <button class="no-min-width" (click)="carouselRef.prev()" nz-button nzType="text">
-                    <span nz-icon nzType="caret-left" nzTheme="outline"></span>
+                    <span *ngIf="lang === 'en'" nz-icon nzType="caret-left" nzTheme="outline"></span>
+                    <span *ngIf="lang === 'ar'" nz-icon nzType="caret-right" nzTheme="outline"></span>
                 </button>
 
                 <button class="no-min-width" (click)="carouselRef.next()" nz-button nzType="text">
-                    <span nz-icon nzType="caret-right" nzTheme="outline"></span>
+                    <span *ngIf="lang === 'en'" nz-icon nzType="caret-right" nzTheme="outline"></span>
+                    <span *ngIf="lang === 'ar'" nz-icon nzType="caret-left" nzTheme="outline"></span>
                 </button>
 
             </div>
@@ -111,10 +114,10 @@
                 <ng-template [width]="210" *ngFor="let item of details.weather" carouselSlide>
                     <div class="lightGray-bg update-item">
                         <div class="item-header">
-                            <p *ngIf="item.variable.code === 'AT'" class="gray name weather">Temperature</p>
-                            <p *ngIf="item.variable.code === 'AP'" class="gray name weather">Pressure</p>
+                            <p *ngIf="item.variable.code === 'AT'" class="gray name weather">{{ (lang$ | async) === 'en' ? 'Temperature' : 'درجة الحرارة'}}</p>
+                            <p *ngIf="item.variable.code === 'AP'" class="gray name weather">{{ (lang$ | async) === 'en' ? 'Pressure' : 'الضغط الجوي'}} </p>
                             <p *ngIf="item.variable.code !== 'AT' && item.variable.code !== 'AP'  "
-                                class="gray name weather">{{item.variable.name_en}}</p>
+                                class="gray name weather">{{ (lang$ | async) === 'en' ?  item.variable.name_en: item.variable.name_ar}}</p>
 
                             <span [ngStyle]="{'border-color': '#25B5B1'}" class="brief-circle">
                                 <span [ngStyle]="{'background': '#25B5B1'}" class="inner"></span>

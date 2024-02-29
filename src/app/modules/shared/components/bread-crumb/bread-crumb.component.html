@@ -3,10 +3,10 @@
         <a   [routerLink]="backRoute" class="back-btn">
         </a>
 
-        <li *ngFor="let route of routes" class="breadcrumb-item link"><a   [routerLink]="route.link">{{route.title}}</a>
+        <li *ngFor="let route of routes" class="breadcrumb-item link"><a   [routerLink]="route.link">{{route.title | translate }}</a>
             <span class="separator">/</span>
         </li>
 
-        <li class="breadcrumb-item active" aria-current="page">{{target}}</li>
+        <li class="breadcrumb-item active" aria-current="page">{{target | translate}}</li>
     </ul>
 </nav>

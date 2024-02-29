@@ -2,9 +2,18 @@
     "home": "Home",
     "overview": "Overview",
     "details": "Details",
-    "admin" : "Admin",
-    "aqi" : "Air Quality Index",
-    "realTimeSummary" : "Real-time Summary",
-     "lastUpdated" : "Last Updated",
-     "mangeBy" : "Manage By"
+    "admin": "Admin",
+    "aqi": "Air Quality Index",
+    "realTimeSummary": "Real-time Summary",
+    "lastUpdated": "Last Updated",
+    "mangeBy": "Manage By",
+    "day" : "Day",
+    "week" : "Week",
+    "month" : "Month",
+    "stationsOverview": "Stations Overview",
+    "download": "Download",
+    "latestUpdate" : "Latest Update",
+    "compare" : "Compare",
+    "variables" : "Variables",
+    "stations" : "Stations"
 }
