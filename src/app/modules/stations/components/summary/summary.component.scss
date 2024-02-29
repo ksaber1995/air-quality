@@ -46,9 +46,7 @@ td:not(:last-child) ::before {
   content: "";
 }
 
-.item {
-  font-weight: 600;
-}
+
 
 .rounded {
   border-radius: 50%;
@@ -58,7 +56,6 @@ td:not(:last-child) ::before {
   height: 45px;
   justify-content: center;
   color: #fff;
-  font-weight: 600;
   align-items: center;
   background-color: $LightGray;
 }
@@ -118,6 +115,9 @@ td:not(:last-child) ::before {
   .item {
     color: #303030;
     font-size: 1.1rem;
-    font-weight: 600;
   }
+}
+
+.item.rounded {
+  font-size: .7rem !important;
 }

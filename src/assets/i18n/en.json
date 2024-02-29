@@ -1,5 +1,10 @@
 {
     "home": "Home",
     "overview": "Overview",
-    "details": "Details"
+    "details": "Details",
+    "admin" : "Admin",
+    "aqi" : "Air Quality Index",
+    "realTimeSummary" : "Real-time Summary",
+     "lastUpdated" : "Last Updated",
+     "mangeBy" : "Manage By"
 }

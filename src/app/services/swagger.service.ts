@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { DetailedStation, Reading, Station } from '../models/Station';
-import { Observable, map, shareReplay } from 'rxjs';
+import { Observable, combineLatest, map, shareReplay } from 'rxjs';
 import { BreakPoint, VariableBreakPoint } from '../models/breakPoint';
 import { CustomOverviewResponse, OverviewResponse } from '../models/overview';
+import { Lang, LocalizationService } from './localization.service';
 
 const BaseUrl = 'https://functions.naqi.dal2.com/v1'
 
@@ -33,26 +34,32 @@ interface BreakPointsResponse {
   providedIn: 'root'
 })
 export class SwaggerService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private localization: LocalizationService) { }
 
   getStations() {
     const url = BaseUrl + '/stations'
-
-    return this.http.get(url).pipe(
-      map((res: StationsResponse) => res.data),
-      map(stations=> {
+    const lang$ = this.localization.getCurrentLanguage();
+    
+    return combineLatest([this.http.get<StationsResponse>(url), lang$])
+    
+    .pipe(
+      map(([stationsResponse, lang])=> {
+        console.log(lang)
+        const stations = stationsResponse.data;
+        debugger
         const data = stations.map(station=>{
         
           return {
             ...station,
-            variables: station.variables.map(variable=> ({...variable, readings: variable.readings.reverse()})),
-            weather: station.weather.map(weather=> ({...weather, readings: weather.readings.reverse()}))
+            variables: station.variables.map(variable=> ({...variable,   readings: variable.readings.reverse()})),
+            weather: station.weather.map(weather=> ({...weather, readings: weather.readings.reverse(), variable: {...weather.variable , name: lang === Lang.ar ? weather.variable.name_ar : weather.variable.name_en }  })),
+            aqi: station.aqi.map(aqi=> ({...aqi, status_name: lang === Lang.ar ? aqi.status_ar : aqi.status_en  })),
+            name: lang === Lang.ar ? station.name_ar : station.name_en,
+            organization: {...station.organization, name: lang === Lang.ar ? station.organization.name_ar : station.organization.name_en}
           }
         })
         return data
-      }),
-
-      shareReplay()
+      })
     )
   }
 

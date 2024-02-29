@@ -23,14 +23,16 @@
     </div>
 
     <div class="veryLightGray-bg main-radius stations-wrapper">
-        <div class="station-controller">
+        <div *ngIf="lang$ | async as lang" class="station-controller">
             <button class="no-min-width rounded seaGreen-bg" (click)="carouselRef.prev()" nz-button nzType="text">
-                <span class="btn-icon" nz-icon nzType="left" nzTheme="outline"></span>
+                <span *ngIf="lang === 'en'" class="btn-icon" nz-icon nzType="left" nzTheme="outline"></span>
+                <span *ngIf="lang === 'ar'" class="btn-icon" nz-icon nzType="right" nzTheme="outline"></span>
             </button>
 
             <button [disabled]="false" class="no-min-width rounded seaGreen-bg" (click)="carouselRef.next();" nz-button
                 nzType="text">
-                <span class="btn-icon" nz-icon nzType="right" nzTheme="outline"></span>
+                <span *ngIf="lang === 'en'" class="btn-icon" nz-icon nzType="right" nzTheme="outline"></span>
+                <span *ngIf="lang === 'ar'" class="btn-icon" nz-icon nzType="left" nzTheme="outline"></span>
             </button>
 
 

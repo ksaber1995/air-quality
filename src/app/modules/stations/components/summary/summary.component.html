@@ -1,7 +1,7 @@
 <div class="wrapper veryLightGray-bg main-radius ">
-  <h1 class="main-header">Air Quality Index</h1>
-  <h3 class="darkGray">Real-time Summary</h3>
-  <p class="gray par">Last updated {{lastUpdate | date: 'yyyy-MM-dd HH:mm:ss'}} </p>
+  <h1 class="main-header">{{'aqi' | translate }}</h1>
+  <h3 class="darkGray">{{'realTimeSummary' | translate}}</h3>
+  <p class="gray par">{{'lastUpdated' | translate}} {{lastUpdate | date: 'yyyy-MM-dd HH:mm:ss'}} </p>
 </div>
 
 <div class="table-wrapper veryLightGray-bg main-radius">
@@ -10,9 +10,9 @@
   <a [routerLink]="'/stations/' + station?.code" class="details">
     <div class="information">
 
-      <h1> {{station?.name_en}} </h1>
+      <h1> {{station?.name}} </h1>
 
-      <p class="gray">Manage By {{station?.organization?.name_en}} </p>
+      <p class="gray">{{'mangeBy' | translate}} {{station?.organization?.name}} </p>
 
       <div [style]="{'background': station?.aqi[0]?.color}" class="status-wrapper">
 
@@ -21,7 +21,7 @@
           <img width="25" height="25" [src]="'assets/icons/' + (station?.aqi[0]?.status_en?.toLowerCase() || 'na') + '-face.svg'" alt="">
 
           <span class="item">
-            {{station?.aqi[0]?.status_en}}
+            {{station?.aqi[0]?.status_name}}
           </span>
         </div>
       </div>
@@ -32,7 +32,7 @@
       <div style="display: block; width: 180px;" >
 
         <div class="main-img">
-          <img width="200" height="200" [src]="'assets/icons/status/meter/' + (station?.aqi[0]?.status_en?.toLowerCase() || 'na')  + '.svg' " alt="">
+          <img width="200" height="200" style="max-width: 100%;" [src]="'assets/icons/status/meter/' + (station?.aqi[0]?.status_en?.toLowerCase() || 'na')  + '.svg' " alt="">
 
 
         </div>
@@ -49,14 +49,14 @@
     <thead>
       <tr>
         <th></th>
-        <th [nzAlign]="'center'" *ngFor="let item of headers">{{item}}</th>
+        <th dir="ltr" class="font-weight-bold" [nzAlign]="'center'" *ngFor="let item of headers">{{item}}</th>
       </tr>
     </thead>
 
 
     <tbody>
       <tr *ngFor="let item of station?.variables; index as i">
-        <td [nzAlign]="'center'">{{item?.variable?.abbreviation_en }}</td>
+      <td class="font-weight-bold" [nzAlign]="'center'">{{item?.variable?.abbreviation_en }}</td>
 
         <td [nzAlign]="'center'" *ngFor="let valueItem of item.readings">
           <span [style.background]="valueItem?.color" [style.color]="valueItem?.color?.toLocaleLowerCase() !== '#ffff00' ? '#fff' : '#000'"  class="item rounded">
@@ -65,9 +65,8 @@
       </tr>
 
 
-      <tr *ngFor="let item of station.weather; index as i">
-        <td [nzAlign]="'center'" *ngIf="item?.variable.code === 'AT'">Temperature</td>
-        <td [nzAlign]="'center'" *ngIf="item?.variable.code !== 'AT'">{{item?.variable.name_en }}</td>
+      <tr *ngFor="let item of station?.weather; index as i">
+        <td class="font-weight-bold" [nzAlign]="'center'" >{{item?.variable.name }}</td>
 
         <td [nzAlign]="'center'" *ngFor="let valueItem of item.readings">
        

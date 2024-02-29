@@ -1,5 +1,10 @@
 {
     "home": "الرئيسية",
     "overview": "نظرة عامة",
-    "details": "تفاصيل"
+    "details": "تفاصيل",
+    "admin" : "مشرف",
+    "aqi" : "مؤشر جودة الهواء",
+    "realTimeSummary" : "ملخص حديث",
+     "lastUpdated" : "اخر تحديث",
+     "mangeBy" : "تدار من قبل"
 }

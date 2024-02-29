@@ -20,6 +20,7 @@ import { OverviewComponent } from './components/overview/overview.component';
 import { SeverityBarComponent } from './components/severity-bar/severity-bar.component';
 import { SummaryComponent } from './components/summary/summary.component';
 import { StationsRoutingModule } from './stations-routing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,7 @@ import { StationsRoutingModule } from './stations-routing.module';
     NzDividerModule,
     NzCheckboxModule,
     CarouselModule,
-  
+    TranslateModule
   ]
 })
 export class StationsModule { }

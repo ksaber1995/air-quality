@@ -1,3 +1,4 @@
+import { LocalizationService } from './../../../../services/localization.service';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs';
@@ -17,7 +18,7 @@ export class MapComponent implements OnInit , OnDestroy {
   breakPoints$ = this.swagger.getBreakPoints().pipe(map(res=> res.aqi_breakpoints?.sort((a, b) => a.sequence - b.sequence)))
   
   carouselOptions = carouselOptions;
-
+  lang$ = this.localization.getCurrentLanguage();
   ngOnInit(): void {
   }
 
@@ -38,8 +39,11 @@ export class MapComponent implements OnInit , OnDestroy {
 
   navigatorPosition
 
-  constructor(private route: ActivatedRoute, private router: Router, private swagger: SwaggerService) {
-  
+  constructor(private route: ActivatedRoute, private router: Router, private swagger: SwaggerService, private localization: LocalizationService) {
+    
+    this.localization.getCurrentLanguage().subscribe(lang=>{
+      this.carouselOptions = {...this.carouselOptions, rtl: lang === 'ar'}
+    })
 
       this.options = {
         center:  { lat: 21.4735, lng: 58.545284 },
@@ -48,6 +52,8 @@ export class MapComponent implements OnInit , OnDestroy {
         mapTypeControl: false,
         zoom: 6.5,
         mapTypeId: 'terrain', // Use 'terrain' map type to emphasize borders
+
+        
 
         streetViewControl: false,
         styles: [

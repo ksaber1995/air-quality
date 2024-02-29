@@ -1,3 +1,4 @@
+import { Lang, LocalizationService } from './../../../../services/localization.service';
 import { Component } from '@angular/core';
 
 @Component({
@@ -6,6 +7,9 @@ import { Component } from '@angular/core';
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
+  lang$ = this.localization.getCurrentLanguage()
+
+  constructor(private localization: LocalizationService){}
 
   homeClick(){
 
@@ -15,5 +19,9 @@ export class HeaderComponent {
   }
   adminClick(){
 
+  }
+
+  setLang(lang){
+    this.localization.setLang(lang)
   }
 }

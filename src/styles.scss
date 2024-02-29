@@ -8,9 +8,23 @@
 @import 'zorro/date-picker';
 @import 'typo/headers';
 
+@font-face {
+    font-family: 'Neo Sans Arabic Regular';
+    src: url('assets/fonts/Neo Sans Arabic Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+body,
+* {
+    font-family: 'Neo Sans Arabic Regular', sans-serif;
+}
+
+
 * {
     margin: 0;
-    
+
     box-sizing: border-box;
     padding: 0;
 }
@@ -50,20 +64,20 @@ a {
 }
 
 
-.margin-0{
-    margin:  0 !important;
-}
-
-
-.bold{
-    font-weight: bold !important;
-}
-
-.m-0{
+.margin-0 {
     margin: 0 !important;
 }
 
-.p-0{
+
+.bold {
+    font-weight: bold !important;
+}
+
+.m-0 {
+    margin: 0 !important;
+}
+
+.p-0 {
     padding: 0 !important;
 }
 
@@ -87,18 +101,18 @@ a {
 }
 
 
-.rounded{
+.rounded {
     border-radius: 50%;
 }
 
 
-.pointer:hover{
+.pointer:hover {
     cursor: pointer;
 }
 
 
 
-.custom-label{
+.custom-label {
     padding: .5rem;
     display: flex;
     align-items: center;
@@ -114,16 +128,16 @@ a {
     background-color: $LightGray;
 }
 
-.custom-label.Good{
+.custom-label.Good {
     background-color: $Good;
 }
 
-.custom-label.Moderate{
+.custom-label.Moderate {
     background-color: $Moderate;
     color: #000 !important;
 }
 
-.custom-label.Satisfactory{
+.custom-label.Satisfactory {
     background-color: $Satisfactory;
 }
 
@@ -131,11 +145,11 @@ a {
     background-color: #FF7E00;
 }
 
-.custom-label.Unhealthy{
+.custom-label.Unhealthy {
     background-color: $Unhealthy;
 }
 
-.custom-label.Hazardous{
+.custom-label.Hazardous {
     background-color: $Hazardous;
 }
 
@@ -145,3 +159,9 @@ a {
 // $Unhealthy: #FA0A00;
 // $VeryUnhealthy: #8F3F97;
 // $Hazardous: #7E0023;
+
+
+
+.font-weight-bold{
+    font-weight: bold !important;
+}

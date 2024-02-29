@@ -11,6 +11,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { SharedModule } from './modules/shared/shared.module';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { CookieService } from 'ngx-cookie-service';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -29,6 +30,8 @@ export function createTranslateLoader(http: HttpClient) {
     HttpClientModule,
     RouterModule,
     SharedModule,
+    
+  
 
     TranslateModule.forRoot({
       loader: {
@@ -44,7 +47,7 @@ export function createTranslateLoader(http: HttpClient) {
   providers: [
     // { provide: LOCALE_ID, useValue: 'zh-Hans' }, // Set locale globally for Angular 
     { provide: NZ_I18N, useValue: en_US }, // Set locale globally for NZ-Zorro
-
+    CookieService
     // provideClientHydration()
   ],
   bootstrap: [AppComponent]

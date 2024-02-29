@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { map, tap, withLatestFrom } from 'rxjs';
+import { combineLatest, map, tap, withLatestFrom } from 'rxjs';
 import { SwaggerService } from '../../../../services/swagger.service';
 
 @Component({
@@ -16,12 +16,15 @@ export class HomeComponent {
       {
         relativeTo: this.route,
         queryParams: { id: res[0].code },
+        queryParamsHandling: 'merge',
+        // preserve the existing query params in the route
       }
     );
   }));
 
-  currentStation$ = this.route.queryParamMap.pipe(
-    withLatestFrom(this.stations$), map(([routes, stations]) => {
+  currentStation$ =  combineLatest([this.route.queryParamMap, this.stations$])
+  .pipe(
+     map(([routes, stations]) => {
       const id = routes.get('id');
       // return stations[0]
       return stations.find(res=> res.code === id) 

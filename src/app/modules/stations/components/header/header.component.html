@@ -1,13 +1,55 @@
 <div class="wrapper veryLightGray-bg">
-    <a  [queryParamsHandling]="'merge'"  routerLink="/">
-      <img class="logo" src="../../../../../assets/icons/logo.svg" alt="">
-    </a>
+  <a [queryParamsHandling]="'merge'" routerLink="/">
+    <img class="logo" src="../../../../../assets/icons/logo.svg" alt="">
+  </a>
 
-    <ul >
-      <li [queryParamsHandling]="'merge'"   [routerLinkActive]="['seaGreen-bg', 'white']" routerLink="/home" class="home "><img src="../../../../../assets/icons/home.svg" alt=""> {{'home' | translate}}</li>
-      
-      <li [routerLinkActive]="['seaGreen-bg', 'white']" routerLink="/overview" class="overview gray"> <img src="../../../../../assets/icons/overview.svg" alt="">Overview</li>
-    </ul>
+  <ul>
+    <li [queryParamsHandling]="'merge'" [routerLinkActive]="['seaGreen-bg', 'white']" routerLink="/home" class="home ">
+      <img src="../../../../../assets/icons/home.svg" alt=""> {{'home' | translate}}
+    </li>
 
-    <div class="admin" (click)="adminClick()"> <img class="adminIcon" src="../../../../../assets/icons/admin.svg" >Admin</div>
+    <li [routerLinkActive]="['seaGreen-bg', 'white']" routerLink="/overview" class="overview gray"> <img
+        src="../../../../../assets/icons/overview.svg" alt="">{{'overview' | translate}}</li>
+  </ul>
+
+  <ul *ngIf="lang$ | async as lang">
+    <li *ngIf="lang === 'ar'">
+
+      <a nz-dropdown [nzDropdownMenu]="menu">
+        <div class="language">
+          <img src="../../../../../assets/icons/languageIcon.svg" class="lang">
+         العربية 
+          <img src="../../../../../assets/icons/arrowDown.svg" class="arrow">
+        </div>
+      </a>
+
+
+      <nz-dropdown-menu #menu="nzDropdownMenu">
+        <ul nz-menu>
+          <li (click)="setLang('en')" nz-menu-item>الانجليزية</li>
+        </ul>
+      </nz-dropdown-menu>
+    </li>
+
+    <li *ngIf="lang === 'en'">
+
+      <a nz-dropdown [nzDropdownMenu]="menu">
+        <div class="language">
+          English
+          <img src="../../../../../assets/icons/arrowDown.svg" class="arrow">
+        </div>
+      </a>
+
+
+      <nz-dropdown-menu #menu="nzDropdownMenu">
+        <ul nz-menu>
+          <li (click)="setLang('ar')" nz-menu-item>العربية</li>
+        </ul>
+      </nz-dropdown-menu>
+    </li>
+
+
+    <div class="admin" (click)="adminClick()"> <img class="adminIcon" src="../../../../../assets/icons/admin.svg">{{'admin' | translate}}
+    </div>
+  </ul>
 </div>

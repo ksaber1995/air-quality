@@ -34,7 +34,7 @@ export function formatTime(date: Date) {
     let hours = date.getHours();
     let minutes = date.getMinutes();
 
-    let period = hours < 12 ? 'am' : 'pm';
+    let period = hours < 12 ?  'am' : 'pm';
     hours = hours % 12;
     hours = hours ? hours : 12; // Convert 0 to 12
     return hours + ':' + minutes + ' ' + period;

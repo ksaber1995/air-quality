@@ -17,6 +17,7 @@ interface Variable {
     name_en: string | null;
     name_ar: string | null;
     code: string
+    name: string
 
 }
 
@@ -31,6 +32,7 @@ interface AqiData {
     color: string;
     status_ar: string,
     status_en: string
+    status_name: string
     value: number
     variable: {
         abbreviation_en: string
@@ -55,6 +57,8 @@ export interface Station {
     name_en: string;
     name_ar: string | null;
 
+    name:string;
+
     aqi: AqiData[];
     variables: Aqi[];
     weather: WeatherData[];
@@ -64,6 +68,7 @@ export interface Station {
     organization: {
         name_ar: string,
         name_en: string
+        name: string
     }
 }
 
