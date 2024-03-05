@@ -49,9 +49,9 @@ export class SwaggerService {
         
           return {
             ...station,
-            variables: station.variables.map(variable=> ({...variable,   readings: variable.readings.reverse()})),
+            variables: station.variables.map(variable=> ({...variable,   readings: variable.readings.reverse()   })),
             weather: station.weather.map(weather=> ({...weather, readings: weather.readings.reverse(), variable: {...weather.variable , name: lang === Lang.ar ? weather.variable.name_ar : weather.variable.name_en }  })),
-            aqi: station.aqi.map(aqi=> ({...aqi, status_name: (lang === Lang.ar ? aqi.status_ar : aqi.status_en) || 'NA'  })),
+            aqi: station.aqi.map(aqi=> ({...aqi,  status_name: (lang === Lang.ar ? aqi.status_ar : aqi.status_en) || 'NA'  })),
             name: lang === Lang.ar ? station.name_ar : station.name_en,
             organization: {...station.organization, name: lang === Lang.ar ? station.organization.name_ar : station.organization.name_en}
           }

@@ -45,3 +45,17 @@ nz-radio-group {
     color: #fff;
     font-size: 1.1rem;
 }
+
+@media(max-width: 992px){
+    .filters{
+        display: block !important;
+    
+        .date-filters{
+            margin-top: 25px;
+
+            button{
+                min-width: unset !important;    
+            }
+        }
+    }
+}

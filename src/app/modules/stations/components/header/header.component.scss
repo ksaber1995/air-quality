@@ -8,13 +8,16 @@
   color: black;
   font-size: 16px;
   font-weight: 600;
+
+
+
+
   .logo{
     width: 250px;
     height: 100px;
   }
 
-  ul{
-    height: 100%;
+  .menu-items-wrapper{
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -84,13 +87,21 @@
     }
     
   }
-}
-
-
-
-
-@media (max-width: 1200px){
-  .admin{
-    display: none !important;
+  .small-menu{
+    display: none;
   }
 }
+
+
+
+@media (max-width: 992px){
+  .menu-items-wrapper{
+    display: none !important;
+  }
+
+  .small-menu{
+    display: block !important;
+  }
+}
+
+

@@ -114,12 +114,30 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+        flex-wrap: wrap;
     }
     .text{
-        font-size: 1.1rem;
+        font-size: .9rem;
         padding: 0;
         line-height: 9px;
 
     }
 
+}
+
+
+
+@media(max-width: 1200px){
+    .filters{
+        display: block !important;
+    
+        .date-filters{
+            margin-top: 25px;
+            justify-content: flex-start !important;
+            button{
+                min-width: unset !important;    
+                padding: .4rem;
+            }
+        }
+    }
 }

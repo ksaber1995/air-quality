@@ -1,4 +1,5 @@
 .wrapper{
+    flex-wrap: wrap;
     padding: 1rem;
     margin-bottom: 1.5rem;
     .main-header{
@@ -90,4 +91,21 @@
 
 .no-min-width{
     min-width: auto !important;
+}
+
+
+@media(max-width: 992px) {
+    .bar-wrapper {
+        &.horizontal {
+
+
+
+            .level {
+                width: 60px;
+
+
+            }
+        }
+    }
+
 }

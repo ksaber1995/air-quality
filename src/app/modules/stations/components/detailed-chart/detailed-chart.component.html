@@ -116,7 +116,7 @@
         <div nz-row [nzGutter]="{ xs: 4, sm: 20, md: 60, lg: 80 }" class="charts-wrapper">
 
 
-                <div nz-col class="gutter-row chart" [nzSpan]="((type$ | async) === 'aqi') ? 18 : 24">
+                <div nz-col class="gutter-row chart" [nzXl]="((type$ | async) === 'aqi') ? 17 : 24"   nzLg="24">
                         <div style="display: block;">
                                 <canvas id="lineChartCanvas" #lineChartCanvas baseChart [datasets]="lineChartData"
                                         [labels]="lineChartLabels" [options]="lineChartOptions" [legend]="false"
@@ -125,7 +125,7 @@
                         </div>
                 </div>
 
-                <div *ngIf="(type$ | async) === 'aqi'" nz-col [nzSpan]="6" class="gutter-row">
+                <div *ngIf="(type$ | async) === 'aqi'" nz-col [nzXl]="7" class="gutter-row">
                         <div class="pipe-chart">
                                 <p class="summary-title">Breakdown</p>
                                 <div class="summary-wrapper">

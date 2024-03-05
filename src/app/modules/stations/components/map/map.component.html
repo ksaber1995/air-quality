@@ -51,7 +51,7 @@
                         <div class="pointer lightSeaGreen-bg station-item"
                             [class.active]="station.code  === currentStation?.code">
                             <h3 class="m-0 p-0 title bold text-center carousel-header">
-                                {{station.name_en}}
+                                {{station.name}}
                             </h3>
 
                             <nz-divider class="bolder-divider m-0 p-0"></nz-divider>
@@ -75,7 +75,7 @@
                                     <app-status-icon [color]="item.color"></app-status-icon>
 
                                     <div class="value">
-                                        {{item.status_en}}
+                                        {{item.status_name || 'NA'}}
                                     </div>
                                 </div>
 

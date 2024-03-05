@@ -18,7 +18,8 @@
 
         <div class="status">
 
-          <img width="25" height="25" [src]="'assets/icons/' + (station?.aqi[0]?.status_en?.toLowerCase() || 'na') + '-face.svg'" alt="">
+          <img width="25" height="25"
+            [src]="'assets/icons/' + (station?.aqi[0]?.status_en?.toLowerCase() || 'na') + '-face.svg'" alt="">
 
           <span class="item">
             {{station?.aqi[0]?.status_name}}
@@ -29,10 +30,12 @@
 
 
     <div class="summary-wrapper">
-      <div style="display: block; width: 180px;" >
+      <div style="display: block; width: 180px;">
 
         <div class="main-img">
-          <img width="200" height="200" style="max-width: 100%;" [src]="'assets/icons/status/meter/' + (station?.aqi[0]?.status_en?.toLowerCase() || 'na')  + '.svg' " alt="">
+          <img width="200" height="200" style="max-width: 100%;"
+            [src]="'assets/icons/status/meter/' + (station?.aqi[0]?.status_en?.toLowerCase() || 'na')  + '.svg' "
+            alt="">
 
 
         </div>
@@ -56,28 +59,58 @@
 
     <tbody>
       <tr *ngFor="let item of station?.variables; index as i">
-      <td class="font-weight-bold" [nzAlign]="'center'">{{item?.variable?.abbreviation_en }}</td>
+        <td class="font-weight-bold" [nzAlign]="'center'">{{item?.variable?.abbreviation_en }}</td>
 
         <td [nzAlign]="'center'" *ngFor="let valueItem of item.readings">
-          <span [style.background]="valueItem?.color" [style.color]="valueItem?.color?.toLocaleLowerCase() !== '#ffff00' ? '#fff' : '#000'"  class="item rounded">
-          {{ valueItem?.value}}</span>
+          <span [style.background]="valueItem?.color"
+            [style.color]="valueItem?.color?.toLocaleLowerCase() !== '#ffff00' ? '#fff' : '#000'" class="item rounded">
+            {{ valueItem?.value || 'NA'}}</span>
         </td>
       </tr>
 
 
       <tr *ngFor="let item of station?.weather; index as i">
-        <td class="font-weight-bold" [nzAlign]="'center'" >{{item?.variable.name }}</td>
+        <td class="font-weight-bold" [nzAlign]="'center'">{{item?.variable.name }}</td>
 
         <td [nzAlign]="'center'" *ngFor="let valueItem of item.readings">
-       
 
-          <span *ngIf="item.variable.code === 'WD'"class="item"> 
+
+          <span *ngIf="item.variable.code === 'WD'" class="item">
             <span [ngStyle]="{'transform': 'rotate(' + valueItem?.value + 'deg)'}" nz-icon nzType="arrow-up"
               nzTheme="outline"></span> </span>
-              
-          <span *ngIf="item.variable.code === 'WS'" class="item">{{ valueItem?.value }} {{item?.unit?.abbreviation_en}} </span>
-          <span *ngIf="item.variable.code === 'AT'" class="item">{{ valueItem?.value }} {{item?.unit?.abbreviation_en}}</span>
-          <span *ngIf="item.variable.code === 'RH'" class="item">{{ valueItem?.value }} {{item?.unit?.abbreviation_en}}</span>
+
+          <span *ngIf="item.variable.code === 'WS'" class="item">
+            <ng-container *ngIf="valueItem?.value">
+
+              {{ valueItem?.value }} {{item?.unit?.abbreviation_en}}
+            </ng-container>
+            <ng-container *ngIf="!valueItem?.value">
+              NA
+            </ng-container>
+          </span>
+
+          <span *ngIf="item.variable.code === 'AT'" class="item">
+            <ng-container *ngIf="valueItem?.value">
+
+              {{ valueItem?.value }} {{item?.unit?.abbreviation_en}}
+            </ng-container>
+            <ng-container *ngIf="!valueItem?.value">
+              NA
+
+            </ng-container>
+          </span>
+
+          <span *ngIf="item.variable.code === 'RH'" class="item">
+            <ng-container *ngIf="valueItem?.value">
+
+              {{ valueItem?.value }} {{item?.unit?.abbreviation_en}}
+            </ng-container>
+            <ng-container *ngIf="!valueItem?.value">
+              NA
+
+            </ng-container>
+
+          </span>
         </td>
       </tr>
     </tbody>

@@ -148,3 +148,37 @@
         }
     }
 }
+
+
+
+@media(max-width: 1200px) {
+    .bar-wrapper {
+        &.horizontal {
+
+
+
+            .level {
+                width: 60px;
+
+
+            }
+        }
+    }
+
+}
+
+@media(max-width: 992px) {
+    .bar-wrapper {
+        &.horizontal {
+
+
+
+            .level {
+                width: 50px;
+
+
+            }
+        }
+    }
+
+}

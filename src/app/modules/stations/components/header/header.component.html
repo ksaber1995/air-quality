@@ -3,7 +3,9 @@
     <img class="logo" src="../../../../../assets/icons/logo.svg" alt="">
   </a>
 
-  <ul>
+
+
+  <ul class="menu-items-wrapper">
     <li [queryParamsHandling]="'merge'" [routerLinkActive]="['seaGreen-bg', 'white']" routerLink="/home" class="home ">
       <img src="../../../../../assets/icons/home.svg" alt=""> {{'home' | translate}}
     </li>
@@ -12,13 +14,13 @@
         src="../../../../../assets/icons/overview.svg" alt="">{{'overview' | translate}}</li>
   </ul>
 
-  <ul  class="menu-items-wrapper" *ngIf="lang$ | async as lang">
+  <ul class="menu-items-wrapper" *ngIf="lang$ | async as lang">
     <li *ngIf="lang === 'ar'">
 
       <a nz-dropdown [nzDropdownMenu]="menu">
         <div class="language">
           <img src="../../../../../assets/icons/languageIcon.svg" class="lang">
-         العربية 
+          العربية
           <img src="../../../../../assets/icons/arrowDown.svg" class="arrow">
         </div>
       </a>
@@ -49,7 +51,36 @@
     </li>
 
 
-    <div class="admin" (click)="adminClick()"> <img class="adminIcon" src="../../../../../assets/icons/admin.svg">{{'admin' | translate}}
+    <div class="admin" (click)="adminClick()"> <img class="adminIcon"
+        src="../../../../../assets/icons/admin.svg">{{'admin' | translate}}
     </div>
   </ul>
+
+
+
+
+  <div *ngIf="lang$ | async as lang" class="small-menu">
+
+    <button nz-button nz-dropdown [nzDropdownMenu]="menu" [nzPlacement]="'bottomCenter'">{{ 'menu' | translate }}
+    </button>
+    <nz-dropdown-menu #menu="nzDropdownMenu">
+      <ul nz-menu>
+
+        <li nz-menu-item [queryParamsHandling]="'merge'" [routerLinkActive]="['seaGreen-bg', 'white']" routerLink="/home"
+          class="home ">
+
+          {{'home' | translate}}
+        </li>
+
+        <li nz-menu-item [routerLinkActive]="['seaGreen-bg', 'white']" routerLink="/overview">{{'overview' | translate}}</li>
+
+        <li nz-menu-item *ngIf="lang === 'ar'" (click)="setLang('en')">الانجليزية</li>
+
+        <li nz-menu-item *ngIf="lang === 'en'" (click)="setLang('ar')">Arabic</li>
+
+      </ul>
+    </nz-dropdown-menu>
+
+  </div>
+
 </div>
