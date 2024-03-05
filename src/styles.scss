@@ -165,3 +165,47 @@ a {
 .font-weight-bold{
     font-weight: bold !important;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+@media(max-width: 1500px){
+    .ant-table-tbody > tr > td{
+        padding-right: 8px;
+        padding-left: 8px;
+        font-size: .6rem;
+    }
+
+    .ant-table-thead > tr > th{
+        padding-left: 8px;
+        padding-right: 8px;
+
+        font-size: .6rem;
+
+    }
+}
+
+
+@media(max-width: 767px){
+    .ant-table-tbody > tr > td{
+        padding-right: 2px;
+        padding-left: 2px;
+        font-size: .5rem;
+    }
+
+    .ant-table-thead > tr > th{
+        padding-left: 2px;
+        padding-right: 2px;
+
+        font-size: .6rem;
+
+    }
+}

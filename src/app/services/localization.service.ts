@@ -35,9 +35,6 @@ export class LocalizationService implements OnInit {
     this.lang$.next(lang)
   }
 
-  toggleLang(){
-    
-  }
 
 
   getCurrentLanguage(): Observable<Lang> {

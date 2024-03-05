@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { LocalizationService } from './services/localization.service';
+import { delay } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -10,19 +11,46 @@ import { LocalizationService } from './services/localization.service';
 export class AppComponent implements OnInit {
   isLoading = true;
   constructor(private spinner: NgxSpinnerService, private localization: LocalizationService) {
-    this.spinner.show();
 
-
-
-    setTimeout(() => {
-      this.spinner.hide();
-      this.isLoading = false;
-
-    }, 1000);
   }
 
   ngOnInit(){
     this.setLangs();
+
+    this.localization.getCurrentLanguage().pipe(delay(1000))
+    .subscribe(res => {
+      // ar en 
+      this.loadGoogleMapsScript(res)
+    })
+  }
+
+  
+  loadGoogleMapsScript(language: string) { // ar en
+    this.isLoading = true
+    
+    const existingScript = document.getElementById('google-maps-script');
+    if (existingScript) {
+      document.body.removeChild(existingScript);
+    }
+
+    const script = document.createElement('script');
+    script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyDDQ3S08D_41Ll3a2GjTE28KGQR-G6XvmM&libraries=places&language=${language}`;
+    script.id = 'google-maps-script';
+    script.async = true;
+    script.defer = true;
+
+    script.onload = () => {
+      // Google Maps API loaded successfully
+      // You can initialize your map here if needed
+      this.isLoading = false;
+    };
+
+    script.onerror = () => {
+      console.error('Error loading Google Maps API script.');
+    };
+
+    document.body.appendChild( script);
+
   }
 
   setLangs() {

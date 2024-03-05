@@ -12,7 +12,7 @@
         src="../../../../../assets/icons/overview.svg" alt="">{{'overview' | translate}}</li>
   </ul>
 
-  <ul *ngIf="lang$ | async as lang">
+  <ul  class="menu-items-wrapper" *ngIf="lang$ | async as lang">
     <li *ngIf="lang === 'ar'">
 
       <a nz-dropdown [nzDropdownMenu]="menu">

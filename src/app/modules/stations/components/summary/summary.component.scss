@@ -105,6 +105,7 @@ td:not(:last-child) ::before {
   text-transform: capitalize;
   display: inline-flex;
   align-items: center;
+
   .status {
     display: flex;
     align-items: center;
@@ -120,4 +121,76 @@ td:not(:last-child) ::before {
 
 .item.rounded {
   font-size: .7rem !important;
+}
+
+td {
+  direction: ltr !important;
+}
+
+
+@media(max-width: 767px) {
+
+  .table-wrapper {
+    padding: .5rem;
+  }
+
+
+  .wrapper {
+    padding: .5rem;
+  }
+
+
+
+
+
+  .rounded {
+    padding: 4px;
+    width: 34px;
+    height: 34px;
+  }
+
+  .title,
+  .details {
+
+    h1 {
+      font-size: 25px;
+    }
+
+    h3 {
+      font-size: 14px;
+    }
+
+  }
+
+  .details {
+    padding-right: 15px;
+
+
+    .spinner {
+
+      img {
+        width: 160px;
+        height: 160px;
+      }
+    }
+  }
+
+
+  .status-wrapper {
+    padding: 0 10px;
+
+    .status {
+      gap: 7px;
+
+    }
+
+    .item {
+      font-size: .7rem;
+    }
+  }
+
+  .item.rounded {
+    font-size: .6rem !important;
+  }
+
 }

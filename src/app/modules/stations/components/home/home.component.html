@@ -3,11 +3,11 @@
 
     <ng-container *ngIf="currentStation$ | async as station">
 
-        <div nz-col class="gutter-row" [nzSpan]="12">
+        <div nz-col class="gutter-row" nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="12" >
             <div class="inner-box summary"><app-summary [station]="station"></app-summary></div>
         </div>
         
-        <div nz-col class="gutter-row" [nzSpan]="12">
+        <div nz-col class="gutter-row" nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="12" >
             <div class="map inner-box"><app-map [currentStation]="station" [stations]="stations"></app-map></div>
         </div>
     </ng-container>

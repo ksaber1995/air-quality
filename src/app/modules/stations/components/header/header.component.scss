@@ -12,22 +12,24 @@
     width: 250px;
     height: 100px;
   }
+
   ul{
-    width: 18%;
     height: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding-top: 10px;
 
+    gap: 1rem;
+
     .home{
       img{
         filter: brightness(0) invert(1);
       }
     }
+
     li{
       list-style: none;
-      width: fit-content;
       padding: 15px 10px;
       height: 30px;
       display: flex;
@@ -86,3 +88,9 @@
 
 
 
+
+@media (max-width: 1200px){
+  .admin{
+    display: none !important;
+  }
+}
