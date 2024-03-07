@@ -10,7 +10,7 @@
                 class="">
 
                 <map-marker   #marker="mapMarker"
-                    [label]=" { color: '#fff', fontSize: '18px', fontWeight: 'bold',  text:  station.aqi[0].value + '' , className: 'custom-label ' + station.aqi[0].status_en } "
+                    [label]=" { color: '#fff', fontSize: '18px', fontWeight: 'bold',  text:  ((station.aqi[0].value || 'NA') + '')  , className: 'custom-label ' + station.aqi[0].status_en } "
                     [icon]="   {url:  ' '}"
                     [position]="{lat: +station.latitude, lng: +station.longitude}">
 
