@@ -1,5 +1,5 @@
 import { LocalizationService } from './../../../../services/localization.service';
-import { Component, Input } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { ChartData, ChartDataset, ChartOptions } from 'chart.js';
 import { BehaviorSubject, combineLatest, map, shareReplay, switchMap } from 'rxjs';
 import { DetailedStation, Reading, Station } from '../../../../models/Station';
@@ -8,6 +8,8 @@ import { HistoryInterval, OverviewType, SwaggerService } from '../../../../servi
 import { OmmanDate, formatDateYYMMDD, formatTime, getDateNsDaysAgo, getDayName } from '../../../../unitlize/custom-date';
 import { getRandomNumber } from '../summary/model';
 import { NzDatePickerComponent } from 'ng-zorro-antd/date-picker';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
 const colorPalette = [
   '#1f77b4', // blue
@@ -32,6 +34,9 @@ const getBackground = (value, breakPoints: BreakPoint[]) => {
   styleUrl: './detailed-chart.component.scss'
 })
 export class DetailedChartComponent {
+  @ViewChild('captureDiv1') captureDiv1: ElementRef;
+  @ViewChild('captureDiv2') captureDiv2: ElementRef;
+
   @Input() stations: Partial<Station>[];
   @Input() variables: { abbreviation_en: any; code: string; }[];
   @Input() details: DetailedStation;
@@ -134,7 +139,7 @@ export class DetailedChartComponent {
   summary: { [key: string]: Reading[] } = {}
   summaryKeys: { name: string; percentage: number; color: string; }[] = [];
 
-  lang$  = this.localization.getCurrentLanguage();
+  lang$ = this.localization.getCurrentLanguage();
   constructor(private swagger: SwaggerService, private localization: LocalizationService) {
 
   }
@@ -148,13 +153,13 @@ export class DetailedChartComponent {
 
     combineLatest(
       [
-        this.activeInterval$, 
-        this.type$, 
-        this.stationsToCompare$, 
+        this.activeInterval$,
+        this.type$,
+        this.stationsToCompare$,
         breakPoints$,
         this.from$,
         this.to$
-      
+
       ])
       .pipe(switchMap(([interval, type, stationsToCompare, breakPoints, from, to]) => {
         this.interval = interval;
@@ -165,7 +170,7 @@ export class DetailedChartComponent {
           this.breakPoints = breakPoints?.variables?.find(res => res.code === type)?.variable_breakpoints?.sort((a, b) => a.sequence - b.sequence)
         }
 
-        return combineLatest([this.getHistory(interval, this.filter_type, type, this.currentStation.code, from, to), ...stationsToCompare.map(code => this.getHistory(interval, this.filter_type, type, code, from , to).pipe(map(res => ({ code, data: res }))))])
+        return combineLatest([this.getHistory(interval, this.filter_type, type, this.currentStation.code, from, to), ...stationsToCompare.map(code => this.getHistory(interval, this.filter_type, type, code, from, to).pipe(map(res => ({ code, data: res }))))])
       }))
       .subscribe(([history, ...stationsToCompare]) => {
         this.history = history;
@@ -193,11 +198,11 @@ export class DetailedChartComponent {
 
         if (this.interval === 'day' || this.interval === 'week') {
           this.lineChartLabels = this.history.map(res => getDayName(OmmanDate(res.aggregated_at).getDay()) + formatTime(OmmanDate(res.aggregated_at)))
-        
-          if(this.interval === 'day'){
+
+          if (this.interval === 'day') {
             this.startDate = getDateNsDaysAgo(1)
             this.endDate = OmmanDate()
-          }else{
+          } else {
             this.startDate = getDateNsDaysAgo(8)
             this.endDate = OmmanDate()
           }
@@ -237,7 +242,7 @@ export class DetailedChartComponent {
             label: this.stations.find(res => res.code === c_station_history.code)?.name_en,
 
 
-            pointBackgroundColor: colorPalette[randomIndex ],
+            pointBackgroundColor: colorPalette[randomIndex],
 
             segment: {
               // backgroundColor: (ctx)=> getBackground(ctx), 
@@ -293,7 +298,7 @@ export class DetailedChartComponent {
     // console.log()
   }
 
-  
+
   disabledDate = (current: Date): boolean => {
 
     const currentDate = current.getFullYear() * 10000 + (current.getMonth() + 1) * 100 + current.getDate();
@@ -301,4 +306,43 @@ export class DetailedChartComponent {
     const end = this.endDate.getFullYear() * 10000 + (this.endDate.getMonth() + 1) * 100 + this.endDate.getDate();
     return currentDate < start || currentDate > end;
   };
+  
+  captureDivAsImage() {
+    html2canvas(this.captureDiv1.nativeElement).then(canvas => {
+      // Convert canvas to PNG image
+      const imageData = canvas.toDataURL('image/png');
+
+      // Create a temporary link and trigger download
+      const link = document.createElement('a');
+      link.download = 'report.png';
+      link.href = imageData;
+      link.click();
+    });
+  }
+
+  captureDivAsPDF() {
+    // Get a reference to the div element
+    const div = this.captureDiv1.nativeElement;
+
+    // Create a new jsPDF instance
+    const pdf = new jsPDF('p', 'px', 'a4');
+
+    // Options to set for html2canvas
+    const options = {
+      scale: 2 // Increase scale to improve resolution (optional)
+    };
+
+    // Capture the div content as an image
+    html2canvas(div, options).then((canvas) => {
+      // Convert canvas to an image data URL
+      const imgData = canvas.toDataURL('image/png');
+
+      // Add the image to the PDF document
+      const imgHeight = canvas.height * 208 / canvas.width; // Adjusting height to maintain aspect ratio
+      pdf.addImage(imgData, 'PNG', 0, 0, 208, imgHeight);
+
+      // Save the PDF
+      pdf.save('div_content.pdf');
+    });
+  }
 }

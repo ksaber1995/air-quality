@@ -64,7 +64,7 @@
         <td [nzAlign]="'center'" *ngFor="let valueItem of item.readings">
           <span [style.background]="valueItem?.color"
             [style.color]="valueItem?.color?.toLocaleLowerCase() !== '#ffff00' ? '#fff' : '#000'" class="item rounded">
-            {{ valueItem?.value || 'NA'}}</span>
+            {{ (valueItem?.value  === null || valueItem?.value === undefined || !valueItem?.color) ? 'NA' : valueItem?.value}}</span>
         </td>
       </tr>
 
