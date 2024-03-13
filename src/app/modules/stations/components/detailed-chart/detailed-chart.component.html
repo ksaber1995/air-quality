@@ -100,7 +100,8 @@
                                         <nz-radio-group [(ngModel)]="downloadType">
 
                                                 <li nz-menu-item>
-                                                        <label (click)="captureDivAsPDF()" class="download-item" [nzValue]="'pdf'" nz-radio>
+                                                        <label (click)="captureDivAsPDF()" class="download-item"
+                                                                [nzValue]="'pdf'" nz-radio>
                                                                 PDF</label>
                                                 </li>
 
@@ -127,8 +128,9 @@
                         <div nz-col class="gutter-row chart" [nzXl]="((type$ | async) === 'aqi') ? 17 : 24" nzLg="24">
                                 <div style="display: block;">
                                         <canvas id="lineChartCanvas" #lineChartCanvas baseChart
-                                                [datasets]="lineChartData" [labels]="lineChartLabels"
-                                                [options]="lineChartOptions" [legend]="false" [type]="'line'">
+                                                [legend]="true"  [datasets]="lineChartData" 
+                                                [labels]="lineChartLabels" [options]="lineChartOptions" 
+                                                [type]="'line'">
                                         </canvas>
                                 </div>
                         </div>

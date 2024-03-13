@@ -1,6 +1,6 @@
 import { LocalizationService } from './../../../../services/localization.service';
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
-import { ChartData, ChartDataset, ChartOptions } from 'chart.js';
+import { ChartData, ChartDataset, ChartOptions, LegendOptions } from 'chart.js';
 import { BehaviorSubject, combineLatest, map, shareReplay, switchMap } from 'rxjs';
 import { DetailedStation, Reading, Station } from '../../../../models/Station';
 import { BreakPoint } from '../../../../models/breakPoint';
@@ -64,7 +64,7 @@ export class DetailedChartComponent {
 
 
 
-  public lineChartData: ChartDataset[];
+  public lineChartData: ChartDataset<'line'>[];
 
   public doughnutChartOptions = {
     responsive: true,
@@ -98,7 +98,8 @@ export class DetailedChartComponent {
 
   public doughnutChartData: ChartData<'doughnut'>;
 
-  public lineChartOptions: ChartOptions = {
+
+  public lineChartOptions: ChartOptions<'line'> = {
     responsive: true,
 
     scales: {
@@ -109,15 +110,7 @@ export class DetailedChartComponent {
           drawOnChartArea: false,
           offset: false,
           circular: true,
-        },
-
-        angleLines: {
-          display: true
-        },
-
-
-
-
+        }
       },
 
       x: {
@@ -126,13 +119,19 @@ export class DetailedChartComponent {
           // maxTicksLimit: 28
 
         }
-
-
-
       }
-
-
     },
+
+    plugins: {
+      legend: {
+        align: 'end',
+        position: 'top',
+        display: true,
+        labels: {
+          // color:
+        }
+      }
+    }
   };
   history: Reading[];
 
@@ -228,7 +227,10 @@ export class DetailedChartComponent {
               // backgroundColor: (ctx)=> getBackground(ctx), 
               borderColor: (ctx) => getBackground(ctx.p0.parsed.y, this.breakPoints),
               borderWidth: 6
-            }
+            },
+
+            borderColor: '#000',
+            backgroundColor: '#000'
           }
         ]
 
@@ -241,14 +243,16 @@ export class DetailedChartComponent {
             data: c_station_history.data.map(res => res.value || 0),
             label: this.stations.find(res => res.code === c_station_history.code)?.name_en,
 
-
             pointBackgroundColor: colorPalette[randomIndex],
 
             segment: {
               // backgroundColor: (ctx)=> getBackground(ctx), 
               borderColor: colorPalette[randomIndex],
               borderWidth: 6
-            }
+            },
+
+            borderColor: colorPalette[randomIndex],
+            backgroundColor: colorPalette[randomIndex]
           }
 
           this.lineChartData.push(new_lineChartData)
@@ -257,6 +261,7 @@ export class DetailedChartComponent {
 
       })
   }
+  
   setDoughnutChartData() {
     const keys = Object.keys(this.summary)
     const backgroundColor = keys.map(key => this.history.find(res => res.status_en === key)?.color || 'rgb(231, 231, 231)')
@@ -306,7 +311,7 @@ export class DetailedChartComponent {
     const end = this.endDate.getFullYear() * 10000 + (this.endDate.getMonth() + 1) * 100 + this.endDate.getDate();
     return currentDate < start || currentDate > end;
   };
-  
+
   captureDivAsImage() {
     html2canvas(this.captureDiv1.nativeElement).then(canvas => {
       // Convert canvas to PNG image
