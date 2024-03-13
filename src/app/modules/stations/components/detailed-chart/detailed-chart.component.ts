@@ -124,11 +124,13 @@ export class DetailedChartComponent {
 
     plugins: {
       legend: {
+
         align: 'end',
         position: 'top',
         display: true,
         labels: {
-          // color:
+          boxHeight: 12,
+          boxWidth: 12,
         }
       }
     }
@@ -229,30 +231,30 @@ export class DetailedChartComponent {
               borderWidth: 6
             },
 
-            borderColor: '#000',
-            backgroundColor: '#000'
+            // borderColor: '#000',
+            // backgroundColor: '#000'
           }
         ]
 
 
-        stationsToCompare.forEach(c_station_history => {
+        stationsToCompare.forEach((c_station_history,i) => {
 
-          const randomIndex = getRandomNumber(6);
+          const color = colorPalette[i];
           const new_lineChartData =
           {
             data: c_station_history.data.map(res => res.value || 0),
             label: this.stations.find(res => res.code === c_station_history.code)?.name_en,
 
-            pointBackgroundColor: colorPalette[randomIndex],
+            pointBackgroundColor: color,
 
             segment: {
               // backgroundColor: (ctx)=> getBackground(ctx), 
-              borderColor: colorPalette[randomIndex],
+              borderColor: color,
               borderWidth: 6
             },
 
-            borderColor: colorPalette[randomIndex],
-            backgroundColor: colorPalette[randomIndex]
+            borderColor: color,
+            backgroundColor: color
           }
 
           this.lineChartData.push(new_lineChartData)
@@ -261,7 +263,7 @@ export class DetailedChartComponent {
 
       })
   }
-  
+
   setDoughnutChartData() {
     const keys = Object.keys(this.summary)
     const backgroundColor = keys.map(key => this.history.find(res => res.status_en === key)?.color || 'rgb(231, 231, 231)')
