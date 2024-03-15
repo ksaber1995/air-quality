@@ -321,7 +321,10 @@ export class DetailedChartComponent {
 
       // Create a temporary link and trigger download
       const link = document.createElement('a');
-      link.download = 'report.png';
+      const stations = this.lineChartData.map(res=> res.label).join(',')
+      
+      link.download = stations + '-report.png';
+
       link.href = imageData;
       link.click();
     });
@@ -345,11 +348,14 @@ export class DetailedChartComponent {
       const imgData = canvas.toDataURL('image/png');
 
       // Add the image to the PDF document
-      const imgHeight = canvas.height * 208 / canvas.width; // Adjusting height to maintain aspect ratio
-      pdf.addImage(imgData, 'PNG', 0, 0, 208, imgHeight);
+      // const imgHeight = canvas.height * 400 / canvas.width; // Adjusting height to maintain aspect ratio
+      // console.log(imgHeight,'height')
+      pdf.addImage(imgData, 'PNG', 30, 30, 400, 180);
 
+      const stations = this.lineChartData.map(res=> res.label).join(',')
+      
       // Save the PDF
-      pdf.save('div_content.pdf');
+      pdf.save(stations + '-report.pdf');
     });
   }
 }
