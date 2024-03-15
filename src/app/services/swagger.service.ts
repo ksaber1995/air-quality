@@ -127,6 +127,8 @@ export class SwaggerService {
 
       return {
         ...data,
+        aqi: data.aqi.map(aqi=> ({...aqi, sequence: getSequence(aqi.status_en), status_name: (lang === Lang.ar ? aqi.status_ar : aqi.status_en) || 'NA'  })),
+        
         name: lang === Lang.ar ? data.name_ar : data.name_en,
         organization: {...data.organization, name: lang === Lang.ar ? data.organization.name_ar : data.organization.name_en}
       }
