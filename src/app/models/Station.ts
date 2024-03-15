@@ -27,6 +27,7 @@ interface Unit {
 }
 
 interface AqiData {
+    sequence: number
     aggregated_at: string;
     status: ReadingStatus[];
     color: string;

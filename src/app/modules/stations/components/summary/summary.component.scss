@@ -5,9 +5,6 @@
   padding-bottom: 0;
 }
 
-th, td{
-  text-wrap: nowrap;
-}
 
 nz-table,
 td,
@@ -56,8 +53,8 @@ td:not(:last-child) ::before {
   border-radius: 50%;
   padding: 5px;
   display: inline-flex;
-  width: 45px;
-  height: 45px;
+  width: 35px;
+  height: 35px;
   justify-content: center;
   color: #fff;
   align-items: center;
@@ -89,15 +86,6 @@ td:not(:last-child) ::before {
   margin-bottom: 2rem;
   padding-right: 30px;
 
-
-  .spinner {
-    text-align: right;
-
-    img {
-      width: 175px;
-      height: 175px;
-    }
-  }
 }
 
 
@@ -119,16 +107,21 @@ td:not(:last-child) ::before {
 
   .item {
     color: #303030;
-    font-size: 1.1rem;
+    font-size: .9rem;
   }
 }
 
 .item.rounded {
   font-size: .7rem !important;
 }
+th{
+  text-wrap: nowrap;
+}
 
-td {
+td, th {
   direction: ltr !important;
+  padding: 15px 5px !important;
+  max-width: 110px;
 }
 
 
@@ -149,8 +142,8 @@ td {
 
   .rounded {
     padding: 4px;
-    width: 34px;
-    height: 34px;
+    width: 25px;
+    height: 25px;
   }
 
   .title,

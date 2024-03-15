@@ -19,7 +19,7 @@
         <div class="status">
 
           <img width="25" height="25"
-            [src]="'assets/icons/' + (station?.aqi[0]?.status_en?.toLowerCase() || 'na') + '-face.svg'" alt="">
+            [src]="'assets/icons/' + (station?.aqi[0]?.sequence || 0) + '-face.svg'" alt="">
 
           <span class="item">
             {{station?.aqi[0]?.status_name}}
@@ -34,7 +34,7 @@
 
         <div class="main-img">
           <img width="200" height="200" style="max-width: 100%;"
-            [src]="'assets/icons/status/meter/' + (station?.aqi[0]?.status_en?.toLowerCase() || 'na')  + '.svg' "
+            [src]="'assets/icons/status/meter/' + (station?.aqi[0]?.sequence || 0)  + '.svg' "
             alt="">
 
 
@@ -52,25 +52,25 @@
     <thead>
       <tr>
         <th></th>
-        <th dir="ltr" class="font-weight-bold" [nzAlign]="'center'" *ngFor="let item of headers">{{item}}</th>
+        <th dir="ltr"  [nzAlign]="'center'" *ngFor="let item of headers">{{item}}</th>
       </tr>
     </thead>
 
 
     <tbody>
       <tr *ngFor="let item of station?.variables; index as i">
-        <td class="font-weight-bold main-td" [nzAlign]="'center'">{{item?.variable?.abbreviation_en }}</td>
+        <td class="main-td" [nzAlign]="'center'">{{item?.variable?.abbreviation_en }}</td>
 
         <td [nzAlign]="'center'" *ngFor="let valueItem of item.readings">
           <span [style.background]="valueItem?.color"
             [style.color]="valueItem?.color?.toLocaleLowerCase() !== '#ffff00' ? '#fff' : '#000'" class="item rounded">
-            {{ (valueItem?.value  === null || valueItem?.value === undefined || !valueItem?.color) ? 'NA' : valueItem?.value}}</span>
+            {{ (valueItem?.value  === null || valueItem?.value === undefined || !valueItem?.color) ? 'NA' : (valueItem?.value | number:'1.0-1') }}</span>
         </td>
       </tr>
 
 
       <tr *ngFor="let item of station?.weather; index as i">
-        <td class="font-weight-bold main-td" [nzAlign]="'center'">{{item?.variable.name }}</td>
+        <td class="main-td" [nzAlign]="'center'">{{item?.variable.name }}</td>
 
         <td [nzAlign]="'center'" *ngFor="let valueItem of item.readings">
 
