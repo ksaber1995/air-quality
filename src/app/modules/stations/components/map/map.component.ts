@@ -51,7 +51,7 @@ export class MapComponent implements OnInit, OnDestroy {
         // this.carouselRef.next()
         this.changeStation(next_station)
       }
-    }, 4000)
+    }, 15000)
   }
 
 
