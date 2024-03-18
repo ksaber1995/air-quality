@@ -1,11 +1,11 @@
 import { OwlOptions } from "ngx-owl-carousel-o";
 
 export const carouselOptions: OwlOptions = {
-    loop: false,
+    loop: true,
     mouseDrag: true,
     touchDrag: true,
     pullDrag: true,
-    autoplay: true,
+    autoplay: false,
     autoWidth: true,
     // width
     // autoplaySpeed?: number | boolean;

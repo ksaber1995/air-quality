@@ -37,14 +37,14 @@
 
             <button class="no-min-width rounded seaGreen-bg" (click)="toggleCarouselAutoPlay(carouselRef)" nz-button
                 nzType="text">
-                <span *ngIf="carouselOptions.autoplay" class="btn-icon" nz-icon nzType="pause" nzTheme="outline"></span>
-                <span *ngIf="!carouselOptions.autoplay" nz-icon nzType="play-circle" nzTheme="outline"></span>
+                <span *ngIf="interval" class="btn-icon" nz-icon nzType="pause" nzTheme="outline"></span>
+                <span *ngIf="!interval" nz-icon nzType="play-circle" nzTheme="outline"></span>
             </button>
         </div>
 
         <div class="carousel-items">
             <owl-carousel-o #carouselRef [options]="carouselOptions">
-                <ng-template *ngFor="let station of stations; index as i" carouselSlide>
+                <ng-template [id]="station.code" *ngFor="let station of stations; index as i" carouselSlide>
                     <div class="  station-item-wrapper" (click)="changeStation(station)">
                         <div class="pointer lightSeaGreen-bg station-item"
                             [class.active]="station.code  === currentStation?.code">

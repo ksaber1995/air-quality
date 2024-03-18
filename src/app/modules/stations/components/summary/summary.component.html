@@ -14,7 +14,7 @@
 
       <p class="gray">{{'mangeBy' | translate}} {{station?.organization?.name}} </p>
 
-      <div [style]="{'background': station?.aqi[0]?.color}" class="status-wrapper">
+      <div [style]="{'background': station?.aqi[0]?.color || '#D1D1D1'}" class="status-wrapper">
 
         <div class="status">
 
@@ -33,15 +33,12 @@
       <div style="display: block; width: 180px;">
 
         <div class="main-img">
-          <img width="200" height="200" style="max-width: 100%;"
+          <img width="200" style="max-width: 100%;"
             [src]="'assets/icons/status/meter/' + (station?.aqi[0]?.sequence || 0)  + '.svg' "
             alt="">
 
 
         </div>
-
-        <div class="chart-inner-circle"></div>
-
       </div>
     </div>
 

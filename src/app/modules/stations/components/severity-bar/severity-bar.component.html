@@ -1,4 +1,5 @@
-<div [class.vertical]="type === 'vertical'" [class.horizontal]="type === 'horizontal'" class="bar-wrapper" style="direction: ltr;">
+<!-- [class.vertical]="type === 'vertical'" [class.horizontal]="type === 'horizontal'" -->
+<div  class="bar-wrapper horizontal" style="direction: ltr;">
     <div   [ngStyle]="{'background': gray}"  class="level na">
         <!-- <span class="end">
             <div class="bar-value">
@@ -14,6 +15,7 @@
 
                 {{breakPoint.breakpoint_end}}
             </div>
+
             <div class="end-bar"></div>
         </span>
     </div>
