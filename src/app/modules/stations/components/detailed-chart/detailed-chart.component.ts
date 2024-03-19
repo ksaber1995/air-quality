@@ -201,7 +201,7 @@ export class DetailedChartComponent {
 
 
         if (this.interval === 'day' || this.interval === 'week') {
-          this.lineChartLabels = this.history.map(res => getDayName(OmmanDate(res.aggregated_at).getDay()) + formatTime(OmmanDate(res.aggregated_at)))
+          this.lineChartLabels = this.history.map(res => getDayName(OmmanDate(res.aggregated_at).getDay(), lang) + formatTime(OmmanDate(res.aggregated_at)))
 
           if (this.interval === 'day') {
             this.startDate = getDateNsDaysAgo(1)
@@ -270,7 +270,7 @@ export class DetailedChartComponent {
   getKeyName(key, lang){
     if(lang === 'ar'){
 
-      return this.summary[key].find(res=> res.status_en === key && !!res.status_ar).status_ar
+      return this.summary[key].find(res=> res?.status_en === key && !!res?.status_ar)?.status_ar || 'غير متاح'
     }else{
       return key
     }
