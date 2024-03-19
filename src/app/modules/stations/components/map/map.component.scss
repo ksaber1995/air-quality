@@ -1,33 +1,35 @@
 @import 'colors';
 
-.main-wrapper{
+.main-wrapper {
     height: 100%;
     display: flex;
     flex-direction: column;
     gap: 20px;
-    .map-wrapper{
+
+    .map-wrapper {
         flex-grow: 1;
         position: relative;
 
-        .bar-wrapper{
+        .bar-wrapper {
             position: absolute;
             // top: 80px;
-            top: 50%;
+            bottom: 30px;
             transform: translateY(-50%);
             left: 50px;
         }
     }
 
- 
+
 }
 
-.station-controller{
+.station-controller {
     display: flex;
     justify-content: flex-end;
     margin-top: 20px;
     gap: 25px;
     padding: 0 1rem;
-    .btn-icon{
+
+    .btn-icon {
         color: #fff;
         font-size: 1.5rem;
 
@@ -37,64 +39,70 @@
         background-color: $Gray ;
     }
 
-    button:active, button:focus{
+    button:active,
+    button:focus {
         background-color: $SeaGreen !important;
-        .btn-icon{
+
+        .btn-icon {
             color: #fff;
             font-size: 1.5rem;
-    
+
         }
     }
 
-    button:hover{
+    button:hover {
         background-color: $SeaGreen;
         transform: scale(1.1);
     }
 }
 
-.no-min-width{
+.no-min-width {
     min-width: 0 !important;
 }
 
 
-.station-item-wrapper{
+.station-item-wrapper {
     padding: .5rem .8rem;
-    
-    .station-item{
+
+    .station-item {
         padding: .5rem;
         border-radius: 18px;
 
-        &.active{
+        &.active {
             border: 2px solid $SeaGreen;
 
         }
     }
 
-    .station-value{
+    .station-value {
         font-size: 1.2rem;
         color: $Gray;
     }
 
-    .bolder-divider{
+    .bolder-divider {
         border: 1px solid $Gray !important;
     }
 
-    .worst-items, .aqi{
+    .worst-items,
+    .aqi {
         display: flex;
         justify-content: space-between;
+
     }
 
-    .aqi{
+    .aqi {
         margin: 5px 0;
     }
 
-    .first,.second{
+    .first,
+    .second {
         display: flex;
+        font-size: .8rem;
         gap: 2px;
         align-items: center;
     }
 }
 
-.carousel-header{
+.carousel-header {
     text-wrap: nowrap;
 }

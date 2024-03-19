@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable, combineLatest, map } from 'rxjs';
 import { DetailedStation, Reading, Station } from '../models/Station';
-import { Observable, combineLatest, map, shareReplay } from 'rxjs';
 import { BreakPoint, VariableBreakPoint } from '../models/breakPoint';
 import { CustomOverviewResponse, OverviewResponse } from '../models/overview';
 import { Lang, LocalizationService } from './localization.service';
@@ -18,6 +18,34 @@ interface CodesResponse {
     abbreviation_en
     code: string
   }[]
+}
+
+
+function getSequence(name: string){
+  if(!name) return 0
+
+  name = name.toLocaleLowerCase();
+
+
+  if(name.includes('good')){
+    return 1
+  }else if(name.includes('moderate')){
+    return 2
+  }else if(name.includes('satisfactory')){
+    return 3
+  }
+  else if(name.includes('sensitive groups')){
+    return 4
+  }
+  else if(name.includes('Unhealthy') && !name.includes('sensitive')){
+    return 5
+  }
+  else if(name.includes('hazardous')){
+    return 6
+  }
+
+
+  return 0
 }
 
 export type OverviewType = 'aqi' | 'variable'
@@ -51,7 +79,7 @@ export class SwaggerService {
             ...station,
             variables: station.variables.map(variable=> ({...variable,   readings: variable.readings.reverse()   })),
             weather: station.weather.map(weather=> ({...weather, readings: weather.readings.reverse(), variable: {...weather.variable , name: lang === Lang.ar ? weather.variable.name_ar : weather.variable.name_en }  })),
-            aqi: station.aqi.map(aqi=> ({...aqi,  status_name: (lang === Lang.ar ? aqi.status_ar : aqi.status_en) || 'NA'  })),
+            aqi: station.aqi.map(aqi=> ({...aqi, sequence: getSequence(aqi.status_en), status_name: (lang === Lang.ar ? aqi.status_ar : aqi.status_en) || 'NA'  })),
             name: lang === Lang.ar ? station.name_ar : station.name_en,
             organization: {...station.organization, name: lang === Lang.ar ? station.organization.name_ar : station.organization.name_en}
           }
@@ -99,6 +127,8 @@ export class SwaggerService {
 
       return {
         ...data,
+        aqi: data.aqi.map(aqi=> ({...aqi, sequence: getSequence(aqi.status_en), status_name: (lang === Lang.ar ? aqi.status_ar : aqi.status_en) || 'NA'  })),
+        
         name: lang === Lang.ar ? data.name_ar : data.name_en,
         organization: {...data.organization, name: lang === Lang.ar ? data.organization.name_ar : data.organization.name_en}
       }

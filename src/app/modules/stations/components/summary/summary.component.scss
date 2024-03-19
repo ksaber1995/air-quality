@@ -1,13 +1,10 @@
 @import 'colors';
 
 .table-wrapper {
-  padding: 1rem;
+  padding: 0 1rem;
   padding-bottom: 0;
 }
 
-th, td{
-  text-wrap: nowrap;
-}
 
 nz-table,
 td,
@@ -19,8 +16,8 @@ tbody {
 }
 
 .wrapper {
-  padding: 1rem;
-  margin-bottom: 1.5rem;
+  padding: .5rem;
+  margin-bottom: 1rem;
 
   .main-header {
     margin-bottom: 0
@@ -56,8 +53,8 @@ td:not(:last-child) ::before {
   border-radius: 50%;
   padding: 5px;
   display: inline-flex;
-  width: 45px;
-  height: 45px;
+  width: 35px;
+  height: 35px;
   justify-content: center;
   color: #fff;
   align-items: center;
@@ -69,7 +66,7 @@ td:not(:last-child) ::before {
   width: 100%;
 
   h1 {
-    font-size: 35px;
+    font-size: 25px;
     font-weight: 700;
     margin: 0
   }
@@ -86,18 +83,9 @@ td:not(:last-child) ::before {
   width: 100%;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 2rem;
+  margin-bottom: 0;
   padding-right: 30px;
 
-
-  .spinner {
-    text-align: right;
-
-    img {
-      width: 175px;
-      height: 175px;
-    }
-  }
 }
 
 
@@ -119,23 +107,28 @@ td:not(:last-child) ::before {
 
   .item {
     color: #303030;
-    font-size: 1.1rem;
+    font-size: .9rem;
   }
 }
 
 .item.rounded {
   font-size: .7rem !important;
 }
+th{
+  text-wrap: nowrap;
+}
 
-td {
+td, th {
   direction: ltr !important;
+  padding: 7px 5px !important;
+  max-width: 110px;
 }
 
 
 @media(max-width: 767px) {
 
   .table-wrapper {
-    padding: .5rem;
+    padding: 0 .5rem;
   }
 
 
@@ -149,15 +142,15 @@ td {
 
   .rounded {
     padding: 4px;
-    width: 34px;
-    height: 34px;
+    width: 25px;
+    height: 25px;
   }
 
   .title,
   .details {
 
     h1 {
-      font-size: 25px;
+      font-size: 23px;
     }
 
     h3 {

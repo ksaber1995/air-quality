@@ -1,10 +1,10 @@
 @import "colors";
+
 .severity-bar-wrapper {
     display: flex;
     justify-content: center;
     margin: 20px 0;
-    padding-bottom: 5rem;
-
+    padding-bottom: 50px;
 }
 
 ::ng-deep .ant-menu-title-content {
@@ -12,34 +12,38 @@
     display: block;
 }
 
-.list-item, p, li{
+.list-item,
+p,
+li {
     text-align: start !important;
 }
 
 
-.compare-menu{
+.compare-menu {
     padding: 1rem;
     display: flex;
     // flex-direction: row;
     gap: 40px;
-    .list-item{
+
+    .list-item {
         margin-bottom: 10px;
     }
 
 
-    .divider{
+    .divider {
         // height: 100%;
         flex-grow: 1;
         width: 1px;
 
-        nz-divider{
-           border-width: 0 0 0 1px !important
+        nz-divider {
+            border-width: 0 0 0 1px !important
         }
+
         // border: 1px $LightGray dashed;
     }
 }
 
-.download-item{
+.download-item {
     width: 100px;
 }
 
@@ -53,9 +57,10 @@
 .wrapper {
     padding: 2rem;
     border-radius: 25px;
+    margin-bottom: 5rem;
 }
 
-.compare-btn{
+.compare-btn {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -71,12 +76,15 @@
     justify-content: flex-end;
     gap: 20px;
 
-    .download{
+    .download {
         padding: 0;
         min-width: 120px;
     }
 }
 
+.charts-wrapper{
+    padding-top: 15px;
+}
 
 .summary-wrapper {
     display: flex;
@@ -105,18 +113,19 @@
 .summary-title {
     font-size: 22px;
     margin-bottom: 15px;
-    text-align: center;
+    text-align: center !important;
 }
 
 
-.brief{
-    .item{
+.brief {
+    .item {
         display: flex;
         justify-content: space-between;
         align-items: center;
         flex-wrap: wrap;
     }
-    .text{
+
+    .text {
         font-size: .9rem;
         padding: 0;
         line-height: 9px;
@@ -127,15 +136,16 @@
 
 
 
-@media(max-width: 1200px){
-    .filters{
+@media(max-width: 1200px) {
+    .filters {
         display: block !important;
-    
-        .date-filters{
+
+        .date-filters {
             margin-top: 25px;
             justify-content: flex-start !important;
-            button{
-                min-width: unset !important;    
+
+            button {
+                min-width: unset !important;
                 padding: .4rem;
             }
         }

@@ -19,8 +19,9 @@
                                                         {{'variables' | translate}}
                                                 </p>
 
-                                                <nz-radio-group [style.direction]="(lang$ | async)  === 'ar' ? 'rtl' : 'ltr'" (ngModelChange)="onVariableChange($event)"
-                                                        [(ngModel)]="type">
+                                                <nz-radio-group
+                                                        [style.direction]="(lang$ | async)  === 'ar' ? 'rtl' : 'ltr'"
+                                                        (ngModelChange)="onVariableChange($event)" [(ngModel)]="type">
 
                                                         <li nz-menu-item>
                                                                 <label style="display: block; width: 100%;"
@@ -54,8 +55,9 @@
                                                         {{'stations' | translate}}
                                                 </p>
 
-                                                <nz-checkbox-wrapper [style.direction]="(lang$ | async)  === 'ar' ? 'rtl' : 'ltr'" (nzOnChange)="onStationChange($event)"
-                                                        style="width: 100%;">
+                                                <nz-checkbox-wrapper
+                                                        [style.direction]="(lang$ | async)  === 'ar' ? 'rtl' : 'ltr'"
+                                                        (nzOnChange)="onStationChange($event)" style="width: 100%;">
                                                         <div class="list-item" *ngFor="let station of stations">
                                                                 <label *ngIf="station.code !== currentStation.code"
                                                                         nz-checkbox
@@ -76,13 +78,17 @@
                                 [class.active]="activeInterval === 'month'">{{'month' | translate}}</button>
 
 
-                                <ng-template #calendar>
-                                        <span style="font-size: 22px; " nz-size="large" nz-icon nzType="calendar" nzTheme="outline"></span>
-                                    </ng-template>
-                    
-                                   
-                                    <nz-range-picker #datepicker [nzAllowClear]="true" [nzDisabledDate]="disabledDate" [nzShowTime]="(activeInterval$ | async) === 'day' ? { nzFormat: 'HH:mm' } : false" [nzSuffixIcon]="calendar" class="simple" [class.hidden]="!date" [(ngModel)]="date"
-                                        (ngModelChange)="onDateChange($event)"></nz-range-picker>
+                        <ng-template #calendar>
+                                <span style="font-size: 22px; " nz-size="large" nz-icon nzType="calendar"
+                                        nzTheme="outline"></span>
+                        </ng-template>
+
+
+                        <nz-range-picker #datepicker [nzAllowClear]="true" [nzDisabledDate]="disabledDate"
+                                [nzShowTime]="(activeInterval$ | async) === 'day' ? { nzFormat: 'HH:mm' } : false"
+                                [nzSuffixIcon]="calendar" class="simple" [class.hidden]="!date" [(ngModel)]="date"
+                                (ngModelChange)="onDateChange($event)"></nz-range-picker>
+
                         <button nz-button nz-dropdown [nzDropdownMenu]="menu" class="download">
                                 {{'download' | translate}}
                                 <span nz-icon nzType="down"></span>
@@ -94,7 +100,8 @@
                                         <nz-radio-group [(ngModel)]="downloadType">
 
                                                 <li nz-menu-item>
-                                                        <label class="download-item" [nzValue]="'pdf'" nz-radio>
+                                                        <label (click)="captureDivAsPDF()" class="download-item"
+                                                                [nzValue]="'pdf'" nz-radio>
                                                                 PDF</label>
                                                 </li>
 
@@ -102,7 +109,8 @@
 
 
                                                 <li nz-menu-item>
-                                                        <label class="download-item" [nzValue]="'png'" nz-radio>
+                                                        <label (click)="captureDivAsImage()" class="download-item"
+                                                                [nzValue]="'png'" nz-radio>
                                                                 PNG</label>
                                                 </li>
 
@@ -113,55 +121,61 @@
         </div>
 
 
-        <div nz-row [nzGutter]="{ xs: 4, sm: 20, md: 60, lg: 80 }" class="charts-wrapper">
+        <div #captureDiv1>
+                <div nz-row [nzGutter]="{ xs: 4, sm: 20, md: 60, lg: 80 }" class="charts-wrapper">
 
 
-                <div nz-col class="gutter-row chart" [nzXl]="((type$ | async) === 'aqi') ? 17 : 24"   nzLg="24">
-                        <div style="display: block;">
-                                <canvas id="lineChartCanvas" #lineChartCanvas baseChart [datasets]="lineChartData"
-                                        [labels]="lineChartLabels" [options]="lineChartOptions" [legend]="false"
-                                        [type]="'line'">
-                                </canvas>
+                        <div nz-col class="gutter-row chart" [nzXl]="((type$ | async) === 'aqi') ? 17 : 24" nzLg="24">
+                                <div style="display: block;">
+                                        <canvas id="lineChartCanvas" #lineChartCanvas baseChart
+                                                [legend]="true"  [datasets]="lineChartData" 
+                                                [labels]="lineChartLabels" [options]="lineChartOptions" 
+                                                [type]="'line'">
+                                        </canvas>
+                                </div>
                         </div>
-                </div>
 
-                <div *ngIf="(type$ | async) === 'aqi'" nz-col [nzXl]="7" class="gutter-row">
-                        <div class="pipe-chart">
-                                <p class="summary-title">Breakdown</p>
-                                <div class="summary-wrapper">
-                                        <div style="display: block;" class="doughnut-chart-wrapper">
-                                                <canvas baseChart [data]="doughnutChartData"
-                                                        [labels]="doughnutChartLabels" [options]="doughnutChartOptions"
-                                                        [legend]="false" [type]="'doughnut'"></canvas>
+                        <div *ngIf="(type$ | async) === 'aqi'" nz-col [nzXl]="7" class="gutter-row">
+                                <div class="pipe-chart">
+                                        <p class="summary-title">Breakdown</p>
+                                        <div class="summary-wrapper">
+                                                <div style="display: block;" class="doughnut-chart-wrapper">
+                                                        <canvas baseChart [data]="doughnutChartData"
+                                                                [labels]="doughnutChartLabels"
+                                                                [options]="doughnutChartOptions" [legend]="false"
+                                                                [type]="'doughnut'"></canvas>
 
-                                                <div class="chart-title">AQI</div>
+                                                        <div class="chart-title">AQI</div>
 
+                                                </div>
+                                        </div>
+                                </div>
+
+                                <nz-divider [nzDashed]="true"></nz-divider>
+
+                                <div class="brief">
+                                        <div *ngFor="let item of summaryKeys; index as i" class="item">
+                                                <p class="gray text">
+                                                        <span [ngStyle]="{'border-color': item.color}"
+                                                                class="brief-circle">
+                                                                <span [ngStyle]="{'background': item.color}"
+                                                                        class="inner"></span>
+                                                        </span>
+
+                                                        {{item.name}}
+                                                </p>
+
+                                                <p class="gray text">
+                                                        {{ item.percentage | number:'.1'}} %
+                                                </p>
                                         </div>
                                 </div>
                         </div>
+                </div>
 
-                        <nz-divider [nzDashed]="true"></nz-divider>
 
-                        <div class="brief">
-                                <div *ngFor="let item of summaryKeys; index as i" class="item">
-                                        <p class="gray text">
-                                                <span [ngStyle]="{'border-color': item.color}" class="brief-circle">
-                                                        <span [ngStyle]="{'background': item.color}"
-                                                                class="inner"></span>
-                                                </span>
-
-                                                {{item.name}}
-                                        </p>
-
-                                        <p class="gray text">
-                                                {{ item.percentage | number:'.1'}} %
-                                        </p>
-                                </div>
-                        </div>
+                <div *ngIf="breakPoints?.length > 0" #captureDiv2 class="severity-bar-wrapper">
+                        <app-severity-bar [breakPoints]="breakPoints"></app-severity-bar>
                 </div>
         </div>
-</div>
-
-<div *ngIf="breakPoints?.length > 0" class="severity-bar-wrapper">
-        <app-severity-bar [breakPoints]="breakPoints"></app-severity-bar>
 </div>

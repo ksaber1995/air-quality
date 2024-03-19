@@ -6,13 +6,11 @@
             </div>
 
 
-            <div *ngFor="let station of stations" 
-                class="">
+            <div *ngFor="let station of stations" class="">
 
-                <map-marker   #marker="mapMarker"
-                    [label]=" { color: '#fff', fontSize: '18px', fontWeight: 'bold',  text:  ((station.aqi[0].value || 'NA') + '')  , className: 'custom-label ' + station.aqi[0].status_en } "
-                    [icon]="   {url:  ' '}"
-                    [position]="{lat: +station.latitude, lng: +station.longitude}">
+                <map-marker (mapClick)="changeStation(station)" #marker="mapMarker"
+                    [label]=" { color: '#fff', fontSize: '18px', fontWeight: 'bold',  text:  station.aqi[0].value + '' , className: 'custom-label ' + station.aqi[0].status_en } "
+                    [icon]="   {url:  ' '}" [position]="{lat: +station.latitude, lng: +station.longitude}">
 
                 </map-marker>
 
@@ -37,16 +35,16 @@
 
 
 
-            <button class="no-min-width rounded seaGreen-bg"
-                (click)="toggleCarouselAutoPlay(carouselRef)" nz-button nzType="text">
-                <span *ngIf="carouselOptions.autoplay" class="btn-icon" nz-icon nzType="pause" nzTheme="outline"></span>
-                <span *ngIf="!carouselOptions.autoplay" nz-icon nzType="play-circle" nzTheme="outline"></span>
+            <button class="no-min-width rounded seaGreen-bg" (click)="toggleCarouselAutoPlay(carouselRef)" nz-button
+                nzType="text">
+                <span *ngIf="interval" class="btn-icon" nz-icon nzType="pause" nzTheme="outline"></span>
+                <span *ngIf="!interval" nz-icon nzType="play-circle" nzTheme="outline"></span>
             </button>
         </div>
 
         <div class="carousel-items">
             <owl-carousel-o #carouselRef [options]="carouselOptions">
-                <ng-template *ngFor="let station of stations; index as i" carouselSlide>
+                <ng-template [id]="station.code" *ngFor="let station of stations; index as i" carouselSlide>
                     <div class="  station-item-wrapper" (click)="changeStation(station)">
                         <div class="pointer lightSeaGreen-bg station-item"
                             [class.active]="station.code  === currentStation?.code">
