@@ -62,7 +62,8 @@
                 </ng-template>
 
                
-                <nz-range-picker #datepicker [nzAllowClear]="true" [nzDisabledDate]="disabledDate" [nzShowTime]="(activeInterval$ | async) === 'day' ? { nzFormat: 'HH:mm' } : false" [nzSuffixIcon]="calendar" class="simple" [class.hidden]="!date" [(ngModel)]="date"
+                
+                <nz-range-picker #datepicker [nzAllowClear]="true"  [nzShowTime]="(activeInterval$ | async) === 'day' ? { nzFormat: 'HH:mm' } : false" [nzSuffixIcon]="calendar" class="simple" [class.hidden]="!date" [(ngModel)]="date"
                     (ngModelChange)="onDateChange($event)"></nz-range-picker>
             </div>
         </div>

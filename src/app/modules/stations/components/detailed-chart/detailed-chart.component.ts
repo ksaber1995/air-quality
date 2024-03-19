@@ -322,13 +322,13 @@ export class DetailedChartComponent {
   }
 
 
-  disabledDate = (current: Date): boolean => {
+  // disabledDate = (current: Date): boolean => {
 
-    const currentDate = current.getFullYear() * 10000 + (current.getMonth() + 1) * 100 + current.getDate();
-    const start = this.startDate.getFullYear() * 10000 + (this.startDate.getMonth() + 1) * 100 + this.startDate.getDate();
-    const end = this.endDate.getFullYear() * 10000 + (this.endDate.getMonth() + 1) * 100 + this.endDate.getDate();
-    return currentDate < start || currentDate > end;
-  };
+  //   const currentDate = current.getFullYear() * 10000 + (current.getMonth() + 1) * 100 + current.getDate();
+  //   const start = this.startDate.getFullYear() * 10000 + (this.startDate.getMonth() + 1) * 100 + this.startDate.getDate();
+  //   const end = this.endDate.getFullYear() * 10000 + (this.endDate.getMonth() + 1) * 100 + this.endDate.getDate();
+  //   return currentDate < start || currentDate > end;
+  // };
 
   captureDiv(){
     if(this.downloadType === 'pdf'){
