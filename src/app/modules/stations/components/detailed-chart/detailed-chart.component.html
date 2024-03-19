@@ -180,7 +180,7 @@
 
 
                 <div *ngIf="breakPoints?.length > 0" #captureDiv2 class="severity-bar-wrapper">
-                        <app-severity-bar [breakPoints]="breakPoints"></app-severity-bar>
+                        <app-severity-bar [lang]="lang$ | async" [breakPoints]="breakPoints"></app-severity-bar>
                 </div>
         </div>
 </div>

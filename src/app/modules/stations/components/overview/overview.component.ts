@@ -5,6 +5,7 @@ import { IBreadCrumb } from '../../../shared/components/bread-crumb/model';
 import { BreakPoint } from './../../../../models/breakPoint';
 import { HistoryInterval, SwaggerService } from './../../../../services/swagger.service';
 import { NzDatePickerComponent } from 'ng-zorro-antd/date-picker';
+import { LocalizationService } from '../../../../services/localization.service';
 const Radius = 12;
 
 @Component({
@@ -40,7 +41,9 @@ export class OverviewComponent implements OnInit {
   data = []
   isLoaded = false;
 
-  constructor(private swagger: SwaggerService) { }
+  lang$ = this.localization.getCurrentLanguage();
+
+  constructor(private swagger: SwaggerService, private localization: LocalizationService) { }
   ngOnInit(): void {
     this.getData();
 

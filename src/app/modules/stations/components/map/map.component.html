@@ -1,8 +1,8 @@
 <div class="main-wrapper">
     <div class="map-wrapper">
         <google-map [options]="options" height="100%" width="100%">
-            <div class="bar-wrapper">
-                <app-severity-bar [breakPoints]="breakPoints$  | async" [type]="'vertical'"> </app-severity-bar>
+            <div class="severity-bar-wrapper">
+                <app-severity-bar [lang]="lang$ | async" [breakPoints]="breakPoints$  | async" > </app-severity-bar>
             </div>
 
 

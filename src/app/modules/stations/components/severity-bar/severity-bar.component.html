@@ -1,22 +1,43 @@
-<!-- [class.vertical]="type === 'vertical'" [class.horizontal]="type === 'horizontal'" -->
-<div  class="bar-wrapper horizontal" style="direction: ltr;">
-    <div   [ngStyle]="{'background': gray}"  class="level na">
-        <!-- <span class="end">
-            <div class="bar-value">
-                0
+<div [class.vertical]="type === 'vertical'" [class.horizontal]="type === 'horizontal'" class="bar-wrapper">
+
+    <div class="bar-items">
+        <ng-container *ngFor="let breakPoint of breakPoints;index as i; last as isLast">
+
+            <div [ngStyle]="{'background': breakPoint.color} " class="level">
+                <span class="text" [ngStyle]="{'color': i == 1 ? 'black' : 'white'}" >
+                    {{lang === 'ar' ? breakPoint.status_ar : breakPoint.status_en}}
+                </span>
+                <span class="end">
+                    <div class="bar-value">
+
+                        {{breakPoint.breakpoint_start}}-{{breakPoint.breakpoint_end}}
+
+                        <span *ngIf="i === 0"> {{unit}}</span>
+                    </div>
+                </span>
             </div>
-            <div class="end-bar"></div>
-        </span> -->
+        </ng-container>
+
     </div>
 
-    <div  [class.na]="false" [ngStyle]="{'background': breakPoint.color}" *ngFor="let breakPoint of breakPoints" class="level">
-        <span class="end">
-            <div class="bar-value">
+    <div class="bar-items">
 
-                {{breakPoint.breakpoint_end}}
-            </div>
+        <div class="na lightGray-bg level">
+            <span *ngIf="lang =='en'" class="text">
+                Not Available
+            </span>
 
-            <div class="end-bar"></div>
-        </span>
+            <span *ngIf="lang =='ar'" class="text">
+                غير متاح
+            </span>
+
+            <!-- <span class="end">
+                <div class="bar-value">
+
+                </div>
+
+            </span> -->
+        </div>
     </div>
+
 </div>
