@@ -100,7 +100,7 @@
                                         <nz-radio-group [(ngModel)]="downloadType">
 
                                                 <li nz-menu-item>
-                                                        <label (click)="captureDivAsPDF()" class="download-item"
+                                                        <label  class="download-item"
                                                                 [nzValue]="'pdf'" nz-radio>
                                                                 PDF</label>
                                                 </li>
@@ -109,9 +109,14 @@
 
 
                                                 <li nz-menu-item>
-                                                        <label (click)="captureDivAsImage()" class="download-item"
+                                                        <label class="download-item"
                                                                 [nzValue]="'png'" nz-radio>
                                                                 PNG</label>
+                                                </li>
+
+                                                
+                                                <li (click)="captureDiv()" nz-menu-item>
+                                                        {{'download' | translate}}
                                                 </li>
 
                                         </nz-radio-group>

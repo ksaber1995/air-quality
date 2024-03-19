@@ -286,9 +286,6 @@ export class DetailedChartComponent {
     
     const data = keys.map(key => this.summary[key].length)
 
-    console.log(keys,'keys')
-    console.log(this.summaryKeys,' s keys')
-
 
     this.doughnutChartData =
     {
@@ -322,7 +319,6 @@ export class DetailedChartComponent {
     this.activeInterval$.next(interval);
     this.from$.next(null)
     this.to$.next(null)
-    // console.log()
   }
 
 
@@ -333,6 +329,15 @@ export class DetailedChartComponent {
     const end = this.endDate.getFullYear() * 10000 + (this.endDate.getMonth() + 1) * 100 + this.endDate.getDate();
     return currentDate < start || currentDate > end;
   };
+
+  captureDiv(){
+    if(this.downloadType === 'pdf'){
+      this.captureDivAsPDF()
+
+    }else{
+      this.captureDivAsImage()
+    }
+  }
 
   captureDivAsImage() {
     html2canvas(this.captureDiv1.nativeElement).then(canvas => {
