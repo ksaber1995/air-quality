@@ -51,7 +51,7 @@ export class MapComponent implements OnInit, OnDestroy {
         // this.carouselRef.next()
         this.changeStation(next_station)
       }
-    }, 15000)
+    }, 8000)
   }
 
 
@@ -114,6 +114,8 @@ export class MapComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    clearInterval(this.interval)
+
   }
 
 

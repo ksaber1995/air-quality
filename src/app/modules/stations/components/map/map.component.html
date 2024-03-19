@@ -38,7 +38,8 @@
             <button class="no-min-width rounded seaGreen-bg" (click)="toggleCarouselAutoPlay(carouselRef)" nz-button
                 nzType="text">
                 <span *ngIf="interval" class="btn-icon" nz-icon nzType="pause" nzTheme="outline"></span>
-                <span *ngIf="!interval" nz-icon nzType="play-circle" nzTheme="outline"></span>
+                <span *ngIf="!interval" class="btn-icon"  nz-icon nzType="caret-right" nzTheme="outline"></span>
+
             </button>
         </div>
 
