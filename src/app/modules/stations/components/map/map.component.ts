@@ -40,7 +40,6 @@ export class MapComponent implements OnInit, OnDestroy {
       if (current_station_index > -1 && current_station_index < (this.stations.length - 1)) {
         const next_station = this.stations[current_station_index + 1]
 
-        // console.log(this.carouselRef.slidesData)
         this.carouselRef.to(next_station.code)
         this.changeStation(next_station)
       } else if (current_station_index === (this.stations.length - 1)) {

@@ -171,9 +171,12 @@ export class DetailedChartComponent {
           this.breakPoints = breakPoints?.variables?.find(res => res.code === type)?.variable_breakpoints?.sort((a, b) => a.sequence - b.sequence)
         }
 
-        return combineLatest([this.getHistory(interval, this.filter_type, type, this.currentStation.code, from, to), ...stationsToCompare.map(code => this.getHistory(interval, this.filter_type, type, code, from, to).pipe(map(res => ({ code, data: res }))))])
+        return combineLatest([
+          this.lang$,
+          this.getHistory(interval, this.filter_type, type, this.currentStation.code, from, to), 
+          ...stationsToCompare.map(code => this.getHistory(interval, this.filter_type, type, code, from, to).pipe(map(res => ({ code, data: res }))))])
       }))
-      .subscribe(([history, ...stationsToCompare]) => {
+      .subscribe(([lang, history, ...stationsToCompare]) => {
         this.history = history;
 
 
@@ -191,7 +194,7 @@ export class DetailedChartComponent {
               this.summary[status] = [item]
             }
           })
-          this.setDoughnutChartData()
+          this.setDoughnutChartData(lang)
         }
 
 
@@ -264,15 +267,32 @@ export class DetailedChartComponent {
       })
   }
 
-  setDoughnutChartData() {
+  getKeyName(key, lang){
+    if(lang === 'ar'){
+
+      return this.summary[key].find(res=> res.status_en === key && !!res.status_ar).status_ar
+    }else{
+      return key
+    }
+
+  }
+
+  setDoughnutChartData(lang) {
+    
     const keys = Object.keys(this.summary)
     const backgroundColor = keys.map(key => this.history.find(res => res.status_en === key)?.color || 'rgb(231, 231, 231)')
-    this.summaryKeys = keys.map((key, i) => ({ name: key, percentage: this.summary[key].length / this.history.length * 100, color: backgroundColor[i] }));
+  
+    this.summaryKeys = keys.map((key, i) => ({ name: this.getKeyName(key, lang) , percentage: this.summary[key].length / this.history.length * 100, color: backgroundColor[i] }));
+    
     const data = keys.map(key => this.summary[key].length)
+
+    console.log(keys,'keys')
+    console.log(this.summaryKeys,' s keys')
+
 
     this.doughnutChartData =
     {
-      labels: keys,
+      labels: keys.map(key=> this.getKeyName(key, lang)),
       datasets: [{
         label: 'AQI',
         data,
@@ -280,7 +300,7 @@ export class DetailedChartComponent {
       }]
     };
 
-    this.doughnutChartLabels = keys
+    this.doughnutChartLabels = keys.map(key=> this.getKeyName(key, lang))
   }
 
   onDateChange(e) {
