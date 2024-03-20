@@ -1,15 +1,15 @@
-import { LocalizationService } from './../../../../services/localization.service';
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
-import { ChartData, ChartDataset, ChartOptions, LegendOptions } from 'chart.js';
+import { ChartData, ChartDataset, ChartOptions } from 'chart.js';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
+import { NzDatePickerComponent } from 'ng-zorro-antd/date-picker';
 import { BehaviorSubject, combineLatest, map, shareReplay, switchMap } from 'rxjs';
 import { DetailedStation, Reading, Station } from '../../../../models/Station';
 import { BreakPoint } from '../../../../models/breakPoint';
 import { HistoryInterval, OverviewType, SwaggerService } from '../../../../services/swagger.service';
-import { OmmanDate, formatDateYYMMDD, formatTime, getDateNsDaysAgo, getDayName } from '../../../../unitlize/custom-date';
+import { OmmanDate, formatDateYYMMDD, formatTime } from '../../../../unitlize/custom-date';
 import { getRandomNumber } from '../summary/model';
-import { NzDatePickerComponent } from 'ng-zorro-antd/date-picker';
-import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
+import { LocalizationService } from './../../../../services/localization.service';
 
 const colorPalette = [
   '#1f77b4', // blue
@@ -164,9 +164,10 @@ export class DetailedChartComponent {
         this.interval = interval;
         this.filter_type = type === 'aqi' ? 'aqi' : 'variable';
         if (type === 'aqi') {
-          this.breakPoints = breakPoints.aqi_breakpoints?.sort((a, b) => a.sequence - b.sequence)
+          this.breakPoints = breakPoints.aqi_breakpoints?.sort((a, b) => a.sequence - b.sequence);
         } else {
           this.breakPoints = breakPoints?.variables?.find(res => res.code === type)?.variable_breakpoints?.sort((a, b) => a.sequence - b.sequence)
+          
         }
 
         return combineLatest([

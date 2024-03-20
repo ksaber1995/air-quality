@@ -16,5 +16,9 @@ export class SeverityBarComponent {
   @Input() breakPoints : BreakPoint[] = [];
 
   constructor(){
+    setInterval(() => {
+      
+      console.log(this.breakPoints)
+    }, 5000);
   }
 }

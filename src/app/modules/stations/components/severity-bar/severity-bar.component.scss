@@ -17,6 +17,9 @@
         border-radius: 6px;
 
     }
+    padding: 20px 0 0;
+    background-color: #fff;
+    border: 1px solid #f2f2f2;
 
     &:hover{   
         padding: 20px 0 0;
@@ -106,7 +109,6 @@
             position: relative;
             font-size: .6rem;
             // font-weight: 600;
-            overflow: hidden;
 
             &:hover{
                 font-size: .65rem;
@@ -132,7 +134,7 @@
                 top: -17px;
                 left: 50%;
                 transform: translateX(-50%);
-                display: none;
+                // display: none;
                 flex-direction: column;
                 font-size: .7rem;
                 align-items: flex-end;
