@@ -42,8 +42,6 @@ export class DetailedChartComponent {
   @Input() details: DetailedStation;
   @Input() currentStation: Station
 
-  startDate: Date;
-  endDate: Date;
 
   from$ = new BehaviorSubject<string>(null)
   to$ = new BehaviorSubject<string>(null)
@@ -173,7 +171,7 @@ export class DetailedChartComponent {
 
         return combineLatest([
           this.lang$,
-          this.getHistory(interval, this.filter_type, type, this.currentStation.code, from, to), 
+          this.getHistory(interval, this.filter_type, type, this.currentStation.code, from, to),
           ...stationsToCompare.map(code => this.getHistory(interval, this.filter_type, type, code, from, to).pipe(map(res => ({ code, data: res }))))])
       }))
       .subscribe(([lang, history, ...stationsToCompare]) => {
@@ -200,22 +198,14 @@ export class DetailedChartComponent {
 
 
 
-        if (this.interval === 'day' || this.interval === 'week') {
-          this.lineChartLabels = this.history.map(res => getDayName(OmmanDate(res.aggregated_at).getDay(), lang) + formatTime(OmmanDate(res.aggregated_at)))
+        if (this.interval === 'day' ) {
+          this.lineChartLabels = this.history.map(res =>  formatDateYYMMDD(OmmanDate(res.aggregated_at)) + ' ' + formatTime(OmmanDate(res.aggregated_at)))
 
-          if (this.interval === 'day') {
-            this.startDate = getDateNsDaysAgo(1)
-            this.endDate = OmmanDate()
-          } else {
-            this.startDate = getDateNsDaysAgo(8)
-            this.endDate = OmmanDate()
-          }
+
         }
 
-        else if (this.interval === 'month') {
+        else if (this.interval === 'month' || this.interval === 'week') {
           this.lineChartLabels = this.history.map(res => formatDateYYMMDD(OmmanDate(res.aggregated_at)))
-          this.startDate = getDateNsDaysAgo(32)
-          this.endDate = OmmanDate()
         }
 
 
@@ -240,7 +230,7 @@ export class DetailedChartComponent {
         ]
 
 
-        stationsToCompare.forEach((c_station_history,i) => {
+        stationsToCompare.forEach((c_station_history, i) => {
 
           const color = colorPalette[i];
           const new_lineChartData =
@@ -267,29 +257,29 @@ export class DetailedChartComponent {
       })
   }
 
-  getKeyName(key, lang){
-    if(lang === 'ar'){
+  getKeyName(key, lang) {
+    if (lang === 'ar') {
 
-      return this.summary[key].find(res=> res?.status_en === key && !!res?.status_ar)?.status_ar || 'غير متاح'
-    }else{
+      return this.summary[key].find(res => res?.status_en === key && !!res?.status_ar)?.status_ar || 'غير متاح'
+    } else {
       return key
     }
 
   }
 
   setDoughnutChartData(lang) {
-    
+
     const keys = Object.keys(this.summary)
     const backgroundColor = keys.map(key => this.history.find(res => res.status_en === key)?.color || 'rgb(231, 231, 231)')
-  
-    this.summaryKeys = keys.map((key, i) => ({ name: this.getKeyName(key, lang) , percentage: this.summary[key].length / this.history.length * 100, color: backgroundColor[i] }));
-    
+
+    this.summaryKeys = keys.map((key, i) => ({ name: this.getKeyName(key, lang), percentage: this.summary[key].length / this.history.length * 100, color: backgroundColor[i] }));
+
     const data = keys.map(key => this.summary[key].length)
 
 
     this.doughnutChartData =
     {
-      labels: keys.map(key=> this.getKeyName(key, lang)),
+      labels: keys.map(key => this.getKeyName(key, lang)),
       datasets: [{
         label: 'AQI',
         data,
@@ -297,7 +287,7 @@ export class DetailedChartComponent {
       }]
     };
 
-    this.doughnutChartLabels = keys.map(key=> this.getKeyName(key, lang))
+    this.doughnutChartLabels = keys.map(key => this.getKeyName(key, lang))
   }
 
   onDateChange(e) {
@@ -315,26 +305,22 @@ export class DetailedChartComponent {
 
   onIntervalChange(interval: HistoryInterval, picker: NzDatePickerComponent) {
     picker.close()
-    this.date = undefined
     this.activeInterval$.next(interval);
-    this.from$.next(null)
-    this.to$.next(null)
   }
 
 
-  // disabledDate = (current: Date): boolean => {
+  disabledDate = (current: Date): boolean => {
 
-  //   const currentDate = current.getFullYear() * 10000 + (current.getMonth() + 1) * 100 + current.getDate();
-  //   const start = this.startDate.getFullYear() * 10000 + (this.startDate.getMonth() + 1) * 100 + this.startDate.getDate();
-  //   const end = this.endDate.getFullYear() * 10000 + (this.endDate.getMonth() + 1) * 100 + this.endDate.getDate();
-  //   return currentDate < start || currentDate > end;
-  // };
+    const currentDate = current.getFullYear() * 10000 + (current.getMonth() + 1) * 100 + current.getDate();
+    const end = new Date().getFullYear() * 10000 + (new Date().getMonth() + 1) * 100 + new Date().getDate();
+    return currentDate > end;
+  };
 
-  captureDiv(){
-    if(this.downloadType === 'pdf'){
+  captureDiv() {
+    if (this.downloadType === 'pdf') {
       this.captureDivAsPDF()
 
-    }else{
+    } else {
       this.captureDivAsImage()
     }
   }
@@ -346,8 +332,8 @@ export class DetailedChartComponent {
 
       // Create a temporary link and trigger download
       const link = document.createElement('a');
-      const stations = this.lineChartData.map(res=> res.label).join(',')
-      
+      const stations = this.lineChartData.map(res => res.label).join(',')
+
       link.download = stations + '-report.png';
 
       link.href = imageData;
@@ -377,8 +363,8 @@ export class DetailedChartComponent {
       // console.log(imgHeight,'height')
       pdf.addImage(imgData, 'PNG', 30, 30, 400, 180);
 
-      const stations = this.lineChartData.map(res=> res.label).join(',')
-      
+      const stations = this.lineChartData.map(res => res.label).join(',')
+
       // Save the PDF
       pdf.save(stations + '-report.pdf');
     });

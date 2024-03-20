@@ -60,7 +60,7 @@ export class ChartComponent implements OnInit {
             callback: (value: any, index: any, values: any) => {
               if (this.interval === 'day') {
 
-                return formatTime(OmmanDate(value))
+                return formatDateYYMMDD(OmmanDate(value)) + ' ' + formatTime(OmmanDate(value))
               } else if (this.interval === 'week') {
                 return formatDateYYMMDD(OmmanDate(value))
               } else if (this.interval === 'month') {

@@ -79,15 +79,16 @@
 
 
                         <ng-template #calendar>
-                                <span style="font-size: 22px; " nz-size="large" nz-icon nzType="calendar"
-                                        nzTheme="outline"></span>
+                                <span [class.active-picker]="!!(date?.[0])" style="font-size: 22px; " nz-size="large"
+                                        nz-icon nzType="calendar" nzTheme="outline"></span>
                         </ng-template>
 
 
-                        <nz-range-picker #datepicker [nzAllowClear]="true" 
-                                [nzShowTime]="(activeInterval$ | async) === 'day' ? { nzFormat: 'HH:mm' } : false"
-                                [nzSuffixIcon]="calendar" class="simple" [class.hidden]="!date" [(ngModel)]="date"
-                                (ngModelChange)="onDateChange($event)"></nz-range-picker>
+
+                        <nz-range-picker #datepicker [nzAllowClear]="true" [nzDisabledDate]="disabledDate"
+                                [nzSuffixIcon]="calendar" class="simple" [class.hidden]="!(date?.[0])"
+                                [(ngModel)]="date" (ngModelChange)="onDateChange($event)">
+                        </nz-range-picker>
 
                         <button nz-button nz-dropdown [nzDropdownMenu]="menu" class="download">
                                 {{'download' | translate}}
@@ -100,8 +101,7 @@
                                         <nz-radio-group [(ngModel)]="downloadType">
 
                                                 <li nz-menu-item>
-                                                        <label  class="download-item"
-                                                                [nzValue]="'pdf'" nz-radio>
+                                                        <label class="download-item" [nzValue]="'pdf'" nz-radio>
                                                                 PDF</label>
                                                 </li>
 
@@ -109,12 +109,11 @@
 
 
                                                 <li nz-menu-item>
-                                                        <label class="download-item"
-                                                                [nzValue]="'png'" nz-radio>
+                                                        <label class="download-item" [nzValue]="'png'" nz-radio>
                                                                 PNG</label>
                                                 </li>
 
-                                                
+
                                                 <li (click)="captureDiv()" nz-menu-item>
                                                         {{'download' | translate}}
                                                 </li>
@@ -131,11 +130,10 @@
 
 
                         <div nz-col class="gutter-row chart" [nzXl]="((type$ | async) === 'aqi') ? 17 : 24" nzLg="24">
-                                <div style="display: block;">
-                                        <canvas id="lineChartCanvas" #lineChartCanvas baseChart
-                                                [legend]="true"  [datasets]="lineChartData" 
-                                                [labels]="lineChartLabels" [options]="lineChartOptions" 
-                                                [type]="'line'">
+                                <div style="direction: ltr; display: block;">
+                                        <canvas id="lineChartCanvas" #lineChartCanvas baseChart [legend]="true"
+                                                [datasets]="lineChartData" [labels]="lineChartLabels"
+                                                [options]="lineChartOptions" [type]="'line'">
                                         </canvas>
                                 </div>
                         </div>

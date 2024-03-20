@@ -57,14 +57,17 @@
                     [class.active]="activeInterval === 'month'">{{'month' | translate}}</button>
 
 
+
+
                 <ng-template #calendar>
-                    <span style="font-size: 22px; " nz-size="large" nz-icon nzType="calendar" nzTheme="outline"></span>
+                    <span [class.active-picker]="!!(date?.[0])" style="font-size: 22px; " nz-size="large" nz-icon nzType="calendar" nzTheme="outline"></span>
                 </ng-template>
 
-               
-                
-                <nz-range-picker #datepicker [nzAllowClear]="true"  [nzShowTime]="(activeInterval$ | async) === 'day' ? { nzFormat: 'HH:mm' } : false" [nzSuffixIcon]="calendar" class="simple" [class.hidden]="!date" [(ngModel)]="date"
+
+                <nz-range-picker #datepicker [nzAllowClear]="true" [nzDisabledDate]="disabledDate" [nzShowTime]="false"
+                    [nzSuffixIcon]="calendar" class="simple" [class.hidden]="!(date?.[0])" [(ngModel)]="date"
                     (ngModelChange)="onDateChange($event)"></nz-range-picker>
+
             </div>
         </div>
 

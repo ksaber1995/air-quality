@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject, combineLatest, debounce, debounceTime, map, shareReplay, switchMap } from 'rxjs';
-import { OmmanDate, getDateNsDaysAgo } from '../../../../unitlize/custom-date';
+import { NzDatePickerComponent } from 'ng-zorro-antd/date-picker';
+import { BehaviorSubject, combineLatest, debounceTime, map, shareReplay, switchMap } from 'rxjs';
+import { LocalizationService } from '../../../../services/localization.service';
+import { OmmanDate } from '../../../../unitlize/custom-date';
 import { IBreadCrumb } from '../../../shared/components/bread-crumb/model';
 import { BreakPoint } from './../../../../models/breakPoint';
 import { HistoryInterval, SwaggerService } from './../../../../services/swagger.service';
-import { NzDatePickerComponent } from 'ng-zorro-antd/date-picker';
-import { LocalizationService } from '../../../../services/localization.service';
 const Radius = 12;
 
 @Component({
@@ -31,8 +31,6 @@ export class OverviewComponent implements OnInit {
   overview$ = this.swagger.getStationsOverview({ type: 'aqi', interval: 'month' });
   sub;
 
-  startDate: Date;
-  endDate: Date;
 
   breakPoints$ = this.swagger.getBreakPoints()
   variables$ = this.swagger.getStationsCode().pipe(map(res => res.variables))
@@ -84,9 +82,6 @@ export class OverviewComponent implements OnInit {
 
 
         if (interval === 'day') {
-          this.startDate = getDateNsDaysAgo(1)
-          this.endDate = OmmanDate()
-
           stations.forEach(station => {
             const station_items = items[station]
 
@@ -104,30 +99,26 @@ export class OverviewComponent implements OnInit {
 
 
 
-        } else if (interval === 'week') {
-          this.startDate = getDateNsDaysAgo(8)
+        }
+        //  else if (interval === 'week') {
+        //   stations.forEach(station => {
+        //     const station_items = items[station]
 
-          this.endDate = OmmanDate()
-
-          stations.forEach(station => {
-            const station_items = items[station]
-
-            const stationData = station_items.map(item => {
-              return { x: OmmanDate(item.aggregated_at).getTime(), y: item.value || 0, r: Radius }
-            })
+        //     const stationData = station_items.map(item => {
+        //       return { x: OmmanDate(item.aggregated_at).getTime(), y: item.value || 0, r: Radius }
+        //     })
 
 
 
-            chartData.push({
-              data: stationData,
-              label: station
-            })
-          })
+        //     chartData.push({
+        //       data: stationData,
+        //       label: station
+        //     })
+        //   })
 
-        } else if (interval === 'month') {
-          this.startDate = getDateNsDaysAgo(32)
-          this.endDate = OmmanDate()
-
+        // } 
+        
+        else if (interval === 'month' || interval === 'week') {
           stations.forEach(station => {
             const station_items = items[station]
 
@@ -156,10 +147,11 @@ export class OverviewComponent implements OnInit {
   onDateChange(e) {
     this.from$.next(e[0])
     this.to$.next(e[1])
+
+    console.log(this.date)
   }
 
   onTypeChange(e: string) {
-
     if (e === 'aqi') {
       this.type$.next('aqi')
     } else {
@@ -169,19 +161,18 @@ export class OverviewComponent implements OnInit {
 
   onIntervalChange(interval: HistoryInterval, picker: NzDatePickerComponent) {
     picker.close()
-    this.date = undefined
     this.activeInterval$.next(interval);
-    this.from$.next(null)
-    this.to$.next(null)
+
     // console.log()
   }
 
 
-  // disabledDate = (current: Date): boolean => {
+  
+  disabledDate = (current: Date): boolean => {
 
-  //   const currentDate = current.getFullYear() * 10000 + (current.getMonth() + 1) * 100 + current.getDate();
-  //   const start = this.startDate.getFullYear() * 10000 + (this.startDate.getMonth() + 1) * 100 + this.startDate.getDate();
-  //   const end = this.endDate.getFullYear() * 10000 + (this.endDate.getMonth() + 1) * 100 + this.endDate.getDate();
-  //   return currentDate < start || currentDate > end;
-  // };
+    const currentDate = current.getFullYear() * 10000 + (current.getMonth() + 1) * 100 + current.getDate();
+    const end = new Date().getFullYear() * 10000 + (new Date().getMonth() + 1) * 100 + new Date().getDate();
+    return  currentDate > end;
+  };
+
 }
