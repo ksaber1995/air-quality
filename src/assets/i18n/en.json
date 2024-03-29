@@ -16,5 +16,8 @@
     "compare" : "Compare",
     "variables" : "Variables",
     "stations" : "Stations",
-    "menu": "Menu"
+    "menu": "Menu",
+    "email" : "Email",
+    "password" : "Password",
+    "no-match" : "Email and password don't match"
 }

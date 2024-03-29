@@ -1,0 +1,25 @@
+
+<div class="form-container">
+  <form class="form" [formGroup]="loginForm"  (ngSubmit)="login()" >
+    <mat-error *ngIf="noMatch">{{'no-match' | translate}}</mat-error>
+    <h1 class="login-title">{{'login' | translate}}</h1>
+    <mat-form-field  >
+      <mat-label>{{"email" | translate}}</mat-label>
+      <input formControlName="email" matInput  >
+      <!-- <mat-error> {{"email-error" | translate}}</mat-error> -->
+    </mat-form-field>
+
+    <mat-form-field >
+      <mat-label>{{"password" | translate}}</mat-label>
+      <input matInput  formControlName="password" type="password" >
+      <!-- <mat-error>  {{"password-error" | translate}}</mat-error> -->
+
+    </mat-form-field>
+    <!-- <div class="hints"> -->
+      <!-- <mat-checkbox class="check-box" color="primary"> {{"remember-me" | translate}}</mat-checkbox> -->
+      <!-- <a href="" class="forget-password"> {{"forget-password" | translate}}</a> -->
+    <!-- </div> -->
+    <button class="login-button" type="submit" [disabled] = '!loginForm.valid'> {{"login" | translate}}</button>
+  </form>
+
+</div>

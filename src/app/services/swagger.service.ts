@@ -5,8 +5,8 @@ import { DetailedStation, Reading, Station } from '../models/Station';
 import { BreakPoint, VariableBreakPoint } from '../models/breakPoint';
 import { CustomOverviewResponse, OverviewResponse } from '../models/overview';
 import { Lang, LocalizationService } from './localization.service';
+import { AjaxService } from './ajax.service';
 
-const BaseUrl = 'https://functions.naqi.dal2.com/v1'
 
 interface StationsResponse {
   data: Station[]
@@ -62,13 +62,13 @@ interface BreakPointsResponse {
   providedIn: 'root'
 })
 export class SwaggerService {
-  constructor(private http: HttpClient, private localization: LocalizationService) { }
+  constructor(private ajax: AjaxService, private localization: LocalizationService) { }
 
   getStations() {
-    const url = BaseUrl + '/stations'
+    const url =  '/stations'
     const lang$ = this.localization.getCurrentLanguage();
     
-    return combineLatest([this.http.get<StationsResponse>(url), lang$])
+    return combineLatest([this.ajax.get<StationsResponse>(url), lang$])
     
     .pipe(
       map(([stationsResponse, lang])=> {
@@ -90,14 +90,14 @@ export class SwaggerService {
   }
 
   getStationsCode() : Observable<CodesResponse>{
-    const url = BaseUrl + '/stations/codes'
-    return combineLatest([this.http.get<CodesResponse>(url), this.localization.getCurrentLanguage()])
+    const url =  '/stations/codes'
+    return combineLatest([this.ajax.get<CodesResponse>(url), this.localization.getCurrentLanguage()])
     .pipe(map(([response, lang])=> ({variables: response.variables, stations: response.stations.map(res=> ({...res, name: lang === Lang.ar ? res.name_ar : res.name_en}))  })))
   }
 
   getStationsOverview( data: {type : OverviewType , interval: HistoryInterval, variable_code?: string, from?: string, to?: string} ) : Observable< CustomOverviewResponse> {
-    const url = BaseUrl + '/stations/overview'
-    return this.http.post<{data: OverviewResponse[]}>(url, { ...data })
+    const url =  '/stations/overview'
+    return this.ajax.post<{data: OverviewResponse[]}>(url, { ...data })
       .pipe(
         map(res=> res.data.reverse()),
         map(res=>{
@@ -120,8 +120,8 @@ export class SwaggerService {
 
   
   getStationDetails(station_code ) : Observable<DetailedStation> {
-    const url = BaseUrl + '/station'
-    return   combineLatest([this.http.post<{data: DetailedStation[]}>(url, { station_code  }), this.localization.getCurrentLanguage()])
+    const url =  '/station'
+    return   combineLatest([this.ajax.post<{data: DetailedStation[]}>(url, { station_code  }), this.localization.getCurrentLanguage()])
     .pipe(map(([res, lang])=> {
       const data = res.data[0];
 
@@ -137,9 +137,9 @@ export class SwaggerService {
   }
 
   getStationHistory( data : {station_code: string, type: OverviewType, variable_code?: string, interval: HistoryInterval, from?: string, to?: string}): Observable<Reading[]> {
-    const url = BaseUrl + '/station/history'
+    const url =  '/station/history'
 
-    return this.http.post<{data: Reading[]}>(url, { ...data  }).pipe(map(res=> res.data.reverse()))
+    return this.ajax.post<{data: Reading[]}>(url, { ...data  }).pipe(map(res=> res.data.reverse()))
   }
 
 
@@ -148,9 +148,9 @@ export class SwaggerService {
 
 
   getBreakPoints(): Observable<BreakPointsResponse> {
-    const url = 'https://hasura.naqi.dal2.com/api/rest/v1/public/breakpoints'
+    const url = '/breakpoints'
 
-    return this.http.get<BreakPointsResponse>(url)
+    return this.ajax.get<BreakPointsResponse>(url)
   }
 
 
