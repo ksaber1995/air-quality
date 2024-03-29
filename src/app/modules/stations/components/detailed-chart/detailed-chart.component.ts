@@ -1,15 +1,15 @@
-import { LocalizationService } from './../../../../services/localization.service';
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
-import { ChartData, ChartDataset, ChartOptions, LegendOptions } from 'chart.js';
+import { ChartData, ChartDataset, ChartOptions } from 'chart.js';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
+import { NzDatePickerComponent } from 'ng-zorro-antd/date-picker';
 import { BehaviorSubject, combineLatest, map, shareReplay, switchMap } from 'rxjs';
 import { DetailedStation, Reading, Station } from '../../../../models/Station';
 import { BreakPoint } from '../../../../models/breakPoint';
 import { HistoryInterval, OverviewType, SwaggerService } from '../../../../services/swagger.service';
-import { OmmanDate, formatDateYYMMDD, formatTime, getDateNsDaysAgo, getDayName } from '../../../../unitlize/custom-date';
+import { OmmanDate, formatDateYYMMDD, formatTime } from '../../../../unitlize/custom-date';
 import { getRandomNumber } from '../summary/model';
-import { NzDatePickerComponent } from 'ng-zorro-antd/date-picker';
-import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
+import { LocalizationService } from './../../../../services/localization.service';
 
 const colorPalette = [
   '#1f77b4', // blue
@@ -42,8 +42,6 @@ export class DetailedChartComponent {
   @Input() details: DetailedStation;
   @Input() currentStation: Station
 
-  startDate: Date;
-  endDate: Date;
 
   from$ = new BehaviorSubject<string>(null)
   to$ = new BehaviorSubject<string>(null)
@@ -166,14 +164,18 @@ export class DetailedChartComponent {
         this.interval = interval;
         this.filter_type = type === 'aqi' ? 'aqi' : 'variable';
         if (type === 'aqi') {
-          this.breakPoints = breakPoints.aqi_breakpoints?.sort((a, b) => a.sequence - b.sequence)
+          this.breakPoints = breakPoints.aqi_breakpoints?.sort((a, b) => a.sequence - b.sequence);
         } else {
           this.breakPoints = breakPoints?.variables?.find(res => res.code === type)?.variable_breakpoints?.sort((a, b) => a.sequence - b.sequence)
+          
         }
 
-        return combineLatest([this.getHistory(interval, this.filter_type, type, this.currentStation.code, from, to), ...stationsToCompare.map(code => this.getHistory(interval, this.filter_type, type, code, from, to).pipe(map(res => ({ code, data: res }))))])
+        return combineLatest([
+          this.lang$,
+          this.getHistory(interval, this.filter_type, type, this.currentStation.code, from, to),
+          ...stationsToCompare.map(code => this.getHistory(interval, this.filter_type, type, code, from, to).pipe(map(res => ({ code, data: res }))))])
       }))
-      .subscribe(([history, ...stationsToCompare]) => {
+      .subscribe(([lang, history, ...stationsToCompare]) => {
         this.history = history;
 
 
@@ -191,28 +193,20 @@ export class DetailedChartComponent {
               this.summary[status] = [item]
             }
           })
-          this.setDoughnutChartData()
+          this.setDoughnutChartData(lang)
         }
 
 
 
 
-        if (this.interval === 'day' || this.interval === 'week') {
-          this.lineChartLabels = this.history.map(res => getDayName(OmmanDate(res.aggregated_at).getDay()) + formatTime(OmmanDate(res.aggregated_at)))
+        if (this.interval === 'day' ) {
+          this.lineChartLabels = this.history.map(res =>  formatDateYYMMDD(OmmanDate(res.aggregated_at)) + ' ' + formatTime(OmmanDate(res.aggregated_at)))
 
-          if (this.interval === 'day') {
-            this.startDate = getDateNsDaysAgo(1)
-            this.endDate = OmmanDate()
-          } else {
-            this.startDate = getDateNsDaysAgo(8)
-            this.endDate = OmmanDate()
-          }
+
         }
 
-        else if (this.interval === 'month') {
+        else if (this.interval === 'month' || this.interval === 'week') {
           this.lineChartLabels = this.history.map(res => formatDateYYMMDD(OmmanDate(res.aggregated_at)))
-          this.startDate = getDateNsDaysAgo(32)
-          this.endDate = OmmanDate()
         }
 
 
@@ -237,7 +231,7 @@ export class DetailedChartComponent {
         ]
 
 
-        stationsToCompare.forEach((c_station_history,i) => {
+        stationsToCompare.forEach((c_station_history, i) => {
 
           const color = colorPalette[i];
           const new_lineChartData =
@@ -264,15 +258,29 @@ export class DetailedChartComponent {
       })
   }
 
-  setDoughnutChartData() {
+  getKeyName(key, lang) {
+    if (lang === 'ar') {
+
+      return this.summary[key].find(res => res?.status_en === key && !!res?.status_ar)?.status_ar || 'غير متاح'
+    } else {
+      return key
+    }
+
+  }
+
+  setDoughnutChartData(lang) {
+
     const keys = Object.keys(this.summary)
     const backgroundColor = keys.map(key => this.history.find(res => res.status_en === key)?.color || 'rgb(231, 231, 231)')
-    this.summaryKeys = keys.map((key, i) => ({ name: key, percentage: this.summary[key].length / this.history.length * 100, color: backgroundColor[i] }));
+
+    this.summaryKeys = keys.map((key, i) => ({ name: this.getKeyName(key, lang), percentage: this.summary[key].length / this.history.length * 100, color: backgroundColor[i] }));
+
     const data = keys.map(key => this.summary[key].length)
+
 
     this.doughnutChartData =
     {
-      labels: keys,
+      labels: keys.map(key => this.getKeyName(key, lang)),
       datasets: [{
         label: 'AQI',
         data,
@@ -280,7 +288,7 @@ export class DetailedChartComponent {
       }]
     };
 
-    this.doughnutChartLabels = keys
+    this.doughnutChartLabels = keys.map(key => this.getKeyName(key, lang))
   }
 
   onDateChange(e) {
@@ -298,21 +306,25 @@ export class DetailedChartComponent {
 
   onIntervalChange(interval: HistoryInterval, picker: NzDatePickerComponent) {
     picker.close()
-    this.date = undefined
     this.activeInterval$.next(interval);
-    this.from$.next(null)
-    this.to$.next(null)
-    // console.log()
   }
 
 
   disabledDate = (current: Date): boolean => {
 
     const currentDate = current.getFullYear() * 10000 + (current.getMonth() + 1) * 100 + current.getDate();
-    const start = this.startDate.getFullYear() * 10000 + (this.startDate.getMonth() + 1) * 100 + this.startDate.getDate();
-    const end = this.endDate.getFullYear() * 10000 + (this.endDate.getMonth() + 1) * 100 + this.endDate.getDate();
-    return currentDate < start || currentDate > end;
+    const end = new Date().getFullYear() * 10000 + (new Date().getMonth() + 1) * 100 + new Date().getDate();
+    return currentDate > end;
   };
+
+  captureDiv() {
+    if (this.downloadType === 'pdf') {
+      this.captureDivAsPDF()
+
+    } else {
+      this.captureDivAsImage()
+    }
+  }
 
   captureDivAsImage() {
     html2canvas(this.captureDiv1.nativeElement).then(canvas => {
@@ -321,8 +333,8 @@ export class DetailedChartComponent {
 
       // Create a temporary link and trigger download
       const link = document.createElement('a');
-      const stations = this.lineChartData.map(res=> res.label).join(',')
-      
+      const stations = this.lineChartData.map(res => res.label).join(',')
+
       link.download = stations + '-report.png';
 
       link.href = imageData;
@@ -352,8 +364,8 @@ export class DetailedChartComponent {
       // console.log(imgHeight,'height')
       pdf.addImage(imgData, 'PNG', 30, 30, 400, 180);
 
-      const stations = this.lineChartData.map(res=> res.label).join(',')
-      
+      const stations = this.lineChartData.map(res => res.label).join(',')
+
       // Save the PDF
       pdf.save(stations + '-report.pdf');
     });

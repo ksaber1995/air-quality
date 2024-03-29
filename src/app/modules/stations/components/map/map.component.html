@@ -1,8 +1,8 @@
 <div class="main-wrapper">
     <div class="map-wrapper">
         <google-map [options]="options" height="100%" width="100%">
-            <div class="bar-wrapper">
-                <app-severity-bar [breakPoints]="breakPoints$  | async" [type]="'vertical'"> </app-severity-bar>
+            <div class="severity-bar-wrapper">
+                <app-severity-bar [lang]="lang$ | async" [breakPoints]="breakPoints$  | async" > </app-severity-bar>
             </div>
 
 
@@ -38,7 +38,8 @@
             <button class="no-min-width rounded seaGreen-bg" (click)="toggleCarouselAutoPlay(carouselRef)" nz-button
                 nzType="text">
                 <span *ngIf="interval" class="btn-icon" nz-icon nzType="pause" nzTheme="outline"></span>
-                <span *ngIf="!interval" nz-icon nzType="play-circle" nzTheme="outline"></span>
+                <span *ngIf="!interval" class="btn-icon"  nz-icon nzType="caret-right" nzTheme="outline"></span>
+
             </button>
         </div>
 
