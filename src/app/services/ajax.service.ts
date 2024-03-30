@@ -16,7 +16,7 @@ export class AjaxService {
   constructor(private http: HttpClient) {}
 
   get<T>(url: string): Observable<T> {
-    return from(nhost.functions.call(url)).pipe(map(res=> res.res.data)) as Observable<T>;
+    return from(nhost.functions.call(url)).pipe(map(res=> res?.res?.data)) as Observable<T>;
   }
 
   post<T>(url: string, body: any): Observable<T> {

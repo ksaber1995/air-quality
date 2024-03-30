@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { AuthService } from '../../../../services/auth.service';
 import { Lang, LocalizationService } from './../../../../services/localization.service';
 import { Component } from '@angular/core';
@@ -10,11 +11,11 @@ import { Component } from '@angular/core';
 export class HeaderComponent {
   lang$ = this.localization.getCurrentLanguage()
   user = this.auth.getUser();
-  
-  constructor(private localization: LocalizationService, private auth: AuthService){}
+
+  constructor(private localization: LocalizationService, private auth: AuthService, private router: Router){}
 
   homeClick(){
-
+    
   }
 
   overviewClick(){
@@ -23,6 +24,7 @@ export class HeaderComponent {
   
   logout(){
     this.auth.logOut();
+    this.router.navigate(['/login'])
   }
 
   setLang(lang){
