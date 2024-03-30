@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { SignInResponse, createNhostClient } from '@nhost/nhost-js';
+import { SignInResponse, User, createNhostClient } from '@nhost/nhost-js';
 import { Observable, delay,  from,  map, of, switchMap } from 'rxjs';
 
 // Self Hosting
@@ -18,13 +18,9 @@ const nhost = createNhostClient({
 export class AuthService {
   constructor() { }
 
-  //  getUser() {
-  //   const session = await nhost.auth.refreshSession('');
-
-  //   if (session.session?.accessToken) {
-  //     return session.session?.user;
-  //   }
-  // }
+   getUser(): User {
+    return nhost.auth.getUser();
+  }
 
   isAuthenticated(): Observable<boolean> {
     // const start = nhost.auth.client.start()

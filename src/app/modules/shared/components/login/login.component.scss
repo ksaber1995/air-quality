@@ -1,6 +1,9 @@
 @import "colors";
-@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap');
 
+mat-form-field{
+  width: 50%;
+  min-width: 220px;
+}
 .form-container {
   width: 100%;
   height: 100%;

@@ -1,3 +1,4 @@
+import { AuthService } from '../../../../services/auth.service';
 import { Lang, LocalizationService } from './../../../../services/localization.service';
 import { Component } from '@angular/core';
 
@@ -8,17 +9,20 @@ import { Component } from '@angular/core';
 })
 export class HeaderComponent {
   lang$ = this.localization.getCurrentLanguage()
-
-  constructor(private localization: LocalizationService){}
+  user = this.auth.getUser();
+  
+  constructor(private localization: LocalizationService, private auth: AuthService){}
 
   homeClick(){
 
   }
+
   overviewClick(){
 
   }
-  adminClick(){
-
+  
+  logout(){
+    this.auth.logOut();
   }
 
   setLang(lang){

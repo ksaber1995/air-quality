@@ -11,18 +11,15 @@ import { SwaggerService } from '../../../../services/swagger.service';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
+  noMatch;
+  
   constructor(
     private router: Router,
     private swagger: SwaggerService,
-    private translate: TranslateService,
     private route: ActivatedRoute,
     private auth: AuthService
-  ) {
-    translate.addLangs(['en', 'ar']);
-    translate.setDefaultLang('ar');
-    translate.use('ar');
-  }
-  noMatch;
+  ) {}
+  
   ngOnInit(): void {}
   loginForm = new FormGroup({
     email: new FormControl('manager@test.com', [

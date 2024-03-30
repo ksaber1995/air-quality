@@ -50,9 +50,21 @@
     </li>
 
 
+
     <div class="admin" (click)="adminClick()"> <img class="adminIcon"
         src="../../../../../assets/icons/admin.svg">{{'admin' | translate}}
-    </div>
+    
+        <a nz-dropdown [nzDropdownMenu]="menu">
+            {{user?.displayName || user?.email }}
+        </a>
+  
+  
+        <nz-dropdown-menu #menu="nzDropdownMenu">
+          <ul nz-menu>
+            <li (click)="logout()" nz-menu-item>{{'logout' | translate}}</li>
+          </ul>
+        </nz-dropdown-menu>
+      </div>
   </ul>
 
 

@@ -19,5 +19,6 @@
     "menu": "Menu",
     "email" : "Email",
     "password" : "Password",
-    "no-match" : "Email and password don't match"
+    "no-match" : "Email and password don't match",
+    "logout" : "Logout"
 }

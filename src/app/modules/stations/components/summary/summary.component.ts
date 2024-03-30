@@ -15,7 +15,7 @@ export class SummaryComponent implements OnInit {
   listOfData
   // = testItem.map(res => ({ ...res, values: res.values.map(res => ({ ...res, color: getColorMapping(res.value) })) }))
   WindConverter = WindConverter;
-  
+
   ngOnInit(): void {
     const lastUpdateStation = this.station?.aqi[0].aggregated_at
      this.lastUpdate = OmmanDate(lastUpdateStation)
