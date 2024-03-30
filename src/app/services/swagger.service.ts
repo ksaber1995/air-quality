@@ -6,6 +6,7 @@ import { BreakPoint, VariableBreakPoint } from '../models/breakPoint';
 import { CustomOverviewResponse, OverviewResponse } from '../models/overview';
 import { Lang, LocalizationService } from './localization.service';
 import { AjaxService } from './ajax.service';
+import { breakpointUrl } from '../environment';
 
 
 interface StationsResponse {
@@ -148,7 +149,7 @@ export class SwaggerService {
 
 
   getBreakPoints(): Observable<BreakPointsResponse> {
-    const url = 'https://hasura.naqi.dal2.com/api/rest/v1/public/breakpoints'
+    const url = breakpointUrl;
 
     return this.http.get<BreakPointsResponse>(url)
   }

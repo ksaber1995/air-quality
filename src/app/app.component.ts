@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { LocalizationService } from './services/localization.service';
 import { delay } from 'rxjs';
+import { MapKey } from './environment';
 
 @Component({
   selector: 'app-root',
@@ -34,7 +35,7 @@ export class AppComponent implements OnInit {
     }
 
     const script = document.createElement('script');
-    script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyDDQ3S08D_41Ll3a2GjTE28KGQR-G6XvmM&libraries=places&language=${language}`;
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${MapKey}&libraries=places&language=${language}`;
     script.id = 'google-maps-script';
     script.async = true;
     script.defer = true;

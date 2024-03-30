@@ -1,14 +1,9 @@
 import { Injectable } from '@angular/core';
 import { SignInResponse, User, createNhostClient } from '@nhost/nhost-js';
-import { Observable, delay,  from,  map, of, switchMap } from 'rxjs';
+import { Observable, delay, from, map, of, switchMap, tap } from 'rxjs';
+import { nhost } from '../environment';
 
 // Self Hosting
-const nhost = createNhostClient({
-  authUrl: 'https://auth.naqi.dal2.com/v1',
-  storageUrl: 'https://auth.naqi.dal2.com/v1',
-  graphqlUrl: 'https://auth.naqi.dal2.com/v1',
-  functionsUrl: 'https://functions.naqi.dal2.com/v2',
-});
 
 // sytaxic sugar
 
@@ -18,42 +13,35 @@ const nhost = createNhostClient({
 export class AuthService {
   constructor() { }
 
-   getUser(): User {
-    return nhost.auth.getUser();
-  }
 
   isAuthenticated(): Observable<boolean> {
-    // const start = nhost.auth.client.start()
     const user = nhost.auth.getUser();
-    if(user){
-      return of(true)
-    }
+    return of(true).pipe(
+      delay(1000),
+      map((res) => Boolean(nhost.auth.getUser())),
+    );
+  }
 
-    
-
-    return of(true).pipe(delay(600)).pipe(switchMap(res => {
-      return from(nhost.auth.refreshSession()).pipe(
-        map((session) => {
-          if (session.session?.accessToken && session.session?.user) {
-            return true;
-          }
-
-          return false;
-        })
-      );
-    }));
+  getUser(): Observable<User> {
+    const user = nhost.auth.getUser();
+    return of(true).pipe(
+      delay(1000),
+      map((res) => nhost.auth.getUser()),
+    );
   }
 
   login(email: string, password: string): Observable<SignInResponse> {
     return from(
       nhost.auth.signIn({
         email,
-        password,
+        password
       })
     );
   }
+
 
   logOut() {
     nhost.auth.signOut();
   }
 }
+

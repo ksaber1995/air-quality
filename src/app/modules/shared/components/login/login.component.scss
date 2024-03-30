@@ -1,29 +1,31 @@
 @import "colors";
 
 mat-form-field{
-  width: 50%;
+  width: 40%;
+  display: block;
   min-width: 220px;
 }
 .form-container {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  // width: 100%;
+  // height: 100%;
+  // display: flex;
+  // align-items: center;
+  // justify-content: center;
   // background-image: url(../../../../../assets/icons/login.png);
-  background-repeat: no-repeat;
-  background-size: cover;
+  // background-repeat: no-repeat;
+  // background-size: cover;
 
   .form {
-    margin-top: 70px;
+    margin: auto;
+
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 800px;
-    height: 500px;
+    width: 100%;
+    height: 90vh;
     border-radius: 20px;
-    background-color: #fff;
+    // background-color: #fff;
 
     .login-title {
       font-size: 32px;
@@ -45,6 +47,9 @@ mat-form-field{
 
       &:disabled {
         cursor: not-allowed;
+      }
+      &:hover {
+        cursor: pointer;
       }
     }
 

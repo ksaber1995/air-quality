@@ -2,6 +2,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../../../services/auth.service';
 import { Lang, LocalizationService } from './../../../../services/localization.service';
 import { Component } from '@angular/core';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -10,7 +11,7 @@ import { Component } from '@angular/core';
 })
 export class HeaderComponent {
   lang$ = this.localization.getCurrentLanguage()
-  user = this.auth.getUser();
+  user$ = this.auth.getUser();
 
   constructor(private localization: LocalizationService, private auth: AuthService, private router: Router){}
 
@@ -25,6 +26,8 @@ export class HeaderComponent {
   logout(){
     this.auth.logOut();
     this.router.navigate(['/login'])
+  
+    this.user$ = of(null)
   }
 
   setLang(lang){

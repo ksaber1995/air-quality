@@ -51,8 +51,8 @@
 
 
 
-    <div class="admin" (click)="adminClick()"> <img class="adminIcon"
-        src="../../../../../assets/icons/admin.svg">{{'admin' | translate}}
+    <div *ngIf="user$ | async as user" class="admin"> <img class="adminIcon"
+        src="../../../../../assets/icons/admin.svg">
     
         <a nz-dropdown [nzDropdownMenu]="menu">
             {{user?.displayName || user?.email }}
