@@ -1,4 +1,6 @@
 @import 'colors';
+$right_left_position_small_screens: 5px;
+$right_left_position: 15px;
 
 .main-wrapper {
     height: 100%;
@@ -10,6 +12,7 @@
         flex-grow: 1;
         position: relative;
         min-height: 550px;
+
         .severity-bar-wrapper {
             position: absolute;
             // top: 80px;
@@ -105,4 +108,40 @@
 
 .carousel-header {
     text-wrap: nowrap;
+}
+
+
+.satellite-wrapper {
+    position: absolute;
+    bottom: 5%;
+    right: $right_left_position;
+    z-index: 1000;
+    border: 4px solid #fff;
+    border-radius: 5px;
+    display: inline-block !important;
+}
+
+
+.ltr-body {
+    .satellite-wrapper {
+        right: unset !important;
+        left: $right_left_position; // 70px
+
+    }
+}
+
+
+@media(max-width: 992px) {
+
+    .satellite-wrapper {
+        right: $right_left_position_small_screens !important;
+    }
+
+    .ltr-body {
+
+        .satellite-wrapper {
+            left: $right_left_position_small_screens;
+
+        }
+    }
 }

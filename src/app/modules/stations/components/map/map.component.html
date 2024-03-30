@@ -1,9 +1,16 @@
 <div class="main-wrapper">
     <div class="map-wrapper">
-        <google-map [options]="options" height="100%" width="100%">
+        <google-map [mapTypeId]="mapType" #googleMap [options]="options" height="100%" width="100%">
             <div class="severity-bar-wrapper">
-                <app-severity-bar [lang]="lang$ | async" [breakPoints]="breakPoints$  | async" > </app-severity-bar>
+                <app-severity-bar [lang]="lang$ | async" [breakPoints]="breakPoints$  | async"> </app-severity-bar>
             </div>
+
+
+            <div   (click)="toggleSatelliteView(googleMap)" class="pointer satellite-wrapper">
+                <img *ngIf="mapType === 'roadmap'" src="assets/icons/satellite.svg">
+                <img *ngIf="mapType === 'hybrid'" src="assets/icons/terrain.svg">
+            </div>
+
 
 
             <div *ngFor="let station of stations" class="">
@@ -38,7 +45,7 @@
             <button class="no-min-width rounded seaGreen-bg" (click)="toggleCarouselAutoPlay(carouselRef)" nz-button
                 nzType="text">
                 <span *ngIf="interval" class="btn-icon" nz-icon nzType="pause" nzTheme="outline"></span>
-                <span *ngIf="!interval" class="btn-icon"  nz-icon nzType="caret-right" nzTheme="outline"></span>
+                <span *ngIf="!interval" class="btn-icon" nz-icon nzType="caret-right" nzTheme="outline"></span>
 
             </button>
         </div>

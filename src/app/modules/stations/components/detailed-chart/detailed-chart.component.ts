@@ -10,6 +10,7 @@ import { HistoryInterval, OverviewType, SwaggerService } from '../../../../servi
 import { OmmanDate, formatDateYYMMDD, formatTime } from '../../../../unitlize/custom-date';
 import { getRandomNumber } from '../summary/model';
 import { LocalizationService } from './../../../../services/localization.service';
+import { generateCSVDownloadLink } from '../../../../unitlize/csv-converter';
 
 const colorPalette = [
   '#1f77b4', // blue
@@ -167,7 +168,7 @@ export class DetailedChartComponent {
           this.breakPoints = breakPoints.aqi_breakpoints?.sort((a, b) => a.sequence - b.sequence);
         } else {
           this.breakPoints = breakPoints?.variables?.find(res => res.code === type)?.variable_breakpoints?.sort((a, b) => a.sequence - b.sequence)
-          
+
         }
 
         return combineLatest([
@@ -199,8 +200,8 @@ export class DetailedChartComponent {
 
 
 
-        if (this.interval === 'day' ) {
-          this.lineChartLabels = this.history.map(res =>  formatDateYYMMDD(OmmanDate(res.aggregated_at)) + ' ' + formatTime(OmmanDate(res.aggregated_at)))
+        if (this.interval === 'day') {
+          this.lineChartLabels = this.history.map(res => formatDateYYMMDD(OmmanDate(res.aggregated_at)) + ' ' + formatTime(OmmanDate(res.aggregated_at)))
 
 
         }
@@ -317,13 +318,34 @@ export class DetailedChartComponent {
     return currentDate > end;
   };
 
-  captureDiv() {
+  captureDiv(lang: 'ar' | 'en') {
     if (this.downloadType === 'pdf') {
       this.captureDivAsPDF()
 
-    } else {
+    } else if (this.downloadType === 'png') {
       this.captureDivAsImage()
     }
+
+    else if (this.downloadType === 'csv') {
+      this.downloadCsv(lang)
+    }
+  }
+
+  downloadCsv(lang : 'ar' | 'en') {
+
+    const data = this.history.map(res=>{
+      return{
+        'Station Name' : this.currentStation.name_en,
+        Date:  formatDateYYMMDD( OmmanDate(res.aggregated_at)),
+        Status:  lang === 'ar' ? res.status_ar :   res.status_en,
+        Value: res.value
+      }
+    })
+
+    generateCSVDownloadLink({
+      filename: this.currentStation.name_en + new Date('YYYY-MM-DD'), // set tenant id
+      data
+    });
   }
 
   captureDivAsImage() {

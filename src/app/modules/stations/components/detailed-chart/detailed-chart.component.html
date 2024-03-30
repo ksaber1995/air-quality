@@ -114,7 +114,14 @@
                                                 </li>
 
 
-                                                <li (click)="captureDiv()" nz-menu-item>
+                                                
+                                                <li nz-menu-item>
+                                                        <label class="download-item" [nzValue]="'csv'" nz-radio>
+                                                                CSV</label>
+                                                </li>
+
+
+                                                <li (click)="captureDiv(lang)" nz-menu-item>
                                                         {{'download' | translate}}
                                                 </li>
 

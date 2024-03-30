@@ -6,6 +6,7 @@ import { Station } from '../../../../models/Station';
 import { SwaggerService } from '../../../../services/swagger.service';
 import { LocalizationService } from './../../../../services/localization.service';
 import { carouselOptions } from './model';
+import { GoogleMap } from '@angular/google-maps';
 
 @Component({
   selector: 'app-map',
@@ -17,6 +18,7 @@ export class MapComponent implements OnInit, OnDestroy {
   @Input() stations: Station[];
   @Input() currentStation: Station;
   @ViewChild('carouselRef') carouselRef: CarouselComponent;
+  mapType: google.maps.MapTypeId = google.maps.MapTypeId.ROADMAP
 
   public options: google.maps.MapOptions
   breakPoints$ = this.swagger.getBreakPoints().pipe(map(res => res.aqi_breakpoints?.sort((a, b) => a.sequence - b.sequence)))
@@ -25,6 +27,12 @@ export class MapComponent implements OnInit, OnDestroy {
   lang$ = this.localization.getCurrentLanguage();
 
   interval;
+
+  
+  toggleSatelliteView(map: GoogleMap): void {
+    this.mapType = this.mapType === google.maps.MapTypeId.ROADMAP ? google.maps.MapTypeId.HYBRID : google.maps.MapTypeId.ROADMAP;
+
+  }
 
   ngOnInit(): void {
     this.StartLooping();

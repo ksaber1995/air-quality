@@ -26,6 +26,7 @@
     "@angular/ssr": "^17.0.9",
     "@ant-design/icons-angular": "^17.0.0",
     "@googlemaps/js-api-loader": "^1.16.2",
+    "@json2csv/plainjs": "^7.0.6",
     "@ngx-translate/core": "^15.0.0",
     "@ngx-translate/http-loader": "^8.0.0",
     "@nhost/nhost-js": "^3.0.10",

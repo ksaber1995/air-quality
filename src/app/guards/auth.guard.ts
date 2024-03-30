@@ -27,13 +27,13 @@ export class AuthGuard implements CanActivate {
 
 
     return isAuthenticated.pipe(
-      // tap((res) => {
-        // if (!res) {
-        //   this.router.navigate(['/login'], {
-        //     queryParams: { return_url: state.url },
-        //   });
-        // }
-      // })
+      tap((res) => {
+        if (!res) {
+          this.router.navigate(['/login'], {
+            queryParams: { return_url: state.url },
+          });
+        }
+      })
     );
   }
 

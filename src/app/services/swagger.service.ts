@@ -62,7 +62,7 @@ interface BreakPointsResponse {
   providedIn: 'root'
 })
 export class SwaggerService {
-  constructor(private ajax: AjaxService, private localization: LocalizationService) { }
+  constructor(private ajax: AjaxService, private localization: LocalizationService, private http: HttpClient) { }
 
   getStations() {
     const url =  '/stations'
@@ -148,9 +148,9 @@ export class SwaggerService {
 
 
   getBreakPoints(): Observable<BreakPointsResponse> {
-    const url = '/breakpoints'
+    const url = 'https://hasura.naqi.dal2.com/api/rest/v1/public/breakpoints'
 
-    return this.ajax.get<BreakPointsResponse>(url)
+    return this.http.get<BreakPointsResponse>(url)
   }
 
 
