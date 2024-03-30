@@ -1,3 +1,4 @@
+import { WindConverter } from './../../../../unitlize/wind-converter';
 import { Component, Input, OnInit } from '@angular/core';
 import { Station } from '../../../../models/Station';
 import { OmmanDate, formatTime } from '../../../../unitlize/custom-date';
@@ -13,7 +14,8 @@ export class SummaryComponent implements OnInit {
   headers
   listOfData
   // = testItem.map(res => ({ ...res, values: res.values.map(res => ({ ...res, color: getColorMapping(res.value) })) }))
-
+  WindConverter = WindConverter;
+  
   ngOnInit(): void {
     const lastUpdateStation = this.station?.aqi[0].aggregated_at
      this.lastUpdate = OmmanDate(lastUpdateStation)

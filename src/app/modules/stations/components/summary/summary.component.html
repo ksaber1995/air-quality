@@ -18,8 +18,7 @@
 
         <div class="status">
 
-          <img width="25" height="25"
-            [src]="'assets/icons/' + (station?.aqi[0]?.sequence || 0) + '-face.svg'" alt="">
+          <img width="25" height="25" [src]="'assets/icons/' + (station?.aqi[0]?.sequence || 0) + '-face.svg'" alt="">
 
           <span class="item">
             {{station?.aqi[0]?.status_name}}
@@ -34,8 +33,7 @@
 
         <div class="main-img">
           <img width="200" style="max-width: 100%;"
-            [src]="'assets/icons/status/meter/' + (station?.aqi[0]?.sequence || 0)  + '.svg' "
-            alt="">
+            [src]="'assets/icons/status/meter/' + (station?.aqi[0]?.sequence || 0)  + '.svg' " alt="">
 
 
         </div>
@@ -49,7 +47,7 @@
     <thead>
       <tr>
         <th></th>
-        <th dir="ltr"  [nzAlign]="'center'" *ngFor="let item of headers">{{item}}</th>
+        <th dir="ltr" [nzAlign]="'center'" *ngFor="let item of headers">{{item}}</th>
       </tr>
     </thead>
 
@@ -61,7 +59,8 @@
         <td [nzAlign]="'center'" *ngFor="let valueItem of item.readings">
           <span [style.background]="valueItem?.color"
             [style.color]="valueItem?.color?.toLocaleLowerCase() !== '#ffff00' ? '#fff' : '#000'" class="item rounded">
-            {{ (valueItem?.value  === null || valueItem?.value === undefined || !valueItem?.color) ? 'NA' : (valueItem?.value | number:'1.0-1') }}</span>
+            {{ (valueItem?.value === null || valueItem?.value === undefined || !valueItem?.color) ? 'NA' :
+            (valueItem?.value | number:'1.0-1') }}</span>
         </td>
       </tr>
 
@@ -73,8 +72,12 @@
 
 
           <span *ngIf="item.variable.code === 'WD'" class="item">
+            
+            {{WindConverter(valueItem?.value)}}
+            
             <span [ngStyle]="{'transform': 'rotate(' + valueItem?.value + 'deg)'}" nz-icon nzType="arrow-up"
-              nzTheme="outline"></span> </span>
+              nzTheme="outline"></span>
+          </span>
 
           <span *ngIf="item.variable.code === 'WS'" class="item">
             <ng-container *ngIf="valueItem?.value">
