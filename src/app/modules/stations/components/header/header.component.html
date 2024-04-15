@@ -6,11 +6,11 @@
 
 
   <ul class="menu-items-wrapper">
-    <li [queryParamsHandling]="'merge'" [routerLinkActive]="['seaGreen-bg', 'white']" routerLink="/home" class="home ">
+    <li [queryParamsHandling]="'merge'" [routerLinkActive]="['active', 'seaGreen-bg', 'white']" routerLink="/home" class="home ">
       <img src="../../../../../assets/icons/home.svg" alt=""> {{'home' | translate}}
     </li>
 
-    <li [routerLinkActive]="['seaGreen-bg', 'white']" routerLink="/overview" class="overview gray"> <img
+    <li [routerLinkActive]="['seaGreen-bg', 'white', 'active']" routerLink="/overview" class="overview gray"> <img
         src="../../../../../assets/icons/overview.svg" alt="">{{'overview' | translate}}</li>
   </ul>
 
