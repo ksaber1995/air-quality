@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { SignInResponse, User, createNhostClient } from '@nhost/nhost-js';
-import { Observable, delay, from, map, of, switchMap, tap } from 'rxjs';
+import { Observable, delay, from, map, of, switchMap, tap, timer } from 'rxjs';
 import { nhost } from '../environment';
 import { HttpClient } from '@angular/common/http';
 import { AjaxService } from './ajax.service';
@@ -18,25 +18,50 @@ export class AuthService {
 
   constructor(private http : HttpClient, private ajax : AjaxService) { }
 
-
   isAuthenticated(): Observable<boolean> {
+    // Wait for 5 seconds before subscribing to the Observable
+
     const user = nhost.auth.getUser();
-    return of(true).pipe(
-      delay(1000),
-      map((res) => Boolean(nhost.auth.getUser())),
-    );
+
+    return this.waitForSeconds(1)
+
+
+    .pipe(
+      map( (_) => {
+        const user = nhost.auth.getUser();
+
+        const isMfaActive = user?.activeMfaType === 'totp';
+
+        return !!nhost.auth.getUser() && isMfaActive;
+
+      })
+    )
+
+  }
+
+
+  waitForSeconds(seconds: number): Observable <boolean> {
+    return timer(seconds * 1000).pipe(map(res=> true));
   }
 
   getUser(): Observable<User> {
-    const user = nhost.auth.getUser();
-    return of(true).pipe(
-      delay(1000),
-      map((res) => nhost.auth.getUser()),
-    );
+
+    // Wait for 5 seconds before subscribing to the Observable
+
+    return this.waitForSeconds(1)
+
+    .pipe(
+      map( (_) => {
+        return nhost.auth.getUser();
+      })
+    )
+
   }
+
   updateUser(body: any){
     return this.ajax.post(this.url + 'update' , body)
   }
+
   generate() {
     return this.http.get<any>(
       'https://auth.naqi.dal2.com/v1/mfa/totp/generate',

@@ -63,6 +63,11 @@ export class CodeAuthenticatorComponent {
 
     this.auth.signinOtp(body).subscribe(res => {
       if (res.session?.accessToken) {
+
+
+
+
+
         localStorage.setItem('token', res.session.accessToken);
         localStorage.setItem('refreshToken', res.session.refreshToken || '');
 

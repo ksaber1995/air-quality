@@ -41,8 +41,6 @@ export class LoginComponent implements OnInit {
       password: this.loginForm.value.password!,
     };
 
-    const returnUrl = this.route.snapshot.queryParamMap.get('return_url') || '';
-
     this.auth.login(body.email, body.password).subscribe((res) => {
       if (res.session?.accessToken) {
         localStorage.setItem('token', res.session.accessToken);
