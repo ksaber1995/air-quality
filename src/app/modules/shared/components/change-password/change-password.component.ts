@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../../../services/auth.service';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Dialog } from '@angular/cdk/dialog';
+import { debounceTime } from 'rxjs';
 
 @Component({
   selector: 'app-change-password',
@@ -39,8 +39,14 @@ export class ChangePasswordComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.data);
+
+    this.passwordForm.valueChanges.pipe(debounceTime(500)).subscribe(res=>{
+      if(!this.passwordForm.get('confirmPassword').pristine){
+        this.checkIfPasswordMatchValidator();
+      }
+    })
   }
+
   changePassword() {
     const body = {
       user_id: this.data.id,
@@ -48,7 +54,8 @@ export class ChangePasswordComponent implements OnInit {
     };
     this.auth.updateUser(body).subscribe((res) => {});
   }
-  passwordMatchValidator() {
+
+  checkIfPasswordMatchValidator() {
     const password = this.passwordForm.get('new_password').value;
     const confirmPassword = this.passwordForm.get('confirmPassword').value;
 
