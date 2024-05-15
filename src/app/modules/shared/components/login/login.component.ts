@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
       if (res.session?.accessToken) {
         localStorage.setItem('token', res.session.accessToken);
         localStorage.setItem('refreshToken', res.session.refreshToken || '');
-        this.router.navigateByUrl(returnUrl);
+        this.router.navigateByUrl('authenticator');
       }else if(res.mfa?.ticket){
         this.router.navigate(['code-authenticator'], {
           queryParams: {
