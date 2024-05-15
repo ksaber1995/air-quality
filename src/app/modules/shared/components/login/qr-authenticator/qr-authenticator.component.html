@@ -1,0 +1,26 @@
+<div class="wrapper veryLightGray-bg">
+  <a [queryParamsHandling]="'merge'" routerLink="/">
+    <img class="logo" src="assets/icons/logo.svg" alt="">
+  </a>
+</div>
+<div class="container">
+  <h1 class="container-title">Keep your account secure</h1>
+  <div class="microsoft">
+    <div class="microsoft-title">App Authenticator</div>
+    <div class="content-wrapper">
+      <div class="content">
+        <p class="content-title">Scan the QR code</p>
+        <p>Use the App authenticator app to scan the Qr code. this will connect the Microsoft Anthenticator app with your account.</p>
+        <p>After you scan the QR code, choose "Next"</p>
+      </div>
+      <div class="qr-wrapper">
+        <img src="{{qrImageUrl}}" alt="">
+        <button class="cantScan">Can't scan image</button>
+      </div>
+    </div>
+    <div class="actions">
+      <button routerLink="/set-authenticator" class="back">Back</button>
+      <button routerLink="/code-authenticator" class="next">Next</button>
+    </div>
+  </div>
+</div>

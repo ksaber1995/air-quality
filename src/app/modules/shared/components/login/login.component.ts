@@ -12,14 +12,14 @@ import { SwaggerService } from '../../../../services/swagger.service';
 })
 export class LoginComponent implements OnInit {
   noMatch;
-  
+
   constructor(
     private router: Router,
     private swagger: SwaggerService,
     private route: ActivatedRoute,
     private auth: AuthService
   ) {}
-  
+
   ngOnInit(): void {}
   loginForm = new FormGroup({
     email: new FormControl(null, [
@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
 
   login() {
     this.noMatch = false;
-    
+
     const body = {
       email: this.loginForm.value.email!,
       password: this.loginForm.value.password!,
@@ -48,7 +48,15 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('token', res.session.accessToken);
         localStorage.setItem('refreshToken', res.session.refreshToken || '');
         this.router.navigateByUrl(returnUrl);
-      }else{
+      }else if(res.mfa?.ticket){
+        this.router.navigate(['code-authenticator'], {
+          queryParams: {
+            type: 'signin',
+            ticket: res.mfa.ticket,
+          },
+        });
+      }
+      else{
         this.noMatch = true;
       }
     }, err=>{

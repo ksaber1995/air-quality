@@ -1,0 +1,52 @@
+<div class="wrapper veryLightGray-bg">
+  <a [queryParamsHandling]="'merge'" routerLink="/">
+    <img class="logo" src="assets/icons/logo.svg" alt="">
+  </a>
+</div>
+
+<div class="container">
+  <h1 class="container-title">Keep your account secure</h1>
+
+
+  <div class="microsoft">
+    <div class="microsoft-title">Microsoft Authenticator</div>
+    <div class="content-wrapper">
+      <img class="auth-image" src="../../../../../../assets/icons/icons8-microsoft-authenticator-50.png">
+      <div class="content">
+        <p class="content-title">Start by getting the app</p>
+        <p>On your phone , install Microsoft Authenticator app. <span class="dawnload"><a
+              href="https://play.google.com/store/apps/details?id=com.azure.authenticator" target="_blank">Download now
+            </a></span>.</p>
+
+        <p>After you install Microsoft Authenticator app on your device, choose "Next".</p>
+      </div>
+    </div>
+    <div class="next">
+      <button routerLink="/set-authenticator">Next</button>
+    </div>
+  </div>
+
+
+  <div class="or-wrapper">
+    <div class="or">or</div>
+  </div>
+
+  <div class="microsoft">
+    <div class="microsoft-title">Google Authenticator</div>
+    <div class="content-wrapper">
+      <img class="auth-image" src="../../../../../../assets/icons/google.webp">
+      <div class="content">
+        <p class="content-title">Start by getting the app</p>
+
+        <p> On your phone, install the Google Authenticator app. <span class="dawnload"><a
+              href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&pli=1"
+              target="_blank">Download now </a></span>.</p>
+      </div>
+    </div>
+
+    <div class="next">
+      <button routerLink="/set-authenticator">Next</button>
+    </div>
+  </div>
+
+</div>
