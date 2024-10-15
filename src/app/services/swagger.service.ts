@@ -82,7 +82,7 @@ export class SwaggerService {
             weather: station.weather.map(weather=> ({...weather, readings: weather.readings.reverse(), variable: {...weather.variable , name: lang === Lang.ar ? weather.variable.name_ar : weather.variable.name_en }  })),
             aqi: station.aqi.map(aqi=> ({...aqi, sequence: getSequence(aqi.status_en), status_name: (lang === Lang.ar ? aqi.status_ar : aqi.status_en) || 'NA'  })),
             name: lang === Lang.ar ? station.name_ar : station.name_en,
-            organization: {...station.organization, name: lang === Lang.ar ? station.organization.name_ar : station.organization.name_en}
+            organization: {...station.organization, name: lang === Lang.ar ? station.organization?.name_ar : station.organization?.name_en}
           }
         })
         return data
@@ -131,7 +131,7 @@ export class SwaggerService {
         aqi: data.aqi.map(aqi=> ({...aqi, sequence: getSequence(aqi.status_en), status_name: (lang === Lang.ar ? aqi.status_ar : aqi.status_en) || 'NA'  })),
         
         name: lang === Lang.ar ? data.name_ar : data.name_en,
-        organization: {...data.organization, name: lang === Lang.ar ? data.organization.name_ar : data.organization.name_en}
+        organization: {...data.organization, name: lang === Lang.ar ? data.organization?.name_ar : data.organization?.name_en}
       }
     }))
 
