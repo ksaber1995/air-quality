@@ -1,0 +1,39 @@
+
+<div class="container">
+  <h1 class="container-title">Enter your otp</h1>
+
+  <div class="microsoft">
+    <div class="microsoft-title">App Authenticator</div>
+    <div class="content-wrapper">
+      <div class="img-wrapper">
+
+        <img class="auth-image" src="../../../../../../assets/icons/icons8-microsoft-authenticator-50.png">
+        <mat-label class="content-title">Enter the code you received  in App Authenticator</mat-label>
+      </div>
+
+      <mat-form-field class="otp-field">
+        <input [(ngModel)]="otpValue" matInput>
+
+      </mat-form-field>
+      <mat-error *ngIf="error">{{error}}</mat-error>
+
+      <!-- <ng-otp-input  (onInputChange)="onOtpChange($event)"  [config]="{length:6}"></ng-otp-input> -->
+    </div>
+
+
+
+    <div *ngIf="type == 'generate';" style="display: flex; gap: 30px;">
+      <button mat-raised-button routerLink="/qr-authenticator" class="back">Back</button>
+
+      <button mat-raised-button class="next" (click)="enterCode()" color="primary">Next</button>
+    </div>
+
+    <div *ngIf="type === 'signin'" style="display: flex; gap: 30px;" >
+
+      <button mat-raised-button  class="next" (click)="enterCode()" color="primary">Validate code</button>
+      <button mat-raised-button  class="next" routerLink="/login"  >Login with different account</button>
+    </div>
+
+
+  </div>
+</div>

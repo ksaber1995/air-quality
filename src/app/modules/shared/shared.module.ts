@@ -27,7 +27,15 @@ import { IconDefinition } from '@ant-design/icons-angular';
 import { StatusIconComponent } from './components/status-icon/status-icon.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { LoginComponent } from './components/login/login.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AuthenticatorComponent } from './components/login/authenticator/authenticator.component';
+import { QrAuthenticatorComponent } from './components/login/qr-authenticator/qr-authenticator.component';
+import { SetAuthenticatorComponent } from './components/login/set-authenticator/set-authenticator.component';
+import { CodeAuthenticatorComponent } from './components/login/code-authenticator/code-authenticator.component';
+import { OtpmodatComponent } from '../../component/otpmodat/otpmodat.component';
+import { MatButtonModule } from '@angular/material/button';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
+import { MatDialogModule } from '@angular/material/dialog';
 const icons: IconDefinition[] = [
   StepBackwardOutline,
   CaretLeftOutline,
@@ -39,8 +47,11 @@ const icons: IconDefinition[] = [
 const DeclarationsExports = [
   BreadCrumbComponent,
   StatusIconComponent,
-  
-
+  AuthenticatorComponent,
+  QrAuthenticatorComponent,
+  SetAuthenticatorComponent,
+  CodeAuthenticatorComponent,
+  OtpmodatComponent
 ]
 
 const ImportsExports = [
@@ -54,15 +65,18 @@ const ImportsExports = [
   ReactiveFormsModule,
   MatCheckboxModule,
   MatFormFieldModule,
-  MatInputModule
-  
+  MatInputModule,
+  FormsModule,
+  MatButtonModule,
+  MatDialogModule
 ]
 
 @NgModule({
   declarations: [
       ...DeclarationsExports,
       LoginComponent,
-      
+      ChangePasswordComponent,
+
   ],
   imports: [
     CommonModule,
@@ -70,7 +84,7 @@ const ImportsExports = [
     TranslateModule,
     ...ImportsExports,
     NzIconModule.forChild(icons)
-    
+
   ],
   exports: [
     ...ImportsExports,
